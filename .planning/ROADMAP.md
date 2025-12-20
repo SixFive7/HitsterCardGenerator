@@ -14,7 +14,7 @@ None
 - Integer phases (1, 2, 3): Planned milestone work
 - Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
 
-- [ ] **Phase 1: Foundation** - Project setup with Spectre.Console UI skeleton
+- [x] **Phase 1: Foundation** - Project setup with Spectre.Console UI skeleton
 - [ ] **Phase 2: CSV Import** - File input, parsing, and validation
 - [ ] **Phase 3: Spotify Integration** - API authentication and track search
 - [ ] **Phase 4: Card Generation** - QR codes, card design, and PDF export
@@ -25,7 +25,7 @@ None
 **Goal**: Running .NET 10 console app with Spectre.Console UI structure (FIGlet header, two-panel layout with step menu)
 **Depends on**: Nothing (first phase)
 **Research**: Unlikely (established .NET patterns, well-documented Spectre.Console)
-**Plans**: TBD
+**Plans**: 1 (01-01-PLAN.md)
 
 ### Phase 2: CSV Import
 **Goal**: Import and validate semicolon-separated CSV with title, artist, year, genre headers; validate genres against 30+ popular genres + 5 French genres
@@ -54,7 +54,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/TBD | Not started | - |
+| 1. Foundation | 1/1 | Complete | 2025-12-20 |
 | 2. CSV Import | 0/TBD | Not started | - |
 | 3. Spotify Integration | 0/TBD | Not started | - |
 | 4. Card Generation | 0/TBD | Not started | - |
