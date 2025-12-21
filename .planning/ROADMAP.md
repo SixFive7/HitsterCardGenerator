@@ -77,10 +77,11 @@ Plans:
 **Goal**: Server-side PDF generation with QuestPDF, file download endpoint
 **Depends on**: Phase 8
 **Research**: Unlikely (QuestPDF already integrated)
-**Plans**: TBD
+**Plans**: 2
 
 Plans:
-- [ ] 09-01: TBD
+- [x] 09-01: Backend Export API
+- [ ] 09-02: Frontend Export UI
 
 ## Progress
 
@@ -94,6 +95,6 @@ Plans:
 | 6. File Upload | v2.0 | 1/1 | Complete | 2025-12-21 |
 | 7. Spotify Web Flow | v2.0 | 2/2 | Complete | 2025-12-21 |
 | 8. Card Preview | v2.0 | 2/2 | Complete | 2025-12-21 |
-| 9. PDF Export | v2.0 | 0/? | Not started | - |
+| 9. PDF Export | v2.0 | 1/2 | In progress | - |
 
-**v1.0 Complete** — Starting v2.0 Web Interface (5 phases)
+**v1.0 Complete** — v2.0 Web Interface nearly complete (1 plan remaining)

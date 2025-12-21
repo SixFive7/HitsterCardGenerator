@@ -1,3 +1,4 @@
+using System.Text;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
@@ -24,13 +25,18 @@ public static class PdfExporter
     private const float HorizontalMargin = (PageWidth - (Columns * CardWidth)) / 2; // 20mm
     private const float VerticalMargin = (PageHeight - (Rows * CardHeight)) / 2;    // 11mm
 
+    // Cutting line settings
+    private const float CuttingLineWidth = 0.5f;  // pt
+    private const float CuttingLineExtension = 3f; // mm - extends beyond card edges for alignment
+
     /// <summary>
     /// Exports cards to a PDF file with front and back pages arranged for double-sided printing
     /// </summary>
     /// <param name="cards">List of card data</param>
     /// <param name="outputPath">Path to save the PDF</param>
+    /// <param name="cuttingLineStyle">Style of cutting lines to render</param>
     /// <returns>Total number of pages generated</returns>
-    public static int ExportToPdf(List<CardData> cards, string outputPath)
+    public static int ExportToPdf(List<CardData> cards, string outputPath, CuttingLineStyle cuttingLineStyle = CuttingLineStyle.None)
     {
         var document = Document.Create(container =>
         {
@@ -49,8 +55,18 @@ public static class PdfExporter
                     page.MarginVertical(VerticalMargin, Unit.Millimetre);
                     page.MarginHorizontal(HorizontalMargin, Unit.Millimetre);
 
-                    page.Content().Table(table =>
+                    page.Content().Layers(layers =>
                     {
+                        // Cutting lines layer (behind cards)
+                        if (cuttingLineStyle != CuttingLineStyle.None)
+                        {
+                            var svgContent = GenerateCuttingLinesSvg(cuttingLineStyle, sheetCards.Count);
+                            layers.Layer().Svg(svgContent);
+                        }
+
+                        // Cards layer
+                        layers.PrimaryLayer().Table(table =>
+                        {
                         table.ColumnsDefinition(columns =>
                         {
                             for (int i = 0; i < Columns; i++)
@@ -71,6 +87,7 @@ public static class PdfExporter
                                 });
                             }
                         }
+                        });
                     });
                 });
 
@@ -81,29 +98,40 @@ public static class PdfExporter
                     page.MarginVertical(VerticalMargin, Unit.Millimetre);
                     page.MarginHorizontal(HorizontalMargin, Unit.Millimetre);
 
-                    page.Content().Table(table =>
+                    page.Content().Layers(layers =>
                     {
-                        table.ColumnsDefinition(columns =>
+                        // Cutting lines layer (behind cards)
+                        if (cuttingLineStyle != CuttingLineStyle.None)
                         {
-                            for (int i = 0; i < Columns; i++)
-                                columns.ConstantColumn(CardWidth, Unit.Millimetre);
-                        });
-
-                        for (int row = 0; row < Rows; row++)
-                        {
-                            // Mirror order: reverse the columns for back page
-                            for (int colIdx = Columns - 1; colIdx >= 0; colIdx--)
-                            {
-                                var cardIndex = row * Columns + colIdx;
-                                table.Cell().Element(c =>
-                                {
-                                    if (cardIndex < sheetCards.Count)
-                                        RenderBackCard(c, sheetCards[cardIndex]);
-                                    else
-                                        RenderEmptyCard(c);
-                                });
-                            }
+                            var svgContent = GenerateCuttingLinesSvg(cuttingLineStyle, sheetCards.Count);
+                            layers.Layer().Svg(svgContent);
                         }
+
+                        // Cards layer
+                        layers.PrimaryLayer().Table(table =>
+                        {
+                            table.ColumnsDefinition(columns =>
+                            {
+                                for (int i = 0; i < Columns; i++)
+                                    columns.ConstantColumn(CardWidth, Unit.Millimetre);
+                            });
+
+                            for (int row = 0; row < Rows; row++)
+                            {
+                                // Mirror order: reverse the columns for back page
+                                for (int colIdx = Columns - 1; colIdx >= 0; colIdx--)
+                                {
+                                    var cardIndex = row * Columns + colIdx;
+                                    table.Cell().Element(c =>
+                                    {
+                                        if (cardIndex < sheetCards.Count)
+                                            RenderBackCard(c, sheetCards[cardIndex]);
+                                        else
+                                            RenderEmptyCard(c);
+                                    });
+                                }
+                            }
+                        });
                     });
                 });
             }
@@ -187,6 +215,56 @@ public static class PdfExporter
             .Height(CardHeight, Unit.Millimetre)
             .Border(0.25f)
             .BorderColor(Colors.Grey.Lighten3);
+    }
+
+    /// <summary>
+    /// Generates SVG content for cutting lines based on the selected style
+    /// </summary>
+    private static string GenerateCuttingLinesSvg(CuttingLineStyle style, int cardCount)
+    {
+        // Grid dimensions in mm (matching the content area)
+        var gridWidth = Columns * CardWidth;
+        var gridHeight = Rows * CardHeight;
+
+        // Calculate how many rows have cards
+        var rowsWithCards = (int)Math.Ceiling((double)cardCount / Columns);
+
+        var svg = new StringBuilder();
+        svg.AppendLine($"<svg viewBox=\"0 0 {gridWidth} {gridHeight}\" xmlns=\"http://www.w3.org/2000/svg\">");
+        svg.AppendLine($"  <style>line {{ stroke: black; stroke-width: 0.25; }}</style>");
+
+        if (style == CuttingLineStyle.EdgeOnly)
+        {
+            var bottomY = rowsWithCards * CardHeight;
+            // Top edge
+            svg.AppendLine($"  <line x1=\"{-CuttingLineExtension}\" y1=\"0\" x2=\"{gridWidth + CuttingLineExtension}\" y2=\"0\" />");
+            // Bottom edge
+            svg.AppendLine($"  <line x1=\"{-CuttingLineExtension}\" y1=\"{bottomY}\" x2=\"{gridWidth + CuttingLineExtension}\" y2=\"{bottomY}\" />");
+            // Left edge
+            svg.AppendLine($"  <line x1=\"0\" y1=\"{-CuttingLineExtension}\" x2=\"0\" y2=\"{bottomY + CuttingLineExtension}\" />");
+            // Right edge
+            svg.AppendLine($"  <line x1=\"{gridWidth}\" y1=\"{-CuttingLineExtension}\" x2=\"{gridWidth}\" y2=\"{bottomY + CuttingLineExtension}\" />");
+        }
+        else if (style == CuttingLineStyle.Complete)
+        {
+            // Horizontal lines
+            for (int row = 0; row <= rowsWithCards; row++)
+            {
+                var y = row * CardHeight;
+                svg.AppendLine($"  <line x1=\"{-CuttingLineExtension}\" y1=\"{y}\" x2=\"{gridWidth + CuttingLineExtension}\" y2=\"{y}\" />");
+            }
+
+            // Vertical lines
+            var maxY = rowsWithCards * CardHeight;
+            for (int col = 0; col <= Columns; col++)
+            {
+                var x = col * CardWidth;
+                svg.AppendLine($"  <line x1=\"{x}\" y1=\"{-CuttingLineExtension}\" x2=\"{x}\" y2=\"{maxY + CuttingLineExtension}\" />");
+            }
+        }
+
+        svg.AppendLine("</svg>");
+        return svg.ToString();
     }
 
     /// <summary>

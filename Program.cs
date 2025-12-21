@@ -28,6 +28,9 @@ app.MapCsvEndpoints();
 // Map match endpoints
 app.MapMatchEndpoints();
 
+// Map export endpoints
+app.MapExportEndpoints();
+
 // Configure to listen on port 5000
 app.Urls.Add("http://localhost:5000");
 
