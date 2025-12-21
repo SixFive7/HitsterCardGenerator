@@ -12,19 +12,19 @@
 - Export PDF with credit-card sized cards (85x55mm), 16 per A4 page
 
 **Constraints:**
-- .NET 10 console application
-- Spectre.Console for all user interaction
+- .NET 10 (Minimal API backend + existing services)
+- Svelte + Tailwind frontend (Vite)
 - Cross-platform (Windows, Mac, Linux)
-- Libraries: Spectre.Console, QuestPDF, QRCoder
+- Libraries: QuestPDF, QRCoder, SpotifyAPI.Web (reused from v1.0)
 
 ## Current Position
 
-Phase: 4 of 4 (Card Generation)
-Plan: 3 of 3 in current phase
-Status: COMPLETE
-Last activity: 2025-12-21 - Completed 04-03-PLAN.md
+Phase: 5 of 9 (Web Foundation)
+Plan: Not started
+Status: Ready to plan
+Last activity: 2025-12-21 - Milestone v2.0 created
 
-Progress: ██████████ 100%
+Progress: ░░░░░░░░░░ 0% (v2.0)
 
 ## Performance Metrics
 
@@ -83,8 +83,12 @@ Status: ✓ Aligned
 Assessment: No work done yet - baseline alignment.
 Drift notes: None
 
+### Roadmap Evolution
+
+- Milestone v2.0 created: Web Interface transformation, 5 phases (Phase 5-9)
+
 ## Session Continuity
 
 Last session: 2025-12-21
-Stopped at: PROJECT COMPLETE
-Resume file: None - all phases and plans completed
+Stopped at: Milestone v2.0 initialization
+Resume file: None
