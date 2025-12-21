@@ -18,7 +18,8 @@
       "Bash(node:*)",
       "Bash(npm:*)",
       "Bash(npx:*)",
-      "Bash(dotnet:*)"
+      "Bash(dotnet:*)",
+      "Bash(cmd /c \"if not exist c:\\\\Source\\\\SixFive7\\\\HitsterCardGenerator\\\\HitsterCardGenerator\\\\Services mkdir c:\\\\Source\\\\SixFive7\\\\HitsterCardGenerator\\\\HitsterCardGenerator\\\\Services\")"
     ]
   }
 }
