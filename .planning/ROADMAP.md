@@ -50,10 +50,10 @@ See [milestones/v2.0-ROADMAP.md](milestones/v2.0-ROADMAP.md) for full details.
 **Goal**: Configure .NET Minimal API to serve Svelte build output from wwwroot
 **Depends on**: Phase 9
 **Research**: Unlikely (standard .NET static files middleware)
-**Plans**: TBD
+**Plans**: 1
 
 Plans:
-- [ ] 10-01: TBD (run /gsd:plan-phase 10 to break down)
+- [x] 10-01: Static file middleware + copy build output
 
 ### Phase 11: Build Integration
 
@@ -78,7 +78,7 @@ Plans:
 | 7. Spotify Web Flow | v2.0 | 2/2 | Complete | 2025-12-21 |
 | 8. Card Preview | v2.0 | 2/2 | Complete | 2025-12-21 |
 | 9. PDF Export | v2.0 | 2/2 | Complete | 2025-12-21 |
-| 10. Static File Serving | v2.1 | 0/? | Not started | - |
+| 10. Static File Serving | v2.1 | 1/1 | Complete | 2025-12-22 |
 | 11. Build Integration | v2.1 | 0/? | Not started | - |
 
 **v1.0 Complete** — **v2.0 Complete** — **v2.1 In Progress**

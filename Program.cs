@@ -16,6 +16,10 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+// Serve static files from wwwroot (Svelte build output)
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 // Map OpenAPI endpoint
 app.MapOpenApi();
 
@@ -30,6 +34,9 @@ app.MapMatchEndpoints();
 
 // Map export endpoints
 app.MapExportEndpoints();
+
+// SPA fallback - serve index.html for client-side routing
+app.MapFallbackToFile("index.html");
 
 // Configure to listen on port 5000
 app.Urls.Add("http://localhost:5000");
