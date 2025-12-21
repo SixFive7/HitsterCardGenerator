@@ -4,6 +4,10 @@ using HitsterCardGenerator.UI;
 using HitsterCardGenerator.Models;
 using HitsterCardGenerator.UI.Steps;
 using HitsterCardGenerator.Services;
+using QuestPDF.Infrastructure;
+
+// Set QuestPDF community license
+QuestPDF.Settings.License = LicenseType.Community;
 
 // Create wizard state and app state
 var wizardState = new WizardState();
@@ -210,6 +214,16 @@ while (wizardState.CurrentStep <= Step.ExportPdf)
             wizardState.AdvanceToNextStep();
             break;
 
+        case Step.ColorChoice:
+            // Prompt for background color preference
+            stepsPanel = StepMenu.Render(wizardState);
+            contentPanel = ColorChoiceStep.GetContentPanel();
+            AppLayout.Render(stepsPanel, contentPanel);
+
+            appState.UseBackgroundColors = ColorChoiceStep.PromptForChoice();
+            wizardState.AdvanceToNextStep();
+            break;
+
         default:
             // Placeholder for remaining steps
             contentPanel = new Panel($"[dim]Step {wizardState.CurrentStep}[/]\n\nComing soon!")
@@ -230,4 +244,5 @@ class AppState
     public string? CsvFilePath { get; set; }
     public List<Song> ValidSongs { get; set; } = new();
     public SpotifyService? SpotifyService { get; set; }
+    public bool UseBackgroundColors { get; set; }
 }
