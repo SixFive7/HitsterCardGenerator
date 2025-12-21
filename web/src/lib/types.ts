@@ -40,3 +40,9 @@ export interface MatchResponse {
   totalMatched: number
   totalNotFound: number
 }
+
+export interface CardCustomization {
+  genreColors: Record<string, string>
+  includedCards: Set<number>
+  currentCardIndex: number
+}
