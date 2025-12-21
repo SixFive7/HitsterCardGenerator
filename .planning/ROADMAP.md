@@ -36,7 +36,7 @@ See [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md) for full details.
 **Plans**: TBD
 
 Plans:
-- [ ] 05-01: TBD (run /gsd:plan-phase 5 to break down)
+- [x] 05-01: Web SDK & Minimal API Foundation
 
 ### Phase 6: File Upload
 
@@ -87,7 +87,7 @@ Plans:
 | 2. CSV Import | v1.0 | 2/2 | Complete | 2025-12-21 |
 | 3. Spotify Integration | v1.0 | 2/2 | Complete | 2025-12-21 |
 | 4. Card Generation | v1.0 | 3/3 | Complete | 2025-12-21 |
-| 5. Web Foundation | v2.0 | 0/? | Not started | - |
+| 5. Web Foundation | v2.0 | 1/? | In progress | - |
 | 6. File Upload | v2.0 | 0/? | Not started | - |
 | 7. Spotify Web Flow | v2.0 | 0/? | Not started | - |
 | 8. Card Preview | v2.0 | 0/? | Not started | - |
