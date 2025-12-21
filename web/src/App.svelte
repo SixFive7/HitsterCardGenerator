@@ -1,14 +1,18 @@
 <script lang="ts">
-  import { fetchHealth } from './lib/api'
+  import { fetchHealth, matchSongs } from './lib/api'
   import { fly, fade } from 'svelte/transition'
   import FileUpload from './lib/FileUpload.svelte'
-  import type { CsvUploadResponse } from './lib/types'
+  import MatchResults from './lib/MatchResults.svelte'
+  import type { CsvUploadResponse, MatchResult, SpotifyMatch } from './lib/types'
 
   // Svelte 5 runes
   let apiStatus = $state<'loading' | 'connected' | 'error'>('loading')
   let errorMessage = $state<string>('')
-  let currentStep = $state<'landing' | 'upload' | 'results'>('landing')
+  let currentStep = $state<'landing' | 'upload' | 'results' | 'matching' | 'matched'>('landing')
   let uploadResult = $state<CsvUploadResponse | null>(null)
+  let matchResults = $state<MatchResult[]>([])
+  let isMatching = $state<boolean>(false)
+  let matchError = $state<string | null>(null)
 
   // Fetch API health on mount
   $effect(() => {
@@ -34,6 +38,41 @@
   function handleUploadDifferentFile() {
     currentStep = 'upload'
     uploadResult = null
+    matchResults = []
+    matchError = null
+  }
+
+  async function handleMatchWithSpotify() {
+    if (!uploadResult || uploadResult.validSongs.length === 0) return
+
+    isMatching = true
+    matchError = null
+    currentStep = 'matching'
+
+    try {
+      const response = await matchSongs(uploadResult.validSongs)
+      matchResults = response.results
+      currentStep = 'matched'
+    } catch (error) {
+      matchError = error instanceof Error ? error.message : 'Failed to match songs'
+      currentStep = 'results'
+    } finally {
+      isMatching = false
+    }
+  }
+
+  function handleSelectAlternative(resultIndex: number, alternative: SpotifyMatch) {
+    // Update the match results with the selected alternative
+    matchResults = matchResults.map((result, index) => {
+      if (index === resultIndex) {
+        return {
+          ...result,
+          match: alternative,
+          confidence: 'high' as const // User-selected becomes high confidence
+        }
+      }
+      return result
+    })
   }
 </script>
 
@@ -219,12 +258,82 @@
           </button>
           {#if uploadResult.validSongs.length > 0}
             <button
-              class="bg-[#1DB954] hover:bg-[#1ed760] text-white font-bold px-8 py-3 rounded-full transition-all opacity-50 cursor-not-allowed"
-              disabled
+              onclick={handleMatchWithSpotify}
+              class="bg-[#1DB954] hover:bg-[#1ed760] text-white font-bold px-8 py-3 rounded-full transition-all transform hover:scale-105"
             >
-              Generate Cards (Coming Soon)
+              Match with Spotify
             </button>
           {/if}
+        </div>
+
+        <!-- Error Message -->
+        {#if matchError}
+          <div class="mt-6 p-4 bg-[#FF6B6B]/20 border border-[#FF6B6B] rounded-lg text-center">
+            <p class="text-[#FF6B6B] font-medium">{matchError}</p>
+          </div>
+        {/if}
+      </div>
+
+    <!-- Matching Progress Page -->
+    {:else if currentStep === 'matching'}
+      <div in:fly={{ y: 50, duration: 600 }}>
+        <h2 class="text-5xl font-bold text-center mb-8 text-white">Matching with Spotify</h2>
+
+        <div class="flex flex-col items-center gap-8 bg-[#282828] rounded-2xl p-12">
+          <div class="w-24 h-24 border-4 border-[#1DB954] border-t-transparent rounded-full animate-spin"></div>
+          <p class="text-2xl text-gray-300 font-medium">Searching Spotify for your songs...</p>
+          <p class="text-gray-500">This may take a moment</p>
+        </div>
+      </div>
+
+    <!-- Matched Results Page -->
+    {:else if currentStep === 'matched'}
+      <div in:fly={{ y: 50, duration: 600 }}>
+        <h2 class="text-5xl font-bold text-center mb-8 text-white">Spotify Matches</h2>
+
+        <!-- Summary Card -->
+        <div class="bg-[#282828] rounded-2xl p-8 mb-8 text-center">
+          <div class="text-6xl mb-4">🎵</div>
+          <h3 class="text-3xl font-bold mb-4 text-white">Matching Complete</h3>
+          <div class="flex justify-center gap-8 text-xl">
+            <div>
+              <span class="text-gray-400">Total:</span>
+              <span class="text-white font-bold ml-2">{matchResults.length}</span>
+            </div>
+            <div>
+              <span class="text-gray-400">Matched:</span>
+              <span class="text-[#1DB954] font-bold ml-2">
+                {matchResults.filter(r => r.match !== null).length}
+              </span>
+            </div>
+            <div>
+              <span class="text-gray-400">Not Found:</span>
+              <span class="text-[#FF6B6B] font-bold ml-2">
+                {matchResults.filter(r => r.match === null).length}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Match Results -->
+        <div class="mb-8">
+          <MatchResults results={matchResults} onSelectAlternative={handleSelectAlternative} />
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-center gap-4">
+          <button
+            onclick={handleUploadDifferentFile}
+            class="bg-[#282828] hover:bg-[#383838] text-white font-bold px-8 py-3 rounded-full transition-all"
+          >
+            Re-upload CSV
+          </button>
+          <button
+            class="bg-[#1DB954] hover:bg-[#1ed760] text-white font-bold px-8 py-3 rounded-full transition-all opacity-50 cursor-not-allowed"
+            disabled
+          >
+            Continue to Preview (Coming Soon)
+          </button>
         </div>
       </div>
     {/if}
