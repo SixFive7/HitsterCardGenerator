@@ -143,6 +143,47 @@ while (wizardState.CurrentStep <= Step.ExportPdf)
             wizardState.AdvanceToNextStep();
             break;
 
+        case Step.SpotifySearch:
+            // Process songs with Spotify search
+            stepsPanel = StepMenu.Render(wizardState);
+            var initialProgressPanel = SpotifySearchStep.GetProgressPanel(0, appState.ValidSongs.Count, "Starting...", "Initializing...");
+            AppLayout.Render(stepsPanel, initialProgressPanel);
+
+            // Run search asynchronously
+            var searchResults = SpotifySearchStep.ProcessSongsAsync(
+                appState.ValidSongs,
+                appState.SpotifyService!,
+                (steps, content) => AppLayout.Render(steps, content),
+                stepsPanel
+            ).GetAwaiter().GetResult();
+
+            // Update songs with Spotify track IDs
+            appState.ValidSongs = searchResults
+                .Where(r => r.Status == SearchStatus.Found && r.Match != null)
+                .Select(r => r.Song with { SpotifyTrackId = r.Match!.TrackId })
+                .ToList();
+
+            // Show summary
+            stepsPanel = StepMenu.Render(wizardState);
+            var summaryPanel = SpotifySearchStep.GetSummaryPanel(searchResults);
+            AppLayout.Render(stepsPanel, summaryPanel);
+
+            // Prompt for action
+            var foundCount = searchResults.Count(r => r.Status == SearchStatus.Found);
+            if (SpotifySearchStep.PromptForAction(foundCount))
+            {
+                wizardState.AdvanceToNextStep();
+            }
+            else
+            {
+                // Go back to CSV import
+                wizardState = new WizardState();
+                appState.CsvFilePath = null;
+                appState.ValidSongs = new List<Song>();
+                appState.SpotifyService = null;
+            }
+            break;
+
         default:
             // Placeholder for remaining steps
             contentPanel = new Panel($"[dim]Step {wizardState.CurrentStep}[/]\n\nComing soon!")
