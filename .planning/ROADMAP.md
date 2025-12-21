@@ -31,7 +31,7 @@ None
 **Goal**: Import and validate semicolon-separated CSV with title, artist, year, genre headers; validate genres against 30+ popular genres + 5 French genres
 **Depends on**: Phase 1
 **Research**: Unlikely (standard CSV parsing, internal genre validation)
-**Plans**: TBD
+**Plans**: 2 (02-01-PLAN.md, 02-02-PLAN.md)
 
 ### Phase 3: Spotify Integration
 **Goal**: Authenticate with Spotify API, search for tracks, apply smart selection logic, provide interactive fallback for ambiguous matches
@@ -55,6 +55,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 1/1 | Complete | 2025-12-20 |
-| 2. CSV Import | 0/TBD | Not started | - |
+| 2. CSV Import | 1/2 | In progress | - |
 | 3. Spotify Integration | 0/TBD | Not started | - |
 | 4. Card Generation | 0/TBD | Not started | - |
