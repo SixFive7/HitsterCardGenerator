@@ -1,5 +1,21 @@
 # Hitster Card Generator
 
+## Current State (Updated: 2025-12-21)
+
+**Shipped:** v1.0 MVP (2025-12-21)
+**Status:** Production-ready
+**Codebase:** 2,404 lines C#, .NET 10, Spectre.Console + QuestPDF + QRCoder
+
+The application is complete and functional. Users can:
+- Import semicolon-separated CSV files with song data
+- Validate genres against 35 supported genres
+- Authenticate with Spotify API
+- Search and match songs with smart selection
+- Generate QR codes linking to Spotify
+- Export print-ready PDF cards (2x5 grid per A4 page)
+
+---
+
 ## Vision
 
 A .NET 10 console application that generates printable PDF cards for a custom Hitster-style music guessing game. The app provides a wizard-like experience using Spectre.Console, guiding users through importing their song collection from CSV, enriching it with Spotify data, and producing professional print-ready cards.
