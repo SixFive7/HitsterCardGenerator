@@ -12,9 +12,13 @@
   interface Props {
     cards: MatchResult[]
     genreColors: Record<string, string>
+    currentIndex?: number
+    onIndexChange?: (index: number) => void
+    flippedCards?: Set<number>
+    onFlipToggle?: (index: number) => void
   }
 
-  let { cards, genreColors }: Props = $props()
+  let { cards, genreColors, currentIndex = 0, onIndexChange, flippedCards = new Set(), onFlipToggle }: Props = $props()
 
   // Embla options
   const options: EmblaOptionsType = {
@@ -24,8 +28,7 @@
 
   // State
   let emblaApi = $state<EmblaCarouselType | undefined>(undefined)
-  let selectedIndex = $state(0)
-  let flippedCards = $state<Set<number>>(new Set())
+  let selectedIndex = $state(currentIndex)
 
   // Initialize embla
   function onEmblaInit(event: CustomEvent<EmblaCarouselType>) {
@@ -34,17 +37,25 @@
     // Track selected index
     emblaApi.on('select', () => {
       selectedIndex = emblaApi.selectedScrollSnap()
+      if (onIndexChange) {
+        onIndexChange(selectedIndex)
+      }
     })
   }
 
+  // Sync external currentIndex with embla
+  $effect(() => {
+    if (emblaApi && currentIndex !== selectedIndex) {
+      emblaApi.scrollTo(currentIndex)
+      selectedIndex = currentIndex
+    }
+  })
+
   // Toggle card flip
   function toggleFlip(index: number) {
-    if (flippedCards.has(index)) {
-      flippedCards.delete(index)
-    } else {
-      flippedCards.add(index)
+    if (onFlipToggle) {
+      onFlipToggle(index)
     }
-    flippedCards = new Set(flippedCards)
   }
 
   // Check if card is flipped
@@ -56,55 +67,11 @@
   function getGenreColor(genre: string): string {
     return genreColors[genre] || '#808080'
   }
-
-  // Navigation handlers
-  function scrollPrev() {
-    emblaApi?.scrollPrev()
-  }
-
-  function scrollNext() {
-    emblaApi?.scrollNext()
-  }
-
-  // Computed values
-  const canScrollPrev = $derived(emblaApi?.canScrollPrev() ?? false)
-  const canScrollNext = $derived(emblaApi?.canScrollNext() ?? false)
 </script>
 
 <div class="carousel-container">
-  <!-- Navigation Header -->
-  <div class="carousel-header">
-    <button
-      class="nav-button"
-      onclick={scrollPrev}
-      disabled={!canScrollPrev}
-      aria-label="Previous card"
-    >
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="15 18 9 12 15 6"></polyline>
-      </svg>
-    </button>
-
-    <div class="carousel-counter">
-      <span class="current">{selectedIndex + 1}</span>
-      <span class="separator">/</span>
-      <span class="total">{cards.length}</span>
-    </div>
-
-    <button
-      class="nav-button"
-      onclick={scrollNext}
-      disabled={!canScrollNext}
-      aria-label="Next card"
-    >
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="9 18 15 12 9 6"></polyline>
-      </svg>
-    </button>
-  </div>
-
   <!-- Embla Carousel -->
-  <div class="embla" use:emblaCarouselSvelte={{ options }} on:emblaInit={onEmblaInit}>
+  <div class="embla" use:emblaCarouselSvelte={{ options }} onemblaInit={onEmblaInit}>
     <div class="embla__container">
       {#each cards as card, index (card.index)}
         <div class="embla__slide">
@@ -158,57 +125,6 @@
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
-  }
-
-  .carousel-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 24px;
-    padding: 0 16px;
-  }
-
-  .nav-button {
-    background: #282828;
-    border: none;
-    color: white;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-
-  .nav-button:hover:not(:disabled) {
-    background: #1DB954;
-    transform: scale(1.1);
-  }
-
-  .nav-button:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-  }
-
-  .carousel-counter {
-    font-size: 24px;
-    font-weight: 600;
-    color: white;
-  }
-
-  .carousel-counter .current {
-    color: #1DB954;
-  }
-
-  .carousel-counter .separator {
-    color: #666;
-    margin: 0 8px;
-  }
-
-  .carousel-counter .total {
-    color: #999;
   }
 
   /* Embla carousel styles */

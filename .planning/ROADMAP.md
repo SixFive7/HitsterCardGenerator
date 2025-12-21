@@ -61,7 +61,7 @@ Plans:
 - [x] 07-01: Backend Match API
 - [x] 07-02: Frontend Match UI
 
-### Phase 8: Card Preview - IN PROGRESS
+### Phase 8: Card Preview - COMPLETE
 
 **Goal**: In-browser card preview with live updates, color picker for genre backgrounds
 **Depends on**: Phase 7
@@ -70,7 +70,7 @@ Plans:
 
 Plans:
 - [x] 08-01: Card Carousel Foundation
-- [ ] 08-02: TBD
+- [x] 08-02: Card Preview Customization
 
 ### Phase 9: PDF Export
 
@@ -93,7 +93,7 @@ Plans:
 | 5. Web Foundation | v2.0 | 2/2 | Complete | 2025-12-21 |
 | 6. File Upload | v2.0 | 1/1 | Complete | 2025-12-21 |
 | 7. Spotify Web Flow | v2.0 | 2/2 | Complete | 2025-12-21 |
-| 8. Card Preview | v2.0 | 1/2 | In progress | - |
+| 8. Card Preview | v2.0 | 2/2 | Complete | 2025-12-21 |
 | 9. PDF Export | v2.0 | 0/? | Not started | - |
 
 **v1.0 Complete** — Starting v2.0 Web Interface (5 phases)

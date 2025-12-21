@@ -45,9 +45,60 @@ export const DEFAULT_GENRE_COLORS: Record<string, string> = {
   "Musette": "#EF4135"
 }
 
+// LocalStorage keys
+const STORAGE_KEY_COLORS = 'hitster-genre-colors'
+const STORAGE_KEY_INCLUDED = 'hitster-included-cards'
+
+// Load from localStorage
+function loadGenreColors(): Record<string, string> {
+  if (typeof window === 'undefined') return { ...DEFAULT_GENRE_COLORS }
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY_COLORS)
+    if (stored) {
+      return JSON.parse(stored)
+    }
+  } catch (e) {
+    console.error('Failed to load genre colors from localStorage', e)
+  }
+  return { ...DEFAULT_GENRE_COLORS }
+}
+
+function loadIncludedCards(): Set<number> {
+  if (typeof window === 'undefined') return new Set()
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY_INCLUDED)
+    if (stored) {
+      const arr = JSON.parse(stored) as number[]
+      return new Set(arr)
+    }
+  } catch (e) {
+    console.error('Failed to load included cards from localStorage', e)
+  }
+  return new Set()
+}
+
+// Save to localStorage
+function saveGenreColors(colors: Record<string, string>) {
+  if (typeof window === 'undefined') return
+  try {
+    localStorage.setItem(STORAGE_KEY_COLORS, JSON.stringify(colors))
+  } catch (e) {
+    console.error('Failed to save genre colors to localStorage', e)
+  }
+}
+
+function saveIncludedCards(cards: Set<number>) {
+  if (typeof window === 'undefined') return
+  try {
+    localStorage.setItem(STORAGE_KEY_INCLUDED, JSON.stringify(Array.from(cards)))
+  } catch (e) {
+    console.error('Failed to save included cards to localStorage', e)
+  }
+}
+
 // Create the store state
-let genreColors = $state<Record<string, string>>({ ...DEFAULT_GENRE_COLORS })
-let includedCards = $state<Set<number>>(new Set())
+let genreColors = $state<Record<string, string>>(loadGenreColors())
+let includedCards = $state<Set<number>>(loadIncludedCards())
 let currentCardIndex = $state<number>(0)
 
 /**
@@ -55,6 +106,7 @@ let currentCardIndex = $state<number>(0)
  */
 export function setGenreColor(genre: string, color: string) {
   genreColors[genre] = color
+  saveGenreColors(genreColors)
 }
 
 /**
@@ -75,6 +127,7 @@ export function toggleCardInclusion(cardIndex: number) {
   }
   // Trigger reactivity
   includedCards = new Set(includedCards)
+  saveIncludedCards(includedCards)
 }
 
 /**
@@ -82,6 +135,15 @@ export function toggleCardInclusion(cardIndex: number) {
  */
 export function resetGenreColors() {
   genreColors = { ...DEFAULT_GENRE_COLORS }
+  saveGenreColors(genreColors)
+}
+
+/**
+ * Applies a palette to all genres
+ */
+export function applyPalette(palette: Record<string, string>) {
+  genreColors = { ...palette }
+  saveGenreColors(genreColors)
 }
 
 /**
@@ -89,6 +151,7 @@ export function resetGenreColors() {
  */
 export function initializeIncludedCards(totalCards: number) {
   includedCards = new Set(Array.from({ length: totalCards }, (_, i) => i))
+  saveIncludedCards(includedCards)
 }
 
 /**
@@ -96,6 +159,13 @@ export function initializeIncludedCards(totalCards: number) {
  */
 export function isCardIncluded(cardIndex: number): boolean {
   return includedCards.has(cardIndex)
+}
+
+/**
+ * Gets the count of included cards
+ */
+export function getIncludedCount(): number {
+  return includedCards.size
 }
 
 // Export reactive state

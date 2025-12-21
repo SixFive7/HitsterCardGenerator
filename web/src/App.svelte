@@ -3,16 +3,30 @@
   import { fly, fade } from 'svelte/transition'
   import FileUpload from './lib/FileUpload.svelte'
   import MatchResults from './lib/MatchResults.svelte'
+  import CardCarousel from './lib/CardPreview/CardCarousel.svelte'
+  import CardControls from './lib/CardPreview/CardControls.svelte'
+  import GenreColorPicker from './lib/ColorSettings/GenreColorPicker.svelte'
   import type { CsvUploadResponse, MatchResult, SpotifyMatch } from './lib/types'
+  import {
+    getCardCustomizationState,
+    initializeIncludedCards,
+    toggleCardInclusion,
+    isCardIncluded,
+    getIncludedCount
+  } from './lib/stores/cardCustomization.svelte'
 
   // Svelte 5 runes
   let apiStatus = $state<'loading' | 'connected' | 'error'>('loading')
   let errorMessage = $state<string>('')
-  let currentStep = $state<'landing' | 'upload' | 'results' | 'matching' | 'matched'>('landing')
+  let currentStep = $state<'landing' | 'upload' | 'results' | 'matching' | 'matched' | 'preview'>('landing')
   let uploadResult = $state<CsvUploadResponse | null>(null)
   let matchResults = $state<MatchResult[]>([])
   let isMatching = $state<boolean>(false)
   let matchError = $state<string | null>(null)
+
+  // Card customization state
+  const customizationState = getCardCustomizationState()
+  let flippedCards = $state<Set<number>>(new Set())
 
   // Fetch API health on mount
   $effect(() => {
@@ -74,6 +88,56 @@
       return result
     })
   }
+
+  function handleContinueToPreview() {
+    // Initialize all cards as included
+    initializeIncludedCards(matchResults.length)
+    // Reset current card index
+    customizationState.currentCardIndex = 0
+    // Clear flipped cards
+    flippedCards = new Set()
+    // Navigate to preview step
+    currentStep = 'preview'
+  }
+
+  function handleBackToMatches() {
+    currentStep = 'matched'
+  }
+
+  // Preview control handlers
+  function handlePrevCard() {
+    if (customizationState.currentCardIndex > 0) {
+      customizationState.currentCardIndex--
+    }
+  }
+
+  function handleNextCard() {
+    if (customizationState.currentCardIndex < matchResults.length - 1) {
+      customizationState.currentCardIndex++
+    }
+  }
+
+  function handleToggleInclude() {
+    toggleCardInclusion(customizationState.currentCardIndex)
+  }
+
+  function handleFlipCard(index?: number) {
+    const cardIndex = index !== undefined ? index : customizationState.currentCardIndex
+    if (flippedCards.has(cardIndex)) {
+      flippedCards.delete(cardIndex)
+    } else {
+      flippedCards.add(cardIndex)
+    }
+    flippedCards = new Set(flippedCards)
+  }
+
+  // Get unique genres from match results
+  const uniqueGenres = $derived(
+    Array.from(new Set(matchResults.map(r => r.originalGenre))).sort()
+  )
+
+  // Get included count
+  const includedCount = $derived(getIncludedCount())
 </script>
 
 <main class="min-h-screen bg-gradient-to-br from-[#191414] via-[#282828] to-[#191414] p-8">
@@ -329,10 +393,80 @@
             Re-upload CSV
           </button>
           <button
+            onclick={handleContinueToPreview}
+            class="bg-[#1DB954] hover:bg-[#1ed760] text-white font-bold px-8 py-3 rounded-full transition-all transform hover:scale-105"
+          >
+            Continue to Preview
+          </button>
+        </div>
+      </div>
+
+    <!-- Preview Page -->
+    {:else if currentStep === 'preview'}
+      <div in:fly={{ y: 50, duration: 600 }}>
+        <h2 class="text-5xl font-bold text-center mb-8 text-white">Preview Your Cards</h2>
+
+        <!-- Summary Bar -->
+        <div class="bg-[#282828] rounded-2xl p-6 mb-8 text-center">
+          <div class="flex justify-center gap-8 text-xl">
+            <div>
+              <span class="text-gray-400">Total Cards:</span>
+              <span class="text-white font-bold ml-2">{matchResults.length}</span>
+            </div>
+            <div>
+              <span class="text-gray-400">Included:</span>
+              <span class="text-[#1DB954] font-bold ml-2">{includedCount}</span>
+            </div>
+            <div>
+              <span class="text-gray-400">Excluded:</span>
+              <span class="text-[#FF6B6B] font-bold ml-2">{matchResults.length - includedCount}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Two-column layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <!-- Main: Card Preview -->
+          <div class="lg:col-span-2">
+            <CardCarousel
+              cards={matchResults}
+              genreColors={customizationState.genreColors}
+              currentIndex={customizationState.currentCardIndex}
+              onIndexChange={(index) => { customizationState.currentCardIndex = index }}
+              flippedCards={flippedCards}
+              onFlipToggle={handleFlipCard}
+            />
+
+            <CardControls
+              totalCards={matchResults.length}
+              currentIndex={customizationState.currentCardIndex}
+              isIncluded={isCardIncluded(customizationState.currentCardIndex)}
+              onPrev={handlePrevCard}
+              onNext={handleNextCard}
+              onToggleInclude={handleToggleInclude}
+              onFlip={handleFlipCard}
+            />
+          </div>
+
+          <!-- Sidebar: Color Customization -->
+          <div class="lg:col-span-1">
+            <GenreColorPicker genres={uniqueGenres} />
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-center gap-4 mt-8">
+          <button
+            onclick={handleBackToMatches}
+            class="bg-[#282828] hover:bg-[#383838] text-white font-bold px-8 py-3 rounded-full transition-all"
+          >
+            Back to Matches
+          </button>
+          <button
             class="bg-[#1DB954] hover:bg-[#1ed760] text-white font-bold px-8 py-3 rounded-full transition-all opacity-50 cursor-not-allowed"
             disabled
           >
-            Continue to Preview (Coming Soon)
+            Continue to Export (Phase 9)
           </button>
         </div>
       </div>
