@@ -6,6 +6,7 @@
   import CardCarousel from './lib/CardPreview/CardCarousel.svelte'
   import CardControls from './lib/CardPreview/CardControls.svelte'
   import GenreColorPicker from './lib/ColorSettings/GenreColorPicker.svelte'
+  import ExportStep from './lib/ExportStep.svelte'
   import type { CsvUploadResponse, MatchResult, SpotifyMatch } from './lib/types'
   import {
     getCardCustomizationState,
@@ -18,7 +19,7 @@
   // Svelte 5 runes
   let apiStatus = $state<'loading' | 'connected' | 'error'>('loading')
   let errorMessage = $state<string>('')
-  let currentStep = $state<'landing' | 'upload' | 'results' | 'matching' | 'matched' | 'preview'>('landing')
+  let currentStep = $state<'landing' | 'upload' | 'results' | 'matching' | 'matched' | 'preview' | 'export'>('landing')
   let uploadResult = $state<CsvUploadResponse | null>(null)
   let matchResults = $state<MatchResult[]>([])
   let isMatching = $state<boolean>(false)
@@ -102,6 +103,23 @@
 
   function handleBackToMatches() {
     currentStep = 'matched'
+  }
+
+  function handleContinueToExport() {
+    currentStep = 'export'
+  }
+
+  function handleStartNewBatch() {
+    // Reset all state
+    uploadResult = null
+    matchResults = []
+    matchError = null
+    // Clear included cards from localStorage (keep genre colors)
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('hitster-included-cards')
+    }
+    // Navigate to upload step
+    currentStep = 'upload'
   }
 
   // Preview control handlers
@@ -463,10 +481,33 @@
             Back to Matches
           </button>
           <button
-            class="bg-[#1DB954] hover:bg-[#1ed760] text-white font-bold px-8 py-3 rounded-full transition-all opacity-50 cursor-not-allowed"
-            disabled
+            onclick={handleContinueToExport}
+            disabled={includedCount === 0}
+            class="bg-[#1DB954] hover:bg-[#1ed760] text-white font-bold px-8 py-3 rounded-full transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
           >
-            Continue to Export (Phase 9)
+            Continue to Export {includedCount > 0 ? `(${includedCount} cards)` : ''}
+          </button>
+        </div>
+      </div>
+
+    <!-- Export Page -->
+    {:else if currentStep === 'export'}
+      <div in:fly={{ y: 50, duration: 600 }}>
+        <h2 class="text-5xl font-bold text-center mb-8 text-white">Export Your Cards</h2>
+
+        <ExportStep
+          matchResults={matchResults.filter((_, index) => isCardIncluded(index))}
+          genreColors={customizationState.genreColors}
+          onStartNewBatch={handleStartNewBatch}
+        />
+
+        <!-- Back Button -->
+        <div class="flex justify-center mt-8">
+          <button
+            onclick={() => currentStep = 'preview'}
+            class="text-gray-400 hover:text-white transition-colors"
+          >
+            ← Back to Preview
           </button>
         </div>
       </div>

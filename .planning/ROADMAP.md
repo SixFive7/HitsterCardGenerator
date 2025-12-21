@@ -3,7 +3,7 @@
 ## Milestones
 
 - [v1.0 MVP](milestones/v1.0-ROADMAP.md) (Phases 1-4) - SHIPPED 2025-12-21
-- **v2.0 Web Interface** (Phases 5-9) - IN PROGRESS
+- **v2.0 Web Interface** (Phases 5-9) - SHIPPED 2025-12-21
 
 ## Completed Milestones
 
@@ -23,7 +23,7 @@ See [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md) for full details.
 
 </details>
 
-## 🚧 v2.0 Web Interface (In Progress)
+## ✅ v2.0 Web Interface (Complete)
 
 **Milestone Goal:** Transform the console application into a modern web interface using .NET Minimal API backend with Svelte + Tailwind frontend.
 
@@ -72,7 +72,7 @@ Plans:
 - [x] 08-01: Card Carousel Foundation
 - [x] 08-02: Card Preview Customization
 
-### Phase 9: PDF Export
+### Phase 9: PDF Export - COMPLETE
 
 **Goal**: Server-side PDF generation with QuestPDF, file download endpoint
 **Depends on**: Phase 8
@@ -81,7 +81,7 @@ Plans:
 
 Plans:
 - [x] 09-01: Backend Export API
-- [ ] 09-02: Frontend Export UI
+- [x] 09-02: Frontend Export UI
 
 ## Progress
 
@@ -95,6 +95,6 @@ Plans:
 | 6. File Upload | v2.0 | 1/1 | Complete | 2025-12-21 |
 | 7. Spotify Web Flow | v2.0 | 2/2 | Complete | 2025-12-21 |
 | 8. Card Preview | v2.0 | 2/2 | Complete | 2025-12-21 |
-| 9. PDF Export | v2.0 | 1/2 | In progress | - |
+| 9. PDF Export | v2.0 | 2/2 | Complete | 2025-12-21 |
 
-**v1.0 Complete** — v2.0 Web Interface nearly complete (1 plan remaining)
+**v1.0 Complete** — **v2.0 Web Interface COMPLETE** (17 plans total)

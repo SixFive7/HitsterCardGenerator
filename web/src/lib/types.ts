@@ -46,3 +46,19 @@ export interface CardCustomization {
   includedCards: Set<number>
   currentCardIndex: number
 }
+
+export type CuttingLineStyle = 'None' | 'EdgeOnly' | 'Complete'
+
+export interface ExportRequest {
+  cards: ExportCard[]
+  genreColors: Record<string, string>
+  cuttingLines: CuttingLineStyle
+}
+
+export interface ExportCard {
+  trackId: string
+  title: string
+  artist: string
+  year: number
+  genre: string
+}

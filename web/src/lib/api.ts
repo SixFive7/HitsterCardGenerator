@@ -1,4 +1,4 @@
-import type { CsvUploadResponse, MatchResponse, Song } from './types'
+import type { CsvUploadResponse, MatchResponse, Song, ExportRequest } from './types'
 
 export async function fetchHealth(): Promise<{ status: string; timestamp: string }> {
   const response = await fetch('/api/health')
@@ -37,4 +37,14 @@ export async function matchSongs(songs: Song[]): Promise<MatchResponse> {
   })
   if (!response.ok) throw new Error('Failed to match songs')
   return response.json()
+}
+
+export async function exportPdf(request: ExportRequest): Promise<Blob> {
+  const response = await fetch('/api/export', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(request)
+  })
+  if (!response.ok) throw new Error('Failed to export PDF')
+  return response.blob()
 }
