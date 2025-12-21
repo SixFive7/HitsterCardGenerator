@@ -22,6 +22,9 @@ app.MapOpenApi();
 // Map health check endpoints
 app.MapHealthEndpoints();
 
+// Map CSV upload endpoints
+app.MapCsvEndpoints();
+
 // Configure to listen on port 5000
 app.Urls.Add("http://localhost:5000");
 

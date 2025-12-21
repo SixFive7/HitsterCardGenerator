@@ -39,15 +39,15 @@ Plans:
 - [x] 05-01: Web SDK & Minimal API Foundation
 - [x] 05-02: Svelte + Tailwind Frontend
 
-### Phase 6: File Upload
+### Phase 6: File Upload - COMPLETE
 
 **Goal**: CSV upload via browser with drag-drop, validation display reusing existing parser
 **Depends on**: Phase 5
 **Research**: Unlikely (standard patterns)
-**Plans**: TBD
+**Plans**: 1
 
 Plans:
-- [ ] 06-01: TBD
+- [x] 06-01: CSV Upload & Validation Display
 
 ### Phase 7: Spotify Web Flow
 
@@ -89,7 +89,7 @@ Plans:
 | 3. Spotify Integration | v1.0 | 2/2 | Complete | 2025-12-21 |
 | 4. Card Generation | v1.0 | 3/3 | Complete | 2025-12-21 |
 | 5. Web Foundation | v2.0 | 2/2 | Complete | 2025-12-21 |
-| 6. File Upload | v2.0 | 0/? | Not started | - |
+| 6. File Upload | v2.0 | 1/1 | Complete | 2025-12-21 |
 | 7. Spotify Web Flow | v2.0 | 0/? | Not started | - |
 | 8. Card Preview | v2.0 | 0/? | Not started | - |
 | 9. PDF Export | v2.0 | 0/? | Not started | - |
