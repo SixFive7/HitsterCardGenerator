@@ -224,6 +224,62 @@ while (wizardState.CurrentStep <= Step.ExportPdf)
             wizardState.AdvanceToNextStep();
             break;
 
+        case Step.DesignCards:
+            // Prepare card designs
+            stepsPanel = StepMenu.Render(wizardState);
+            var designProgressPanel = DesignCardsStep.GetProgressPanel(0, appState.ValidSongs.Count);
+            AppLayout.Render(stepsPanel, designProgressPanel);
+
+            // Prepare cards with progress callback
+            appState.CardData = DesignCardsStep.PrepareCards(
+                appState.ValidSongs,
+                appState.UseBackgroundColors,
+                current =>
+                {
+                    var progressPanel = DesignCardsStep.GetProgressPanel(current, appState.ValidSongs.Count);
+                    AppLayout.Render(StepMenu.Render(wizardState), progressPanel);
+                });
+
+            // Show summary
+            stepsPanel = StepMenu.Render(wizardState);
+            var designSummaryPanel = DesignCardsStep.GetSummaryPanel(appState.CardData.Count);
+            AppLayout.Render(stepsPanel, designSummaryPanel);
+
+            Console.ReadLine();
+            wizardState.AdvanceToNextStep();
+            break;
+
+        case Step.ExportPdf:
+            // Export to PDF
+            stepsPanel = StepMenu.Render(wizardState);
+            contentPanel = ExportPdfStep.GetContentPanel(appState.CardData.Count);
+            AppLayout.Render(stepsPanel, contentPanel);
+
+            // Prompt for output path
+            var outputPath = ExportPdfStep.PromptForOutputPath();
+
+            // Show exporting panel with spinner
+            stepsPanel = StepMenu.Render(wizardState);
+            var exportingPanel = ExportPdfStep.GetExportingPanel(outputPath);
+            AppLayout.Render(stepsPanel, exportingPanel);
+
+            // Generate PDF
+            int pageCount = 0;
+            AnsiConsole.Status()
+                .Spinner(Spinner.Known.Dots)
+                .Start("[yellow]Generating PDF...[/]", ctx =>
+                {
+                    pageCount = PdfExporter.ExportToPdf(appState.CardData, outputPath);
+                });
+
+            // Show completion
+            stepsPanel = StepMenu.Render(wizardState);
+            var completionPanel = ExportPdfStep.GetCompletionPanel(outputPath, appState.CardData.Count, pageCount);
+            AppLayout.Render(stepsPanel, completionPanel);
+
+            Console.ReadLine();
+            break; // Exit wizard - don't advance
+
         default:
             // Placeholder for remaining steps
             contentPanel = new Panel($"[dim]Step {wizardState.CurrentStep}[/]\n\nComing soon!")
@@ -245,4 +301,5 @@ class AppState
     public List<Song> ValidSongs { get; set; } = new();
     public SpotifyService? SpotifyService { get; set; }
     public bool UseBackgroundColors { get; set; }
+    public List<CardData> CardData { get; set; } = new();
 }
