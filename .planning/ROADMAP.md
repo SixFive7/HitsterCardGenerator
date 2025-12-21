@@ -2,13 +2,13 @@
 
 ## Milestones
 
-- [v1.0 MVP](milestones/v1.0-ROADMAP.md) (Phases 1-4) - SHIPPED 2025-12-21
-- **v2.0 Web Interface** (Phases 5-9) - SHIPPED 2025-12-21
+- ✅ [v1.0 MVP](milestones/v1.0-ROADMAP.md) (Phases 1-4) - SHIPPED 2025-12-21
+- ✅ [v2.0 Web Interface](milestones/v2.0-ROADMAP.md) (Phases 5-9) - SHIPPED 2025-12-21
 
 ## Completed Milestones
 
 <details>
-<summary>v1.0 MVP (Phases 1-4) - SHIPPED 2025-12-21</summary>
+<summary>✅ v1.0 MVP (Phases 1-4) - SHIPPED 2025-12-21</summary>
 
 Transform a CSV of songs into print-ready Hitster-style cards through a wizard-like console experience.
 
@@ -23,65 +23,22 @@ See [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md) for full details.
 
 </details>
 
-## ✅ v2.0 Web Interface (Complete)
+<details>
+<summary>✅ v2.0 Web Interface (Phases 5-9) - SHIPPED 2025-12-21</summary>
 
-**Milestone Goal:** Transform the console application into a modern web interface using .NET Minimal API backend with Svelte + Tailwind frontend.
+Transform the console application into a modern web interface using .NET Minimal API backend with Svelte + Tailwind frontend.
 
-### Phase 5: Web Foundation - COMPLETE
+- [x] **Phase 5: Web Foundation** - Minimal API + Svelte/Tailwind setup (2 plans)
+- [x] **Phase 6: File Upload** - Drag-drop CSV with validation display (1 plan)
+- [x] **Phase 7: Spotify Web Flow** - Match API with confidence scoring (2 plans)
+- [x] **Phase 8: Card Preview** - Carousel with color palettes and curation (2 plans)
+- [x] **Phase 9: PDF Export** - Server-side generation with cutting lines (2 plans)
 
-**Goal**: Set up Minimal API project, Svelte/Vite frontend with Tailwind, establish project structure
-**Depends on**: v1.0 complete
-**Research**: Likely (Svelte/Vite/.NET integration patterns)
-**Research topics**: Vite proxy setup, Svelte project structure, Tailwind configuration
-**Plans**: 2
+**Total:** 5 phases, 9 plans
 
-Plans:
-- [x] 05-01: Web SDK & Minimal API Foundation
-- [x] 05-02: Svelte + Tailwind Frontend
+See [milestones/v2.0-ROADMAP.md](milestones/v2.0-ROADMAP.md) for full details.
 
-### Phase 6: File Upload - COMPLETE
-
-**Goal**: CSV upload via browser with drag-drop, validation display reusing existing parser
-**Depends on**: Phase 5
-**Research**: Unlikely (standard patterns)
-**Plans**: 1
-
-Plans:
-- [x] 06-01: CSV Upload & Validation Display
-
-### Phase 7: Spotify Web Flow - COMPLETE
-
-**Goal**: OAuth redirect flow for Spotify authentication, track search UI with results display
-**Depends on**: Phase 6
-**Research**: Likely (web OAuth differs from client credentials)
-**Research topics**: Spotify Authorization Code flow, PKCE, redirect handling
-**Plans**: 2
-
-Plans:
-- [x] 07-01: Backend Match API
-- [x] 07-02: Frontend Match UI
-
-### Phase 8: Card Preview - COMPLETE
-
-**Goal**: In-browser card preview with live updates, color picker for genre backgrounds
-**Depends on**: Phase 7
-**Research**: Unlikely (internal patterns)
-**Plans**: 2
-
-Plans:
-- [x] 08-01: Card Carousel Foundation
-- [x] 08-02: Card Preview Customization
-
-### Phase 9: PDF Export - COMPLETE
-
-**Goal**: Server-side PDF generation with QuestPDF, file download endpoint
-**Depends on**: Phase 8
-**Research**: Unlikely (QuestPDF already integrated)
-**Plans**: 2
-
-Plans:
-- [x] 09-01: Backend Export API
-- [x] 09-02: Frontend Export UI
+</details>
 
 ## Progress
 
@@ -97,4 +54,4 @@ Plans:
 | 8. Card Preview | v2.0 | 2/2 | Complete | 2025-12-21 |
 | 9. PDF Export | v2.0 | 2/2 | Complete | 2025-12-21 |
 
-**v1.0 Complete** — **v2.0 Web Interface COMPLETE** (17 plans total)
+**v1.0 Complete** — **v2.0 Web Interface Complete** (17 plans total)

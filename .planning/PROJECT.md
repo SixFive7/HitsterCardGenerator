@@ -2,19 +2,33 @@
 
 ## Current State (Updated: 2025-12-21)
 
-**Shipped:** v1.0 MVP (2025-12-21)
+**Shipped:** v2.0 Web Interface (2025-12-21)
 **Status:** Production-ready
-**Codebase:** 2,404 lines C#, .NET 10, Spectre.Console + QuestPDF + QRCoder
+**Codebase:** ~10,500 lines (C# backend + Svelte/TypeScript frontend)
+**Stack:** .NET 10 Minimal API, Svelte 5, Tailwind v4, QuestPDF, QRCoder
 
-The application is complete and functional. Users can:
+The application is complete with both console and web interfaces:
+
+**Console (v1.0):**
 - Import semicolon-separated CSV files with song data
 - Validate genres against 35 supported genres
-- Authenticate with Spotify API
+- Authenticate with Spotify API (client credentials)
 - Search and match songs with smart selection
 - Generate QR codes linking to Spotify
 - Export print-ready PDF cards (2x5 grid per A4 page)
 
+**Web Interface (v2.0):**
+- Drag-drop CSV upload with real-time validation
+- Visual Spotify matching with confidence scores and album art
+- Interactive card carousel with 3D flip preview
+- Five color palettes + per-genre customization
+- Card curation (include/exclude individual cards)
+- PDF export with optional cutting lines
+
 ---
+
+<details>
+<summary>Original Vision (v1.0 - Archived for reference)</summary>
 
 ## Vision
 
@@ -36,15 +50,15 @@ This app automates the entire process, turning a CSV of songs into print-ready P
 
 How we know this worked:
 
-- [ ] User can import a semicolon-separated CSV with title, artist, year, genre headers
-- [ ] Validation catches malformed CSV and unknown genres with clear error messages
-- [ ] Spotify credentials are validated against the API before proceeding
-- [ ] Each song is matched to a Spotify track ID using smart selection logic
-- [ ] QR codes are generated linking to open.spotify.com/track/{ID}
-- [ ] Cards are credit-card sized (~85x55mm), 16 per A4 page in 4x4 grid
-- [ ] PDF has separate pages for fronts and backs (double-sided printing support)
-- [ ] Genre icons and optional background colors work correctly
-- [ ] The entire flow works on Windows, Mac, and Linux
+- [x] User can import a semicolon-separated CSV with title, artist, year, genre headers
+- [x] Validation catches malformed CSV and unknown genres with clear error messages
+- [x] Spotify credentials are validated against the API before proceeding
+- [x] Each song is matched to a Spotify track ID using smart selection logic
+- [x] QR codes are generated linking to open.spotify.com/track/{ID}
+- [x] Cards are credit-card sized (~85x55mm), 10 per A4 page in 2x5 grid
+- [x] PDF has separate pages for fronts and backs (double-sided printing support)
+- [x] Genre icons and optional background colors work correctly
+- [x] The entire flow works on Windows, Mac, and Linux
 
 ## Scope
 
@@ -58,7 +72,7 @@ How we know this worked:
 - QR code generation for Spotify URLs
 - Card design: front (QR code), back (year large/centered, artist above, title below, genre icon)
 - Optional genre-based background colors (80% transparency)
-- PDF export with 16 cards per A4, cutting line indicators
+- PDF export with 10 cards per A4, cutting line indicators
 - Fronts and backs on separate pages for double-sided printing
 
 ### Not Building
@@ -80,7 +94,7 @@ This is a greenfield project. The directory has a git repo initialized but no co
 5. Generate QR codes for each track
 6. Ask if user wants background colors
 7. Generate card designs (front + back)
-8. Export to single PDF with 16 cards per A4
+8. Export to single PDF with 10 cards per A4
 
 **Spectre.Console Layout:**
 - Top: FIGlet title "Hitster Card Generator"
@@ -103,7 +117,7 @@ This is a greenfield project. The directory has a git repo initialized but no co
 | Decision | Choice | Rationale |
 |----------|--------|-----------|
 | CSV separator | Semicolon | Song titles may contain commas |
-| Card size | 85x55mm (credit card) | Standard Hitster card size, 16 fit on A4 |
+| Card size | 85x55mm (credit card) | Standard Hitster card size, 10 fit on A4 |
 | PDF layout | Separate front/back pages | Easy double-sided printing |
 | Spotify URL | open.spotify.com/track/{ID} | Official Spotify web/app URL format |
 | Genre count | 30 popular + 5 French | Covers most music, includes French chansons/pop |
@@ -114,9 +128,13 @@ This is a greenfield project. The directory has a git repo initialized but no co
 
 Things to figure out during execution:
 
-- [ ] Exact list of 30 popular genres + colors + icons
-- [ ] Icon set to use for genres (Unicode emoji? Custom SVG?)
-- [ ] Spotify search ranking algorithm details (album_type, release_date, remastered filters)
+- [x] Exact list of 30 popular genres + colors + icons
+- [x] Icon set to use for genres (Unicode emoji)
+- [x] Spotify search ranking algorithm details (album_type, release_date, remastered filters)
+
+</details>
 
 ---
 *Initialized: 2025-12-20*
+*v1.0 Shipped: 2025-12-21*
+*v2.0 Shipped: 2025-12-21*
