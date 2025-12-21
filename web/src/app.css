@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+/* Custom theme for Hitster - fun, playful, bright */
+@theme {
+  --color-primary: #1DB954;      /* Spotify green */
+  --color-primary-dark: #169c46;
+  --color-accent: #FF6B6B;       /* Playful coral */
+  --color-accent-dark: #ee5a5a;
+  --color-surface: #191414;      /* Spotify dark */
+  --color-surface-light: #282828;
+}
