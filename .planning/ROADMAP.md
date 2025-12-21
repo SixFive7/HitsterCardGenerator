@@ -38,7 +38,7 @@ None
 **Depends on**: Phase 2
 **Research**: Likely (external API integration)
 **Research topics**: Spotify Web API client credentials flow, search endpoint parameters, track metadata fields, rate limiting
-**Plans**: TBD
+**Plans**: 2 (03-01-PLAN.md, 03-02-PLAN.md)
 
 ### Phase 4: Card Generation
 **Goal**: Generate QR codes linking to Spotify, design credit-card sized cards (85x55mm) with front (QR) and back (year/artist/title/genre icon), export PDF with 16 cards per A4 and cutting guides
@@ -56,5 +56,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Foundation | 1/1 | Complete | 2025-12-20 |
 | 2. CSV Import | 2/2 | Complete | 2025-12-21 |
-| 3. Spotify Integration | 0/TBD | Not started | - |
+| 3. Spotify Integration | 1/2 | In progress | - |
 | 4. Card Generation | 0/TBD | Not started | - |

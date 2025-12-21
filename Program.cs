@@ -77,6 +77,72 @@ while (wizardState.CurrentStep <= Step.ExportPdf)
             }
             break;
 
+        case Step.SpotifyAuth:
+            // Loop until valid credentials are provided
+            string? authError = null;
+            while (true)
+            {
+                stepsPanel = StepMenu.Render(wizardState);
+                contentPanel = SpotifyCredentialsStep.GetContentPanel(authError);
+                AppLayout.Render(stepsPanel, contentPanel);
+
+                // Prompt for Client ID
+                var clientId = AnsiConsole.Prompt(
+                    new TextPrompt<string>("> ")
+                        .PromptStyle("green")
+                        .AllowEmpty());
+
+                if (string.IsNullOrWhiteSpace(clientId))
+                {
+                    authError = "Client ID cannot be empty.";
+                    continue;
+                }
+
+                // Show secret prompt
+                stepsPanel = StepMenu.Render(wizardState);
+                contentPanel = SpotifyCredentialsStep.GetSecretPromptPanel();
+                AppLayout.Render(stepsPanel, contentPanel);
+
+                // Prompt for Client Secret (masked)
+                var clientSecret = AnsiConsole.Prompt(
+                    new TextPrompt<string>("> ")
+                        .PromptStyle("green")
+                        .Secret()
+                        .AllowEmpty());
+
+                if (string.IsNullOrWhiteSpace(clientSecret))
+                {
+                    authError = "Client Secret cannot be empty.";
+                    continue;
+                }
+
+                // Validate credentials
+                AnsiConsole.Status()
+                    .Spinner(Spinner.Known.Dots)
+                    .Start("[yellow]Authenticating with Spotify...[/]", ctx =>
+                    {
+                        var service = new SpotifyService(clientId.Trim(), clientSecret.Trim());
+                        var success = service.AuthenticateAsync().GetAwaiter().GetResult();
+
+                        if (success)
+                        {
+                            appState.SpotifyService = service;
+                            authError = null;
+                        }
+                        else
+                        {
+                            authError = "Authentication failed. Please check your credentials.";
+                        }
+                    });
+
+                if (authError == null)
+                {
+                    break; // Success
+                }
+            }
+            wizardState.AdvanceToNextStep();
+            break;
+
         default:
             // Placeholder for remaining steps
             contentPanel = new Panel($"[dim]Step {wizardState.CurrentStep}[/]\n\nComing soon!")
@@ -96,4 +162,5 @@ class AppState
 {
     public string? CsvFilePath { get; set; }
     public List<Song> ValidSongs { get; set; } = new();
+    public SpotifyService? SpotifyService { get; set; }
 }
