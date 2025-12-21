@@ -49,16 +49,16 @@ Plans:
 Plans:
 - [x] 06-01: CSV Upload & Validation Display
 
-### Phase 7: Spotify Web Flow
+### Phase 7: Spotify Web Flow - IN PROGRESS
 
 **Goal**: OAuth redirect flow for Spotify authentication, track search UI with results display
 **Depends on**: Phase 6
 **Research**: Likely (web OAuth differs from client credentials)
 **Research topics**: Spotify Authorization Code flow, PKCE, redirect handling
-**Plans**: TBD
+**Plans**: 1+
 
 Plans:
-- [ ] 07-01: TBD
+- [x] 07-01: Backend Match API
 
 ### Phase 8: Card Preview
 
@@ -90,7 +90,7 @@ Plans:
 | 4. Card Generation | v1.0 | 3/3 | Complete | 2025-12-21 |
 | 5. Web Foundation | v2.0 | 2/2 | Complete | 2025-12-21 |
 | 6. File Upload | v2.0 | 1/1 | Complete | 2025-12-21 |
-| 7. Spotify Web Flow | v2.0 | 0/? | Not started | - |
+| 7. Spotify Web Flow | v2.0 | 1/? | In progress | - |
 | 8. Card Preview | v2.0 | 0/? | Not started | - |
 | 9. PDF Export | v2.0 | 0/? | Not started | - |
 

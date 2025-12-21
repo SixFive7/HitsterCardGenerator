@@ -12,6 +12,7 @@ public record SpotifySearchResult
     public string AlbumType { get; init; } = string.Empty; // "album", "single", "compilation"
     public int ReleaseYear { get; init; }
     public bool IsRemastered { get; init; }
+    public string AlbumImageUrl { get; init; } = string.Empty;
     public string SpotifyUrl => $"https://open.spotify.com/track/{TrackId}";
 
     /// <summary>

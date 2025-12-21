@@ -149,7 +149,8 @@ public class SpotifyService
             AlbumName = albumName,
             AlbumType = albumType,
             ReleaseYear = releaseYear,
-            IsRemastered = isRemastered
+            IsRemastered = isRemastered,
+            AlbumImageUrl = track.Album?.Images?.FirstOrDefault()?.Url ?? string.Empty
         };
     }
 }
