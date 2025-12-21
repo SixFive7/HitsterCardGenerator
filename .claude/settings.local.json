@@ -19,7 +19,25 @@
       "Bash(npm:*)",
       "Bash(npx:*)",
       "Bash(dotnet:*)",
-      "Bash(cmd /c \"if not exist c:\\\\Source\\\\SixFive7\\\\HitsterCardGenerator\\\\HitsterCardGenerator\\\\Services mkdir c:\\\\Source\\\\SixFive7\\\\HitsterCardGenerator\\\\HitsterCardGenerator\\\\Services\")"
-    ]
+      "Bash(cmd /c \"if not exist c:\\\\Source\\\\SixFive7\\\\HitsterCardGenerator\\\\HitsterCardGenerator\\\\Services mkdir c:\\\\Source\\\\SixFive7\\\\HitsterCardGenerator\\\\HitsterCardGenerator\\\\Services\")",
+      "Bash(ls:*)",
+      "Skill(webapp-testing)",
+      "Skill(webapp-testing:*)",
+      "Bash(python scripts/with_server.py --server \"dotnet run\" --port 5000 --server \"cd c:\\\\Source\\\\SixFive7\\\\HitsterCardGenerator\\\\HitsterCardGenerator\\\\web && npm run dev\" --port 5173 --timeout 60 -- python test_csv_upload.py)",
+      "Bash(python scripts/with_server.py --server \"dotnet run\" --port 5000 --server \"cd c:\\\\Source\\\\SixFive7\\\\HitsterCardGenerator\\\\HitsterCardGenerator\\\\web && npm run dev\" --port 5173 --timeout 90 -- python test_csv_upload.py)",
+      "Bash(timeout:*)",
+      "Bash(powershell:*)",
+      "Bash(python:*)",
+      "Bash(curl:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(cat:*)",
+      "Bash(if not exist \"c:\\\\Source\\\\SixFive7\\\\HitsterCardGenerator\\\\HitsterCardGenerator\\\\.planning\\\\phases\\\\09-pdf-export\" mkdir \"c:\\\\Source\\\\SixFive7\\\\HitsterCardGenerator\\\\HitsterCardGenerator\\\\.planning\\\\phases\\\\09-pdf-export\")",
+      "Bash(taskkill:*)",
+      "Bash(curl.exe:*)",
+      "Bash(dir:*)",
+      "Bash(cd:*)"
+    ],
+    "bypassPermissions": true
   }
 }
