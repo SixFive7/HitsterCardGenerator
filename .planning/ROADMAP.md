@@ -41,11 +41,12 @@ None
 **Plans**: 2 (03-01-PLAN.md, 03-02-PLAN.md)
 
 ### Phase 4: Card Generation
-**Goal**: Generate QR codes linking to Spotify, design credit-card sized cards (85x55mm) with front (QR) and back (year/artist/title/genre icon), export PDF with 16 cards per A4 and cutting guides
+**Goal**: Generate QR codes linking to Spotify, design credit-card sized cards (85x55mm) with front (QR) and back (year/artist/title/genre icon), export PDF with cards in grid layout and cutting guides
 **Depends on**: Phase 3
 **Research**: Likely (PDF generation, QR library)
-**Research topics**: QuestPDF fluent API for card layouts, QRCoder usage, image embedding, page layout for 4x4 grid
-**Plans**: TBD
+**Research topics**: QuestPDF fluent API for card layouts, QRCoder usage, image embedding, page layout for grid
+**Plans**: 3 (04-01-PLAN.md, 04-02-PLAN.md, 04-03-PLAN.md)
+**Note**: Card layout adjusted to 2x5 grid (10 per A4) - 4x4 (16) doesn't physically fit with 85x55mm cards
 
 ## Progress
 
@@ -57,4 +58,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | 1. Foundation | 1/1 | Complete | 2025-12-20 |
 | 2. CSV Import | 2/2 | Complete | 2025-12-21 |
 | 3. Spotify Integration | 2/2 | Complete | 2025-12-21 |
-| 4. Card Generation | 0/TBD | Not started | - |
+| 4. Card Generation | 1/3 | In progress | - |

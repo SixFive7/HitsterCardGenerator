@@ -184,6 +184,32 @@ while (wizardState.CurrentStep <= Step.ExportPdf)
             }
             break;
 
+        case Step.GenerateQR:
+            // Generate QR codes for all songs
+            stepsPanel = StepMenu.Render(wizardState);
+            var qrProgressPanel = GenerateQrStep.GetProgressPanel(0, appState.ValidSongs.Count, "Starting...");
+            AppLayout.Render(stepsPanel, qrProgressPanel);
+
+            // Generate QR codes with progress callback
+            var songsWithQr = GenerateQrStep.GenerateQrCodes(
+                appState.ValidSongs,
+                (current, songName) =>
+                {
+                    var progressPanel = GenerateQrStep.GetProgressPanel(current, appState.ValidSongs.Count, songName);
+                    AppLayout.Render(StepMenu.Render(wizardState), progressPanel);
+                });
+
+            appState.ValidSongs = songsWithQr;
+
+            // Show summary
+            stepsPanel = StepMenu.Render(wizardState);
+            var qrSummaryPanel = GenerateQrStep.GetSummaryPanel(songsWithQr.Count);
+            AppLayout.Render(stepsPanel, qrSummaryPanel);
+
+            Console.ReadLine();
+            wizardState.AdvanceToNextStep();
+            break;
+
         default:
             // Placeholder for remaining steps
             contentPanel = new Panel($"[dim]Step {wizardState.CurrentStep}[/]\n\nComing soon!")

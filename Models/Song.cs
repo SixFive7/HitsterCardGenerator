@@ -7,6 +7,7 @@ public record Song
     public int Year { get; init; }
     public string Genre { get; init; } = string.Empty;
     public string? SpotifyTrackId { get; init; }
+    public byte[]? QrCodeData { get; init; }
     public List<string> ValidationErrors { get; init; } = new();
 
     /// <summary>
