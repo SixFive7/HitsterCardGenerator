@@ -5,6 +5,10 @@ namespace HitsterCardGenerator.UI;
 
 public static class AppLayout
 {
+    /// <summary>
+    /// Renders the app header and two-column layout (steps + content).
+    /// Unlike Layout, this doesn't fill the screen - leaves room for prompts below.
+    /// </summary>
     public static void Render(IRenderable stepsPanel, IRenderable contentPanel)
     {
         // Clear the console
@@ -14,21 +18,13 @@ public static class AppLayout
         var header = new FigletText("Hitster Card Generator")
             .Color(Color.Blue);
 
-        // Create the main layout with header and content area
-        var layout = new Layout("Root")
-            .SplitRows(
-                new Layout("Header", header),
-                new Layout("Main")
-                    .SplitColumns(
-                        new Layout("Steps", stepsPanel).Size(30),
-                        new Layout("Content", contentPanel)
-                    )
-            );
+        AnsiConsole.Write(header);
 
-        // Set header size
-        layout["Header"].Size(10);
+        // Create side-by-side columns (doesn't fill screen like Layout does)
+        var columns = new Columns(stepsPanel, contentPanel);
+        columns.Expand = false;
 
-        // Render the layout
-        AnsiConsole.Write(layout);
+        AnsiConsole.Write(columns);
+        AnsiConsole.WriteLine();
     }
 }
