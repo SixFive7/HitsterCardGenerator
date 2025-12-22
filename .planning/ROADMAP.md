@@ -41,29 +41,19 @@ See [milestones/v2.0-ROADMAP.md](milestones/v2.0-ROADMAP.md) for full details.
 
 </details>
 
-## 🚧 v2.1 Enhancements (In Progress)
+<details>
+<summary>✅ v2.1 Enhancements (Phases 10-11) - SHIPPED 2025-12-22</summary>
 
-**Milestone Goal:** Simplify startup by having .NET serve the Svelte frontend directly - single process instead of running backend and frontend separately.
+Simplify startup by having .NET serve the Svelte frontend directly - single process instead of running backend and frontend separately.
 
-### Phase 10: Static File Serving
+- [x] **Phase 10: Static File Serving** - .NET serves Svelte build from wwwroot (1 plan)
+- [x] **Phase 11: Build Integration** - MSBuild targets automate npm install/build (1 plan)
 
-**Goal**: Configure .NET Minimal API to serve Svelte build output from wwwroot
-**Depends on**: Phase 9
-**Research**: Unlikely (standard .NET static files middleware)
-**Plans**: 1
+**Total:** 2 phases, 2 plans
 
-Plans:
-- [x] 10-01: Static file middleware + copy build output
+See [milestones/v2.1-ROADMAP.md](milestones/v2.1-ROADMAP.md) for full details.
 
-### Phase 11: Build Integration
-
-**Goal**: Integrate Svelte build into .NET project workflow - single `dotnet run` starts everything
-**Depends on**: Phase 10
-**Research**: Unlikely (MSBuild/npm integration patterns)
-**Plans**: 1
-
-Plans:
-- [x] 11-01: MSBuild targets for npm install/build + Vite output to wwwroot
+</details>
 
 ## Progress
 
@@ -81,4 +71,4 @@ Plans:
 | 10. Static File Serving | v2.1 | 1/1 | Complete | 2025-12-22 |
 | 11. Build Integration | v2.1 | 1/1 | Complete | 2025-12-22 |
 
-**v1.0 Complete** — **v2.0 Complete** — **v2.1 Complete**
+**v1.0 Complete** — **v2.0 Complete** — **v2.1 Complete** (All milestones shipped)

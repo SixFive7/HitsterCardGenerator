@@ -1,11 +1,16 @@
 # Hitster Card Generator
 
-## Current State (Updated: 2025-12-21)
+## Current State (Updated: 2025-12-22)
 
-**Shipped:** v2.0 Web Interface (2025-12-21)
+**Shipped:** v2.1 Enhancements (2025-12-22)
 **Status:** Production-ready
 **Codebase:** ~10,500 lines (C# backend + Svelte/TypeScript frontend)
 **Stack:** .NET 10 Minimal API, Svelte 5, Tailwind v4, QuestPDF, QRCoder
+
+**v2.1 Improvements:**
+- Single `dotnet run` builds and serves complete application
+- MSBuild automates npm install/build on first run
+- No separate frontend dev server needed
 
 The application is complete with both console and web interfaces:
 
@@ -138,3 +143,4 @@ Things to figure out during execution:
 *Initialized: 2025-12-20*
 *v1.0 Shipped: 2025-12-21*
 *v2.0 Shipped: 2025-12-21*
+*v2.1 Shipped: 2025-12-22*

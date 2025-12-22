@@ -1,5 +1,33 @@
 # Project Milestones: Hitster Card Generator
 
+## v2.1 Enhancements (Shipped: 2025-12-22)
+
+**Delivered:** Single-process startup - `dotnet run` builds and serves complete application without needing separate frontend dev server.
+
+**Phases completed:** 10-11 (2 plans total)
+
+**Key accomplishments:**
+
+- Static file middleware serves Svelte build from wwwroot
+- SPA fallback routing with MapFallbackToFile("index.html")
+- MSBuild NpmInstall target auto-runs npm install on first build
+- MSBuild NpmBuild target compiles frontend before .NET build
+- Vite configured to output directly to wwwroot
+- Cross-platform support with Windows npm.cmd detection
+
+**Stats:**
+
+- 14 files created/modified
+- +462/-19 lines
+- 2 phases, 2 plans, 6 tasks
+- 2 days (Dec 20-22, 2025)
+
+**Git range:** `feat(10-01)` → `feat(11-01)`
+
+**What's next:** All planned milestones complete. Project is production-ready with streamlined developer experience.
+
+---
+
 ## v2.0 Web Interface (Shipped: 2025-12-21)
 
 **Delivered:** Modern web interface with drag-drop CSV upload, visual Spotify matching, interactive card preview carousel, and PDF export with cutting lines.
