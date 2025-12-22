@@ -1,0 +1,46 @@
+{
+  "name": "HitsterCardGenerator",
+  "image": "mcr.microsoft.com/devcontainers/dotnet:10.0",
+  "runArgs": ["--name", "Blacklist"],
+  "initializeCommand": "mkdir -p .devcontainer/mounts/.claude",
+
+  "features": {
+    "ghcr.io/devcontainers/features/node:latest": {
+      "version": "latest"
+    },
+    "ghcr.io/anthropics/devcontainer-features/claude-code:latest": {}
+  },
+
+  "mounts": [
+    {
+      "source": "${localWorkspaceFolder}/.devcontainer/mounts/.claude",
+      "target": "/home/vscode/.claude",
+      "type": "bind"
+    }
+  ],
+
+  "remoteEnv": {
+    "ANTHROPIC_API_KEY": "${localEnv:ANTHROPIC_API_KEY}",
+    "ANTHROPIC_AUTH_TOKEN": "${localEnv:ANTHROPIC_AUTH_TOKEN}"
+  },
+
+  "forwardPorts": [5000, 5173],
+  "portsAttributes": {
+    "5000": {"label": ".NET API", "onAutoForward": "notify"},
+    "5173": {"label": "Vite Dev Server", "onAutoForward": "notify"}
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "anthropic.claude-code",
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.vscode-dotnet-runtime",
+        "svelte.svelte-vscode",
+        "bradlc.vscode-tailwindcss"
+      ]
+    }
+  },
+
+  "postCreateCommand": "sudo chown -R vscode:vscode /home/vscode/.claude && npm install -g npm@latest && cd web && npm install"
+}
