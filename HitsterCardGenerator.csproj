@@ -14,4 +14,20 @@
     <PackageReference Include="SpotifyAPI.Web" Version="7.2.1" />
   </ItemGroup>
 
+  <!-- Frontend Build Integration -->
+  <PropertyGroup>
+    <NpmCommand Condition="$([MSBuild]::IsOSPlatform('Windows'))">npm.cmd</NpmCommand>
+    <NpmCommand Condition="!$([MSBuild]::IsOSPlatform('Windows'))">npm</NpmCommand>
+  </PropertyGroup>
+
+  <Target Name="NpmInstall" BeforeTargets="NpmBuild" Condition="!Exists('web/node_modules')">
+    <Message Importance="high" Text="Running npm install..." />
+    <Exec Command="$(NpmCommand) install" WorkingDirectory="web" />
+  </Target>
+
+  <Target Name="NpmBuild" BeforeTargets="Build">
+    <Message Importance="high" Text="Building frontend..." />
+    <Exec Command="$(NpmCommand) run build" WorkingDirectory="web" />
+  </Target>
+
 </Project>

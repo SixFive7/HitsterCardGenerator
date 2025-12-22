@@ -4,7 +4,7 @@
 
 - ✅ [v1.0 MVP](milestones/v1.0-ROADMAP.md) (Phases 1-4) - SHIPPED 2025-12-21
 - ✅ [v2.0 Web Interface](milestones/v2.0-ROADMAP.md) (Phases 5-9) - SHIPPED 2025-12-21
-- 🚧 **v2.1 Enhancements** - Phases 10-11 (in progress)
+- ✅ [v2.1 Enhancements](milestones/v2.1-ROADMAP.md) (Phases 10-11) - SHIPPED 2025-12-22
 
 ## Completed Milestones
 
@@ -60,10 +60,10 @@ Plans:
 **Goal**: Integrate Svelte build into .NET project workflow - single `dotnet run` starts everything
 **Depends on**: Phase 10
 **Research**: Unlikely (MSBuild/npm integration patterns)
-**Plans**: TBD
+**Plans**: 1
 
 Plans:
-- [ ] 11-01: TBD (run /gsd:plan-phase 11 to break down)
+- [x] 11-01: MSBuild targets for npm install/build + Vite output to wwwroot
 
 ## Progress
 
@@ -79,6 +79,6 @@ Plans:
 | 8. Card Preview | v2.0 | 2/2 | Complete | 2025-12-21 |
 | 9. PDF Export | v2.0 | 2/2 | Complete | 2025-12-21 |
 | 10. Static File Serving | v2.1 | 1/1 | Complete | 2025-12-22 |
-| 11. Build Integration | v2.1 | 0/? | Not started | - |
+| 11. Build Integration | v2.1 | 1/1 | Complete | 2025-12-22 |
 
-**v1.0 Complete** — **v2.0 Complete** — **v2.1 In Progress**
+**v1.0 Complete** — **v2.0 Complete** — **v2.1 Complete**
