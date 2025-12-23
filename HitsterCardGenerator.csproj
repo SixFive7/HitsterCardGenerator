@@ -20,12 +20,12 @@
     <NpmCommand Condition="!$([MSBuild]::IsOSPlatform('Windows'))">npm</NpmCommand>
   </PropertyGroup>
 
-  <Target Name="NpmInstall" BeforeTargets="NpmBuild" Condition="!Exists('web/node_modules')">
+  <Target Name="NpmInstall" BeforeTargets="NpmBuild" Condition="'$(Configuration)' == 'Release' And !Exists('web/node_modules')">
     <Message Importance="high" Text="Running npm install..." />
     <Exec Command="$(NpmCommand) install" WorkingDirectory="web" />
   </Target>
 
-  <Target Name="NpmBuild" BeforeTargets="Build">
+  <Target Name="NpmBuild" BeforeTargets="Build" Condition="'$(Configuration)' == 'Release'">
     <Message Importance="high" Text="Building frontend..." />
     <Exec Command="$(NpmCommand) run build" WorkingDirectory="web" />
   </Target>

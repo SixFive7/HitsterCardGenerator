@@ -12,13 +12,13 @@
 
 **Milestone Goal:** Docker containerization with automated CI/CD pipeline for easy deployment via docker-compose.
 
-### Phase 13: Dev Experience
+### Phase 13: Dev Experience (Complete)
 
 **Goal**: Enable HMR during development, configure VS Code launch/tasks for optimal debugging workflow
 **Depends on**: Phase 12 (devcontainer provides dev environment)
 **Research**: Likely (VS Code launch.json/tasks.json options, compound launch configs)
 **Research topics**: VS Code debugging configurations, .NET + Vite compound launch, preLaunchTask patterns
-**Plans**: TBD
+**Plans**: 1
 
 **Deliverables:**
 - Fix NpmBuild to only run in Release mode (enables fast debug cycles)
@@ -27,7 +27,7 @@
 - Compound launch config (start both .NET and Vite with F5)
 
 Plans:
-- [ ] 13-01: TBD (run /gsd:plan-phase 13 to break down)
+- [x] 13-01: VS Code dev workflow (MSBuild condition + tasks + compound launch)
 
 ### Phase 14: Docker Image
 
@@ -143,7 +143,7 @@ See [milestones/v2.2-ROADMAP.md](milestones/v2.2-ROADMAP.md) for full details.
 | 10. Static File Serving | v2.1 | 1/1 | Complete | 2025-12-22 |
 | 11. Build Integration | v2.1 | 1/1 | Complete | 2025-12-22 |
 | 12. Devcontainer Setup | v2.2 | 1/1 | Complete | 2025-12-22 |
-| 13. Dev Experience | v2.3 | 0/? | Not started | - |
+| 13. Dev Experience | v2.3 | 1/1 | Complete | 2025-12-23 |
 | 14. Docker Image | v2.3 | 0/? | Not started | - |
 | 15. GitHub Actions CI | v2.3 | 0/? | Not started | - |
 | 16. Multi-Arch & Docs | v2.3 | 0/? | Not started | - |

@@ -2,30 +2,77 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
+            // Fast Debug build - skips npm build for quick iteration
+            "label": "build-debug",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/HitsterCardGenerator.sln",
+                "${workspaceFolder}/HitsterCardGenerator.csproj",
+                "-c", "Debug",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary;ForceNoAlign"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            // Release build - includes npm install and build
+            "label": "build-release",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/HitsterCardGenerator.csproj",
+                "-c", "Release",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary;ForceNoAlign"
             ],
             "problemMatcher": "$msCompile"
         },
         {
+            // Vite dev server for HMR - runs in background
+            "label": "vite-dev",
+            "type": "npm",
+            "script": "dev",
+            "path": "web",
+            "isBackground": true,
+            "problemMatcher": {
+                "owner": "vite",
+                "pattern": {
+                    "regexp": "^(.*)$",
+                    "message": 1
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "VITE",
+                    "endsPattern": "ready in"
+                }
+            },
+            "presentation": {
+                "reveal": "silent",
+                "panel": "dedicated"
+            }
+        },
+        {
+            // Publish for production deployment
             "label": "publish",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/HitsterCardGenerator.sln",
+                "${workspaceFolder}/HitsterCardGenerator.csproj",
+                "-c", "Release",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary;ForceNoAlign"
             ],
             "problemMatcher": "$msCompile"
         },
         {
+            // Watch mode for hot reload during development
             "label": "watch",
             "command": "dotnet",
             "type": "process",
@@ -33,7 +80,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/HitsterCardGenerator.sln"
+                "${workspaceFolder}/HitsterCardGenerator.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

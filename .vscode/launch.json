@@ -1,36 +1,61 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    // VS Code launch configurations for Hitster Card Generator
+    // F5 runs "Full Stack (F5)" which starts both .NET API and Vite dev server
+    // Open http://localhost:5173 for frontend with HMR
     "version": "0.2.0",
     "configurations": [
         {
-            "name": ".NET Core Launch (web)",
+            // .NET API only - for backend debugging without frontend
+            // Uses build-debug task (skips npm build for fast startup)
+            "name": ".NET API (Debug)",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "build-debug",
             "program": "${workspaceFolder}/bin/Debug/net10.0/HitsterCardGenerator.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
-            "serverReadyAction": {
-                "action": "openExternally",
-                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-            },
+            // Note: No serverReadyAction - use Vite at port 5173 for HMR during development
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
-            },
             "logging": {
+                // Disable module load logging for cleaner output
                 "moduleLoad": false
             }
         },
         {
+            // Vite dev server for frontend HMR
+            // Runs npm run dev in the web folder
+            "name": "Vite Dev Server",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "dev"],
+            "cwd": "${workspaceFolder}/web",
+            "console": "integratedTerminal",
+            "skipFiles": ["<node_internals>/**"]
+        },
+        {
+            // Attach to running .NET process
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach"
+        }
+    ],
+    "compounds": [
+        {
+            // Full development environment - starts both servers with F5
+            // Access frontend at http://localhost:5173 (HMR enabled)
+            // API available at http://localhost:5000 (proxied by Vite)
+            "name": "Full Stack (F5)",
+            "configurations": [".NET API (Debug)", "Vite Dev Server"],
+            "stopAll": true,
+            "presentation": {
+                "hidden": false,
+                "group": "",
+                "order": 1
+            }
         }
     ]
 }
