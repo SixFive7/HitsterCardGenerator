@@ -35,7 +35,22 @@
   // Note: If a container with this name exists, Docker will fail to create a new one.
   // You must remove the old container first (happens automatically on "Rebuild Container").
   // ═══════════════════════════════════════════════════════════════════════════════════════════════
-  "runArgs": ["--name", "Blacklist"],
+  // ─────────────────────────────────────────────────────────────────────────────────────────────
+  // Custom seccomp profile for Chrome sandbox support
+  // ─────────────────────────────────────────────────────────────────────────────────────────────
+  // Chrome's renderer sandbox requires user namespace creation (clone/unshare syscalls).
+  // Docker's default seccomp profile blocks these. Options:
+  //   1. --cap-add=SYS_ADMIN (grants too many privileges)
+  //   2. --security-opt seccomp=unconfined (removes all syscall filtering)
+  //   3. Custom seccomp profile (this approach - allows only what Chrome needs)
+  //
+  // The chrome-seccomp.json profile is based on Jess Frazelle's Chrome profile, updated
+  // with modern syscalls (clone3, rseq, statx, etc.) for compatibility with newer kernels.
+  // ─────────────────────────────────────────────────────────────────────────────────────────────
+  "runArgs": [
+    "--name", "Blacklist",
+    "--security-opt", "seccomp=${localWorkspaceFolder}/.devcontainer/chrome-seccomp.json"
+  ],
 
   // ═══════════════════════════════════════════════════════════════════════════════════════════════
   // INITIALIZE COMMAND (runs on HOST before container creation)
@@ -99,7 +114,22 @@
     //
     // Source: https://github.com/anthropics/devcontainer-features
     // ─────────────────────────────────────────────────────────────────────────────────────────────
-    "ghcr.io/anthropics/devcontainer-features/claude-code:latest": {}
+    "ghcr.io/anthropics/devcontainer-features/claude-code:latest": {},
+    // ─────────────────────────────────────────────────────────────────────────────────────────────
+    // Chrome for Testing
+    // ─────────────────────────────────────────────────────────────────────────────────────────────
+    // Installs Chrome for Testing and ChromeDriver for browser automation.
+    // Required for Chrome DevTools MCP server (see .mcp.json).
+    //
+    // Why use a feature instead of apt-get install chromium?
+    //   - Handles all system dependencies automatically
+    //   - Works across Ubuntu/Debian versions (avoids package naming issues)
+    //   - Includes matching ChromeDriver version
+    //
+    // Executable installed to: /usr/local/bin/chrome
+    // Source: https://github.com/kreemer/features
+    // ─────────────────────────────────────────────────────────────────────────────────────────────
+    "ghcr.io/kreemer/features/chrometesting:1": {}
   },
 
   // ═══════════════════════════════════════════════════════════════════════════════════════════════
@@ -268,12 +298,9 @@
   // ═══════════════════════════════════════════════════════════════════════════════════════════════
   // Runs after container is created and VS Code Server has initialized .vscode-server/
   //
+  // Steps:
   // 1. Fix .claude ownership (bind mounts can have root ownership issues)
-  // 2. Create VS Code Machine settings symlink:
-  //    - mkdir -p: Ensure .vscode-server/data/Machine/ exists (VS Code Server created the parent)
-  //    - rm -f: Remove any existing settings.json file
-  //    - ln -sf: Create symlink from VS Code's location → our mounted file
-  //    This makes settings changes persist to the host via the mounted file.
+  // 2. Create VS Code Machine settings symlink for persistence
   // 3. Update npm and install web dependencies
   // ═══════════════════════════════════════════════════════════════════════════════════════════════
   "postCreateCommand": "sudo chown -R vscode:vscode /home/vscode/.claude && mkdir -p /home/vscode/.vscode-server/data/Machine && rm -f /home/vscode/.vscode-server/data/Machine/settings.json && ln -sf /home/vscode/.vscode-machine-settings.json /home/vscode/.vscode-server/data/Machine/settings.json && npm install -g npm@latest && cd web && npm install"
