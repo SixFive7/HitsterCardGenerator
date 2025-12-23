@@ -420,3 +420,6 @@ FodyWeavers.xsd
 
 # Devcontainer mounts (persisted locally per developer)
 .devcontainer/mounts/
+
+# Claude Code local settings (MCP approvals, session state)
+.claude/
