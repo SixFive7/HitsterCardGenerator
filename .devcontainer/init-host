@@ -1,0 +1,25 @@
+#!/bin/sh
+# Cross-platform initializeCommand for devcontainers
+#
+# This script runs on Unix/Mac/WSL hosts via: sh .devcontainer/init-host
+# Windows uses init-host.cmd via: cmd /c .devcontainer\init-host.cmd
+#
+# Workaround for: https://github.com/devcontainers/spec/issues/347
+# (OS-specific initializeCommand not yet supported in devcontainer spec)
+#
+# Creates the bind mount source directories/files on the host before container starts.
+
+# Create .claude directory for settings, history, plugins, etc.
+mkdir -p .devcontainer/mounts/.claude
+
+# Create .claude.json file for onboarding state (API acknowledgments, theme, tips)
+# Docker requires the file to exist before bind-mounting
+if [ ! -f .devcontainer/mounts/.claude.json ]; then
+    echo '{}' > .devcontainer/mounts/.claude.json
+fi
+
+# Create VS Code "Remote" settings file (Settings > Remote tab)
+# Persists ALL Remote-scoped settings, not just Claude Code
+if [ ! -f .devcontainer/mounts/.vscode-machine-settings.json ]; then
+    echo '{}' > .devcontainer/mounts/.vscode-machine-settings.json
+fi
