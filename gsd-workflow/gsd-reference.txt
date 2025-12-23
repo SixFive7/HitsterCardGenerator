@@ -1,0 +1,791 @@
+================================================================================
+                         GSD (GET SHIT DONE) COMPLETE REFERENCE
+              Workflow Documentation & SVG Visualization Specifications
+================================================================================
+
+================================================================================
+SECTION 1: OVERVIEW
+================================================================================
+
+GSD is an AI-assisted CLI workflow that structures software development into:
+- PROJECTS (the overall software being built)
+- MILESTONES (versioned releases like v1.0, v2.0)
+- PHASES (units of work inside a milestone, typically 3-6 per milestone)
+- PLANS (executable task breakdowns within a phase)
+
+KEY HIERARCHY:
+  Project
+    └── Milestone (v1.0)
+          ├── Phase 01-foundation
+          │     ├── Plan 01
+          │     └── Plan 02
+          ├── Phase 02-user-auth
+          │     └── Plan 01
+          └── Phase 03-dashboard
+                └── Plan 01
+
+TOTAL COMMANDS: 18
+
+================================================================================
+SECTION 2: FILE STRUCTURE
+================================================================================
+
+.planning/
+├── PROJECT.md                              # Project vision and requirements
+├── ROADMAP.md                              # Phase breakdown for current milestone
+├── STATE.md                                # Project memory (position, decisions, issues)
+├── ISSUES.md                               # Deferred enhancements and bugs
+├── config.json                             # Workflow configuration
+├── MILESTONES.md                           # Index of completed milestones
+├── milestones/
+│   ├── v1.0-mvp.md                        # Archived milestone v1.0
+│   └── v2.0-enhanced.md                   # Archived milestone v2.0
+├── codebase/                              # Brownfield analysis (optional)
+│   ├── STACK.md
+│   ├── ARCHITECTURE.md
+│   ├── STRUCTURE.md
+│   ├── CONVENTIONS.md
+│   ├── TESTING.md
+│   ├── INTEGRATIONS.md
+│   └── CONCERNS.md
+└── phases/
+    ├── 01-foundation/                      # Phase directory
+    │   ├── .continue-here.md              # Pause/resume handoff
+    │   ├── DISCOVERY.md                   # Discovery findings
+    │   ├── 01-foundation-CONTEXT.md       # User's vision (from discuss-phase)
+    │   ├── 01-foundation-RESEARCH.md      # Ecosystem research (from research-phase)
+    │   ├── 01-foundation-01-PLAN.md       # First plan
+    │   ├── 01-foundation-01-SUMMARY.md    # First plan results
+    │   ├── 01-foundation-02-PLAN.md       # Second plan (if needed)
+    │   └── 01-foundation-02-SUMMARY.md    # Second plan results
+    ├── 02-user-auth/
+    │   └── ...
+    └── 72.1-hotfix-login/                 # Decimal phase (inserted urgent work)
+        └── ...
+
+FILE NAMING CONVENTIONS:
+- {phase} = full directory name (e.g., "01-foundation", NOT just "01")
+- Context:  {phase}-CONTEXT.md           → 01-foundation-CONTEXT.md
+- Research: {phase}-RESEARCH.md          → 01-foundation-RESEARCH.md
+- Plan:     {phase}-{plan}-PLAN.md       → 01-foundation-01-PLAN.md
+- Summary:  {phase}-{plan}-SUMMARY.md    → 01-foundation-01-SUMMARY.md
+- Handoff:  .continue-here.md            → (fixed name, in phase directory)
+- Archive:  v{VERSION}-{NAME}.md         → v1.0-mvp.md
+
+================================================================================
+SECTION 3: ALL 18 COMMANDS (DETAILED)
+================================================================================
+
+------------------------------------------------------------------------------
+COMMAND 1: /gsd:map-codebase
+------------------------------------------------------------------------------
+PURPOSE:    Analyze existing codebase for brownfield projects
+CATEGORY:   Project Setup (Blue)
+OPTIONAL:   Yes (only for brownfield, skip for greenfield)
+
+PREREQUISITES:
+  - Existing code to analyze
+  - Can run before OR after new-project
+
+OUTPUTS:
+  - .planning/codebase/STACK.md
+  - .planning/codebase/ARCHITECTURE.md
+  - .planning/codebase/STRUCTURE.md
+  - .planning/codebase/CONVENTIONS.md
+  - .planning/codebase/TESTING.md
+  - .planning/codebase/INTEGRATIONS.md
+  - .planning/codebase/CONCERNS.md
+
+ROUTES TO:
+  - /gsd:new-project (if project not initialized)
+  - /gsd:plan-phase (if project already initialized)
+
+------------------------------------------------------------------------------
+COMMAND 2: /gsd:new-project
+------------------------------------------------------------------------------
+PURPOSE:    Initialize a new project through deep questioning
+CATEGORY:   Project Setup (Blue)
+OPTIONAL:   No (required for every new project)
+
+PREREQUISITES:
+  - No existing .planning/PROJECT.md
+  - Git repository (will initialize if not present)
+
+OUTPUTS:
+  - .planning/PROJECT.md
+  - .planning/config.json
+  - Git commit: "docs: initialize [project-name]"
+
+ROUTES TO:
+  - /gsd:map-codebase (if existing code detected, no codebase map)
+  - /gsd:create-roadmap (after PROJECT.md created)
+
+------------------------------------------------------------------------------
+COMMAND 3: /gsd:create-roadmap
+------------------------------------------------------------------------------
+PURPOSE:    Create project roadmap with FIRST milestone and phases
+CATEGORY:   Project Setup (Blue)
+OPTIONAL:   No (required after new-project)
+
+PREREQUISITES:
+  - .planning/PROJECT.md must exist
+  - .planning/config.json must exist
+
+OUTPUTS:
+  - .planning/ROADMAP.md
+  - .planning/STATE.md
+  - .planning/phases/XX-name/ directories
+
+ROUTES TO:
+  - /gsd:plan-phase 1 (primary)
+  - /gsd:discuss-phase 1 (alternative)
+  - /gsd:research-phase 1 (alternative)
+
+NOTE: This creates the FIRST milestone. Use /gsd:new-milestone for subsequent milestones.
+
+------------------------------------------------------------------------------
+COMMAND 4: /gsd:list-phase-assumptions [phase]
+------------------------------------------------------------------------------
+PURPOSE:    Surface Claude's assumptions before planning
+CATEGORY:   Phase Preparation (Green) - Optional
+OPTIONAL:   Yes
+
+PREREQUISITES:
+  - .planning/STATE.md must exist
+  - .planning/ROADMAP.md must exist
+  - Phase number argument required
+
+OUTPUTS:
+  - None (conversational output only)
+
+ROUTES TO:
+  - /gsd:discuss-phase (if user wants to clarify)
+  - /gsd:plan-phase (if assumptions correct)
+  - Correct assumptions (if wrong)
+
+------------------------------------------------------------------------------
+COMMAND 5: /gsd:discuss-phase [phase]
+------------------------------------------------------------------------------
+PURPOSE:    Gather user's vision for a phase through Q&A
+CATEGORY:   Phase Preparation (Green) - Optional
+OPTIONAL:   Yes
+
+PREREQUISITES:
+  - .planning/STATE.md must exist
+  - .planning/ROADMAP.md must exist
+  - Phase number argument required
+
+OUTPUTS:
+  - .planning/phases/XX-name/{phase}-CONTEXT.md
+
+ROUTES TO:
+  - /gsd:research-phase (if domain needs research)
+  - /gsd:plan-phase (if ready to plan)
+
+------------------------------------------------------------------------------
+COMMAND 6: /gsd:research-phase [phase]
+------------------------------------------------------------------------------
+PURPOSE:    Research ecosystem knowledge for complex domains
+CATEGORY:   Phase Preparation (Green) - Optional
+OPTIONAL:   Yes (use for niche/complex: 3D, games, audio, ML, shaders)
+
+PREREQUISITES:
+  - .planning/STATE.md must exist
+  - .planning/ROADMAP.md must exist
+  - Phase number argument required
+
+OUTPUTS:
+  - .planning/phases/XX-name/{phase}-RESEARCH.md
+
+ROUTES TO:
+  - /gsd:plan-phase (after research complete)
+
+------------------------------------------------------------------------------
+COMMAND 7: /gsd:plan-phase [phase]
+------------------------------------------------------------------------------
+PURPOSE:    Create executable task breakdown (PLAN.md)
+CATEGORY:   Phase Execution (Green)
+OPTIONAL:   No (required for execution)
+
+PREREQUISITES:
+  - .planning/ directory must exist
+  - .planning/STATE.md must exist
+  - .planning/ROADMAP.md must exist
+  - Phase number optional (auto-detects next unplanned)
+
+OPTIONAL INPUTS (loaded if exist):
+  - .planning/phases/XX-name/{phase}-CONTEXT.md
+  - .planning/phases/XX-name/{phase}-RESEARCH.md
+  - .planning/codebase/* documents
+
+OUTPUTS:
+  - .planning/phases/XX-name/{phase}-{plan}-PLAN.md
+
+ROUTES TO:
+  - /gsd:execute-plan [path]
+
+------------------------------------------------------------------------------
+COMMAND 8: /gsd:execute-plan [path-to-PLAN.md]
+------------------------------------------------------------------------------
+PURPOSE:    Execute tasks in PLAN.md, create SUMMARY.md
+CATEGORY:   Phase Execution (Green)
+OPTIONAL:   No (required to implement)
+
+PREREQUISITES:
+  - .planning/ directory must exist
+  - .planning/STATE.md must exist
+  - .planning/config.json must exist
+  - PLAN.md file path required
+
+OUTPUTS:
+  - .planning/phases/XX-name/{phase}-{plan}-SUMMARY.md
+  - Updated .planning/STATE.md
+  - Updated .planning/ROADMAP.md
+  - Git commit: "feat({phase}-{plan}): [summary]"
+
+ROUTES TO:
+  - Next plan in phase (if more plans)
+  - /gsd:plan-phase (if more phases)
+  - /gsd:complete-milestone (if milestone done)
+
+------------------------------------------------------------------------------
+COMMAND 9: /gsd:progress
+------------------------------------------------------------------------------
+PURPOSE:    Check project status, route to next action
+CATEGORY:   Session Management (Gray)
+OPTIONAL:   Yes (informational, but highly useful)
+
+PREREQUISITES:
+  - .planning/ directory must exist
+  - .planning/STATE.md must exist
+  - .planning/ROADMAP.md must exist
+
+OUTPUTS:
+  - None (displays status only)
+
+ROUTING LOGIC:
+  IF PLAN.md exists (unexecuted):
+    → /gsd:execute-plan [path]
+  ELSE IF no PLAN.md AND CONTEXT.md exists:
+    → /gsd:plan-phase [phase]
+  ELSE IF no PLAN.md AND no CONTEXT.md:
+    → Offer: plan-phase, discuss-phase, research-phase, list-phase-assumptions
+  ELSE IF phase complete AND more phases:
+    → /gsd:plan-phase [next-phase]
+  ELSE IF milestone 100% complete:
+    → /gsd:complete-milestone
+  ELSE IF .continue-here.md exists:
+    → /gsd:resume-work
+
+------------------------------------------------------------------------------
+COMMAND 10: /gsd:complete-milestone <version>
+------------------------------------------------------------------------------
+PURPOSE:    Archive completed milestone, git tag, prepare for next
+CATEGORY:   Milestone Management (Amber)
+OPTIONAL:   No (required to close a milestone)
+
+PREREQUISITES:
+  - .planning/ROADMAP.md must exist
+  - .planning/STATE.md must exist
+  - .planning/PROJECT.md must exist
+  - ALL phases in milestone must have SUMMARY.md files
+  - Version argument required (e.g., "1.0", "2.0")
+
+OUTPUTS:
+  - .planning/milestones/v{version}-{name}.md (archive)
+  - Updated .planning/MILESTONES.md (entry added)
+  - Updated .planning/ROADMAP.md (collapsed to one-line)
+  - Updated .planning/PROJECT.md (current state updated)
+  - Git commit: "chore: archive v{version} milestone"
+  - Git tag: v{version}
+
+ROUTES TO:
+  - /gsd:discuss-milestone (to plan next)
+  - /gsd:new-milestone (if already know what's next)
+  - Done (if project complete)
+
+------------------------------------------------------------------------------
+COMMAND 11: /gsd:discuss-milestone
+------------------------------------------------------------------------------
+PURPOSE:    Brainstorm next milestone through Q&A
+CATEGORY:   Milestone Management (Amber)
+OPTIONAL:   Yes (can skip if you know what's next)
+
+PREREQUISITES:
+  - .planning/STATE.md must exist
+  - .planning/ROADMAP.md must exist
+
+OUTPUTS:
+  - None (gathers context, routes to new-milestone)
+
+ROUTES TO:
+  - /gsd:new-milestone [name] (with gathered context)
+
+------------------------------------------------------------------------------
+COMMAND 12: /gsd:new-milestone [name]
+------------------------------------------------------------------------------
+PURPOSE:    Create NEXT milestone with phases
+CATEGORY:   Milestone Management (Amber)
+OPTIONAL:   No (required for subsequent milestones)
+
+PREREQUISITES:
+  - .planning/STATE.md must exist
+  - .planning/ROADMAP.md must exist
+  - Milestone name optional (will prompt)
+
+OUTPUTS:
+  - Updated .planning/ROADMAP.md (new milestone section)
+  - Updated .planning/STATE.md (reset for new milestone)
+  - .planning/phases/XX-name/ directories for new phases
+  - Git commit for milestone creation
+
+ROUTES TO:
+  - /gsd:discuss-phase 1 (first phase of new milestone)
+  - /gsd:plan-phase 1 (if ready)
+
+NOTE: Use this for milestones AFTER the first. create-roadmap creates the first.
+
+------------------------------------------------------------------------------
+COMMAND 13: /gsd:add-phase <description>
+------------------------------------------------------------------------------
+PURPOSE:    Add phase to END of current milestone
+CATEGORY:   Roadmap Adjustments (Amber)
+OPTIONAL:   Yes (only when scope changes)
+
+PREREQUISITES:
+  - .planning/ROADMAP.md must exist
+  - Description argument required
+
+OUTPUTS:
+  - .planning/phases/{NN}-{slug}/ directory
+  - Updated .planning/ROADMAP.md
+  - Updated .planning/STATE.md
+
+ROUTES TO:
+  - /gsd:plan-phase [N] (to plan the new phase)
+  - /gsd:add-phase (to add another)
+
+------------------------------------------------------------------------------
+COMMAND 14: /gsd:insert-phase <after> <description>
+------------------------------------------------------------------------------
+PURPOSE:    Insert URGENT phase as decimal (e.g., 7.1)
+CATEGORY:   Roadmap Adjustments (Amber)
+OPTIONAL:   Yes (only for urgent work)
+
+PREREQUISITES:
+  - .planning/ROADMAP.md must exist
+  - Target phase number must exist
+  - Two arguments: after-phase and description
+
+OUTPUTS:
+  - .planning/phases/{N.M}-{slug}/ directory (e.g., 72.1-hotfix/)
+  - Updated .planning/ROADMAP.md (with "(INSERTED)" marker)
+  - Updated .planning/STATE.md (with "(URGENT)" marker)
+
+ROUTES TO:
+  - /gsd:plan-phase {decimal} (to plan urgent phase)
+
+------------------------------------------------------------------------------
+COMMAND 15: /gsd:consider-issues
+------------------------------------------------------------------------------
+PURPOSE:    Triage deferred issues, close resolved, flag urgent
+CATEGORY:   Utilities (Gray)
+OPTIONAL:   Yes
+
+PREREQUISITES:
+  - .planning/ISSUES.md must exist with open issues
+
+OUTPUTS:
+  - Updated .planning/ISSUES.md (resolved moved to Closed)
+  - Updated .planning/STATE.md (if changes)
+
+ROUTES TO:
+  - /gsd:insert-phase (if urgent issues found)
+  - Continue current work (after triage)
+
+------------------------------------------------------------------------------
+COMMAND 16: /gsd:pause-work
+------------------------------------------------------------------------------
+PURPOSE:    Save context for resumption later
+CATEGORY:   Session Management (Gray)
+OPTIONAL:   Yes (only when stopping mid-phase)
+
+PREREQUISITES:
+  - .planning/STATE.md must exist
+  - Work in progress
+
+OUTPUTS:
+  - .planning/phases/XX-name/.continue-here.md
+  - Git commit: "wip: [phase-name] paused at task [X]/[Y]"
+
+ROUTES TO:
+  - Informs user to use /gsd:resume-work later
+
+------------------------------------------------------------------------------
+COMMAND 17: /gsd:resume-work
+------------------------------------------------------------------------------
+PURPOSE:    Restore context from previous session
+CATEGORY:   Session Management (Gray)
+OPTIONAL:   Yes (but essential for multi-session projects)
+
+PREREQUISITES:
+  - .planning/ directory must exist
+
+OUTPUTS:
+  - None (reads state, routes appropriately)
+
+ROUTING LOGIC:
+  IF .continue-here.md exists:
+    → Resume from checkpoint
+  ELSE IF PLAN.md exists without SUMMARY.md:
+    → Complete incomplete plan
+  ELSE IF phase in progress, all plans complete:
+    → Transition to next phase
+  ELSE IF phase ready to plan:
+    → /gsd:discuss-phase OR /gsd:plan-phase
+  ELSE IF phase ready to execute:
+    → Execute next plan
+
+------------------------------------------------------------------------------
+COMMAND 18: /gsd:help
+------------------------------------------------------------------------------
+PURPOSE:    Show command reference
+CATEGORY:   Utilities (Gray)
+OPTIONAL:   Yes (informational)
+
+PREREQUISITES:
+  - None
+
+OUTPUTS:
+  - None (displays help text)
+
+ROUTES TO:
+  - None (informational only)
+
+================================================================================
+SECTION 4: COMMAND RELATIONSHIPS
+================================================================================
+
+DEPENDENCY GRAPH:
+
+  ┌─────────────────────────────────────────────────────────────────────┐
+  │                        PROJECT INITIALIZATION                        │
+  └─────────────────────────────────────────────────────────────────────┘
+                                    │
+           ┌────────────────────────┼────────────────────────┐
+           ▼                        ▼                        ▼
+    [map-codebase]           [new-project]               (existing
+      (optional)               (required)                 project)
+           │                        │                        │
+           └────────────────────────┼────────────────────────┘
+                                    ▼
+                            [create-roadmap]
+                      (creates FIRST milestone)
+                                    │
+  ┌─────────────────────────────────┼─────────────────────────────────┐
+  │                           MILESTONE                                │
+  │ ┌─────────────────────────────────────────────────────────────────┐│
+  │ │                         PHASE WORK                              ││
+  │ │                                                                 ││
+  │ │    [list-phase-assumptions]  ←──┐                               ││
+  │ │              │                   │                              ││
+  │ │              ▼                   │ (all three are              ││
+  │ │       [discuss-phase]  ←────────┤  order-independent           ││
+  │ │              │                   │  and optional)               ││
+  │ │              ▼                   │                              ││
+  │ │      [research-phase]  ←────────┘                               ││
+  │ │              │                                                  ││
+  │ │              ▼                                                  ││
+  │ │        [plan-phase] ◄─────────────────────────────────┐        ││
+  │ │              │                                         │        ││
+  │ │              ▼                                         │        ││
+  │ │       [execute-plan]                                   │        ││
+  │ │              │                                         │        ││
+  │ │              ▼                                         │        ││
+  │ │         [progress] ──── more plans? ───────────────────┤        ││
+  │ │              │                                         │        ││
+  │ │              │ more phases?                            │        ││
+  │ │              └─────────────────────────────────────────┘        ││
+  │ └─────────────────────────────────────────────────────────────────┘│
+  │                              │                                     │
+  │                     milestone complete?                            │
+  │                              ▼                                     │
+  │                    [complete-milestone]                            │
+  │                              │                                     │
+  │                              ▼                                     │
+  │                   [discuss-milestone] (optional)                   │
+  │                              │                                     │
+  │                              ▼                                     │
+  │                      [new-milestone]  ─────────────────────────────┤
+  │                                                                    │
+  └────────────────────────────────────────────────────────────────────┘
+
+COMMANDS THAT CAN RUN ANYTIME (UTILITIES):
+  - /gsd:help           - No prerequisites
+  - /gsd:progress       - Requires .planning/
+  - /gsd:resume-work    - Requires .planning/
+  - /gsd:consider-issues - Requires ISSUES.md
+  - /gsd:add-phase      - Requires ROADMAP.md
+  - /gsd:insert-phase   - Requires ROADMAP.md
+  - /gsd:pause-work     - Requires work in progress
+
+COMMANDS WITH STRICT PREREQUISITES:
+  - /gsd:new-project       - No existing PROJECT.md
+  - /gsd:create-roadmap    - Requires PROJECT.md
+  - /gsd:plan-phase        - Requires ROADMAP.md
+  - /gsd:execute-plan      - Requires PLAN.md
+  - /gsd:complete-milestone - Requires ALL SUMMARY.md files
+
+================================================================================
+SECTION 5: WORKFLOW LOOPS
+================================================================================
+
+The GSD workflow contains two nested loops:
+
+MILESTONE LOOP (Outer):
+  M → Need new milestone?
+    → Yes: new-milestone → discuss-milestone → add phases
+    → No: enter Phase Loop
+  → After all phases complete: complete-milestone
+  → Another milestone? Loop back to M
+
+PHASE LOOP (Inner - contained within Milestone Loop):
+  P → discuss-phase (optional)
+    → research-phase (optional)
+    → list-phase-assumptions (optional)
+    → plan-phase
+    → execute-plan
+  → More phases? Loop back to P
+  → No more phases? Exit to Milestone completion
+
+================================================================================
+SECTION 6: EXECUTION FLOWS
+================================================================================
+
+TYPICAL FLOW (NUMBERED):
+
+  1. /gsd:new-project                    → PROJECT.md
+  2. /gsd:create-roadmap                 → ROADMAP.md, STATE.md, first milestone
+
+  ┌─── REPEAT FOR EACH PHASE ───────────────────────────────────────────────┐
+  │ 3. /gsd:list-phase-assumptions [N]  → (optional) catch wrong assumptions │
+  │ 4. /gsd:discuss-phase [N]           → (optional) CONTEXT.md              │
+  │ 5. /gsd:research-phase [N]          → (optional) RESEARCH.md             │
+  │ 6. /gsd:plan-phase [N]              → PLAN.md                            │
+  │ 7. /gsd:execute-plan [path]         → SUMMARY.md, code changes           │
+  │ 8. /gsd:progress                    → routes to next                     │
+  └─────────────────────────────────────────────────────────────────────────┘
+
+  9. /gsd:complete-milestone [version]  → archive, git tag
+  10. /gsd:discuss-milestone            → (optional) context for next
+  11. /gsd:new-milestone [name]         → next milestone with phases
+
+  → REPEAT FROM STEP 3
+
+ALL VALID ORDERINGS:
+
+PROJECT INITIALIZATION (strict order):
+  Option A (greenfield):  new-project → create-roadmap
+  Option B (brownfield):  map-codebase → new-project → create-roadmap
+  Option C (brownfield):  new-project → map-codebase → create-roadmap
+
+PHASE PREPARATION (any order, all optional):
+  - list-phase-assumptions → discuss-phase → research-phase → plan-phase
+  - discuss-phase → list-phase-assumptions → research-phase → plan-phase
+  - research-phase → discuss-phase → plan-phase
+  - discuss-phase → plan-phase
+  - research-phase → plan-phase
+  - plan-phase (skip all optional)
+
+PHASE EXECUTION (strict order):
+  plan-phase → execute-plan
+  (may have multiple plans per phase: plan → execute → plan → execute)
+
+MILESTONE COMPLETION (strict order):
+  complete-milestone → [discuss-milestone] → new-milestone
+
+COMPOSITIONAL PATTERNS (allowed):
+  - discuss-phase AFTER plan-phase (to update context, then re-plan)
+  - research-phase AFTER discuss-phase (common)
+  - research-phase BEFORE discuss-phase (also valid)
+  - Multiple plans per phase (plan-phase creates 01, 02, etc.)
+
+SESSION MANAGEMENT (flexible):
+  - pause-work → (exit) → resume-work
+  - progress (anytime to check status)
+
+ROUTING DECISION TREES:
+
+/gsd:progress routing:
+  ┌─ PLAN.md exists (unexecuted)?
+  │   └─ YES → /gsd:execute-plan [path]
+  │   └─ NO  ─┬─ CONTEXT.md exists?
+  │           │   └─ YES → /gsd:plan-phase [phase]
+  │           │   └─ NO  → offer: plan-phase, discuss-phase, research-phase
+  │           └─ Phase complete?
+  │               └─ YES ─┬─ More phases? → /gsd:plan-phase [next]
+  │                       └─ Milestone done? → /gsd:complete-milestone
+  └─ .continue-here.md exists? → /gsd:resume-work
+
+/gsd:resume-work routing:
+  ┌─ .continue-here.md exists?
+  │   └─ YES → Resume from checkpoint OR start fresh
+  │   └─ NO  ─┬─ PLAN without SUMMARY?
+  │           │   └─ YES → Complete incomplete plan
+  │           │   └─ NO  ─┬─ Phase ready to plan?
+  │                       │   └─ YES → discuss-phase OR plan-phase
+  │                       │   └─ NO  → Phase ready to execute?
+  │                                   └─ YES → Execute next plan
+
+================================================================================
+SECTION 7: STATE TRACKING
+================================================================================
+
+STATE.MD STRUCTURE:
+
+  ## Project Summary
+  [Copied from PROJECT.md - immutable]
+
+  ## Current Position
+  - Phase: X of Y
+  - Plan: A of B
+  - Status: Ready to plan | Planning | Ready to execute | In progress | Phase complete
+  - Last activity: [timestamp] [description]
+  - Progress: [=========>          ] 45%
+
+  ## Performance Metrics
+  - Total plans executed: N
+  - Average plan duration: X hours
+  - Per-phase breakdown: [table]
+
+  ## Accumulated Context
+  ### Decisions Made
+  | Phase | Decision | Rationale |
+  | ----- | -------- | --------- |
+  | 01    | Use React| Team expertise |
+
+  ### Deferred Issues
+  [From ISSUES.md]
+
+  ### Blockers/Concerns
+  [From SUMMARY.md "Next Phase Readiness" sections]
+
+  ## Project Alignment
+  Status: Aligned | Drift | Misaligned
+
+  ## Session Continuity
+  - Last session: [date]
+  - Last action: [description]
+  - Resume file: [path if exists]
+
+STATE LIFECYCLE:
+  - CREATED: After ROADMAP.md during create-roadmap
+  - READ: First step of EVERY workflow
+  - UPDATED: After execute-plan, phase transitions, alignment checks
+  - SIZE LIMIT: Keep under 150 lines (digest, not archive)
+
+STATUS VALUES:
+  - "Ready to plan" - Phase exists, no PLAN.md yet
+  - "Planning" - PLAN.md being created
+  - "Ready to execute" - PLAN.md exists, not executed
+  - "In progress" - execute-plan running
+  - "Phase complete" - SUMMARY.md exists for all plans
+
+POSITION TRACKING:
+  - Phase X of Y: Current phase number, total phases in milestone
+  - Plan A of B: Current plan number, total plans in phase
+  - Resume file: Path to .continue-here.md if paused mid-work
+
+================================================================================
+SECTION 8: SVG VISUALIZATION SPECIFICATIONS
+================================================================================
+
+This section documents requirements for creating visual flowcharts of the GSD
+workflow system.
+
+VISUALIZATION REQUIREMENTS:
+  - Resolution: 1442x1173 pixels (or similar aspect ratio)
+  - Style: Dark mode with gradient backgrounds
+  - Minimum text size: 14px
+
+COLOR SCHEME BY CATEGORY:
+  - Blue (#3b82f6)  - Project Setup commands (new-project, map-codebase, create-roadmap)
+  - Amber (#f59e0b) - Milestone commands (discuss-milestone, new-milestone, complete-milestone, add-phase, insert-phase)
+  - Green (#22c55e) - Phase commands (discuss-phase, research-phase, list-phase-assumptions, plan-phase, execute-plan)
+  - Gray (#6b7280)  - Utilities (progress, pause-work, resume-work, consider-issues, help)
+  - Cyan (#06b6d4)  - In Progress status indicator
+
+SVG GRADIENTS:
+  - bgGrad:     Background gradient (#1a1f2e → #0d1117)
+  - blueGrad:   Project setup (#3b82f6 → #1d4ed8)
+  - greenGrad:  Phase work (#22c55e → #15803d)
+  - amberGrad:  Milestone work (#f59e0b → #d97706)
+  - grayGrad:   Utilities (#6b7280 → #4b5563)
+  - cyanGrad:   In progress (#06b6d4 → #0891b2)
+  - cardGrad:   Card backgrounds (#252d3d → #1e2533)
+  - headerGrad: Title gradient (blue → purple → amber)
+
+SVG FILTERS:
+  - shadow:      Drop shadow for main elements
+  - softShadow:  Lighter shadow for cards
+  - glow:        Glow effect for loop entry points (M, P circles)
+  - subtleGlow:  Lighter glow for title
+
+ARROW MARKERS:
+  - arrowBlue, arrowGreen, arrowAmber, arrowGray, arrowWhite
+
+VISUAL ELEMENTS:
+  - Rounded rectangles (rx="6") for command boxes
+  - Diamonds (polygons) for decision points
+  - Dashed rectangles for loop boundaries
+  - Circles with letters (M, P) for loop entry points
+  - Subtle grid pattern overlay on background
+
+================================================================================
+SECTION 9: VISUALIZATION VERSION HISTORY
+================================================================================
+
+The SVG visualizations were created iteratively with each version improving
+upon the previous based on visual feedback and user input.
+
+VERSION HISTORY:
+  v001-v003: Initial layout experiments
+  v004:      Adjusted to 1442x1173 dimensions
+  v005:      Added complete flowchart with all decision paths and nested loops
+  v006:      Reorganized layout with left sidebar, cleaner arrow routing
+  v007:      Improved arrow routing, better M→P connection
+  v008:      Fixed discuss-milestone routing, better visual balance
+  v009:      Refined layout with better spacing, more compact elements
+  v010:      Final polish - clean professional appearance, no overlapping arrows
+
+FILES IN THIS FOLDER:
+  gsd-reference.txt             - This file (complete reference)
+  gsd-workflow-001.svg          - Version 1 visualization
+  gsd-workflow-002.svg          - Version 2 visualization
+  gsd-workflow-003.svg          - Version 3 visualization
+  gsd-workflow-004.svg          - Version 4 (1442x1173 dimensions)
+  gsd-workflow-005.svg          - Version 5 (complete flowchart)
+  gsd-workflow-006.svg          - Version 6 (reorganized layout)
+  gsd-workflow-007.svg          - Version 7 (improved arrows)
+  gsd-workflow-008.svg          - Version 8 (better balance)
+  gsd-workflow-009.svg          - Version 9 (refined spacing)
+  gsd-workflow-009.png          - Screenshot of v009
+  gsd-workflow-010.svg          - Version 10 (final polish)
+  gsd-workflow-010.png          - Screenshot of v010 (final)
+
+================================================================================
+END OF COMPLETE REFERENCE
+================================================================================
+
+This document contains all information needed for:
+1. Understanding and using the GSD workflow system
+2. Generating accurate GSD workflow flowcharts
+3. Implementing AI-assisted workflow tooling
+
+Includes:
+- All 18 commands with prerequisites, outputs, and routing
+- Complete file structure with naming conventions
+- All valid execution orderings (not just typical flow)
+- Command dependency relationships
+- State tracking and routing decision trees
+- SVG visualization specifications and version history

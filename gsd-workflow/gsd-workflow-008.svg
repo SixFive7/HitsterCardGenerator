@@ -1,0 +1,347 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1442 1173">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="50%" style="stop-color:#1e293b"/>
+      <stop offset="100%" style="stop-color:#0f172a"/>
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6"/>
+      <stop offset="100%" style="stop-color:#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="amberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b"/>
+      <stop offset="100%" style="stop-color:#d97706"/>
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#22c55e"/>
+      <stop offset="100%" style="stop-color:#16a34a"/>
+    </linearGradient>
+    <linearGradient id="grayGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#64748b"/>
+      <stop offset="100%" style="stop-color:#475569"/>
+    </linearGradient>
+
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.25"/>
+    </filter>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#22c55e"/>
+    </marker>
+    <marker id="arrowAmber" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#f59e0b"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1442" height="1173" fill="url(#bgGrad)"/>
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#334155" stroke-width="0.3" opacity="0.25"/>
+  </pattern>
+  <rect width="1442" height="1173" fill="url(#grid)"/>
+
+  <!-- Title -->
+  <text x="721" y="38" text-anchor="middle" fill="#f8fafc" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="bold" filter="url(#glow)">GSD (GET SHIT DONE) WORKFLOW</text>
+  <text x="721" y="62" text-anchor="middle" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="14">Complete Flowchart | 18 Commands | AI-Assisted CLI for Structured Development</text>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- LEFT SIDEBAR -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+  <!-- File Structure -->
+  <rect x="20" y="85" width="250" height="360" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="145" y="110" text-anchor="middle" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="14" font-weight="bold">FILE STRUCTURE</text>
+
+  <text x="32" y="135" fill="#fbbf24" font-family="monospace" font-size="12">.planning/</text>
+  <text x="42" y="153" fill="#e2e8f0" font-family="monospace" font-size="10">├── PROJECT.md</text>
+  <text x="42" y="169" fill="#e2e8f0" font-family="monospace" font-size="10">├── ROADMAP.md</text>
+  <text x="42" y="185" fill="#e2e8f0" font-family="monospace" font-size="10">├── STATE.md</text>
+  <text x="42" y="201" fill="#e2e8f0" font-family="monospace" font-size="10">├── ISSUES.md</text>
+  <text x="42" y="217" fill="#e2e8f0" font-family="monospace" font-size="10">├── config.json</text>
+  <text x="42" y="233" fill="#e2e8f0" font-family="monospace" font-size="10">├── MILESTONES.md</text>
+  <text x="42" y="254" fill="#f59e0b" font-family="monospace" font-size="10">├── milestones/</text>
+  <text x="55" y="270" fill="#94a3b8" font-family="monospace" font-size="9">└── v1.0-mvp.md</text>
+  <text x="42" y="291" fill="#3b82f6" font-family="monospace" font-size="10">├── codebase/</text>
+  <text x="55" y="307" fill="#94a3b8" font-family="monospace" font-size="9">└── STACK.md, ...</text>
+  <text x="42" y="328" fill="#22c55e" font-family="monospace" font-size="10">└── phases/</text>
+  <text x="55" y="346" fill="#e2e8f0" font-family="monospace" font-size="9">├── 01-foundation/</text>
+  <text x="68" y="362" fill="#94a3b8" font-family="monospace" font-size="8">├── *-CONTEXT.md</text>
+  <text x="68" y="376" fill="#94a3b8" font-family="monospace" font-size="8">├── *-RESEARCH.md</text>
+  <text x="68" y="390" fill="#94a3b8" font-family="monospace" font-size="8">├── *-PLAN.md</text>
+  <text x="68" y="404" fill="#94a3b8" font-family="monospace" font-size="8">└── *-SUMMARY.md</text>
+  <text x="55" y="422" fill="#e2e8f0" font-family="monospace" font-size="9">└── 72.1-hotfix/</text>
+  <text x="160" y="422" fill="#64748b" font-family="system-ui, sans-serif" font-size="8">(decimal)</text>
+
+  <!-- Legend -->
+  <rect x="20" y="460" width="250" height="160" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="145" y="484" text-anchor="middle" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="14" font-weight="bold">LEGEND</text>
+
+  <rect x="35" y="502" width="16" height="16" rx="3" fill="url(#blueGrad)"/>
+  <text x="58" y="514" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="11">Project Setup</text>
+  <rect x="145" y="502" width="16" height="16" rx="3" fill="url(#greenGrad)"/>
+  <text x="168" y="514" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="11">Phase Work</text>
+
+  <rect x="35" y="526" width="16" height="16" rx="3" fill="url(#amberGrad)"/>
+  <text x="58" y="538" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="11">Milestone</text>
+  <rect x="145" y="526" width="16" height="16" rx="3" fill="url(#grayGrad)"/>
+  <text x="168" y="538" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="11">Utilities</text>
+
+  <rect x="35" y="550" width="16" height="16" rx="3" fill="none" stroke="#64748b" stroke-dasharray="3,2"/>
+  <text x="58" y="562" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="11">Optional</text>
+  <polygon points="153,561 169,561 161,551" fill="#64748b"/>
+  <text x="176" y="562" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="11">Decision</text>
+
+  <path d="M 35 585 L 52 585" stroke="#22c55e" stroke-width="3" stroke-dasharray="5,3"/>
+  <text x="58" y="590" fill="#86efac" font-family="system-ui, sans-serif" font-size="11">Phase Loop</text>
+  <path d="M 145 585 L 162 585" stroke="#f59e0b" stroke-width="3" stroke-dasharray="7,4"/>
+  <text x="168" y="590" fill="#fcd34d" font-family="system-ui, sans-serif" font-size="11">Milestone Loop</text>
+
+  <!-- Utilities -->
+  <rect x="20" y="635" width="250" height="235" rx="10" fill="#1e293b" stroke="#64748b" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="145" y="660" text-anchor="middle" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="14" font-weight="bold">UTILITIES (anytime)</text>
+
+  <rect x="32" y="680" width="226" height="28" rx="5" fill="url(#grayGrad)" filter="url(#shadow)"/>
+  <text x="145" y="699" text-anchor="middle" fill="#fff" font-family="monospace" font-size="11">/gsd:progress</text>
+  <rect x="32" y="714" width="226" height="28" rx="5" fill="url(#grayGrad)" filter="url(#shadow)"/>
+  <text x="145" y="733" text-anchor="middle" fill="#fff" font-family="monospace" font-size="11">/gsd:pause-work</text>
+  <rect x="32" y="748" width="226" height="28" rx="5" fill="url(#grayGrad)" filter="url(#shadow)"/>
+  <text x="145" y="767" text-anchor="middle" fill="#fff" font-family="monospace" font-size="11">/gsd:resume-work</text>
+  <rect x="32" y="782" width="108" height="24" rx="4" fill="url(#grayGrad)" opacity="0.7"/>
+  <text x="86" y="799" text-anchor="middle" fill="#fff" font-family="monospace" font-size="10">add-phase</text>
+  <rect x="150" y="782" width="108" height="24" rx="4" fill="url(#grayGrad)" opacity="0.7"/>
+  <text x="204" y="799" text-anchor="middle" fill="#fff" font-family="monospace" font-size="10">insert-phase</text>
+  <rect x="32" y="812" width="108" height="24" rx="4" fill="url(#grayGrad)" opacity="0.7"/>
+  <text x="86" y="829" text-anchor="middle" fill="#fff" font-family="monospace" font-size="10">consider-issues</text>
+  <rect x="150" y="812" width="108" height="24" rx="4" fill="url(#grayGrad)" opacity="0.7"/>
+  <text x="204" y="829" text-anchor="middle" fill="#fff" font-family="monospace" font-size="10">help</text>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- MAIN FLOWCHART - Centered clean layout -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+  <rect x="290" y="85" width="1130" height="785" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="855" y="110" text-anchor="middle" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="15" font-weight="bold">COMPLETE WORKFLOW FLOWCHART</text>
+
+  <!-- ─────────────────────────────────────────────────────────────────────── -->
+  <!-- PROJECT SETUP - Horizontal flow at top -->
+  <!-- ─────────────────────────────────────────────────────────────────────── -->
+
+  <!-- Start -->
+  <ellipse cx="370" cy="160" rx="38" ry="20" fill="#0f172a" stroke="#64748b" stroke-width="2"/>
+  <text x="370" y="165" text-anchor="middle" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="12">START</text>
+
+  <path d="M 408 160 L 455 160" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Decision: Existing code? -->
+  <polygon points="515,160 568,188 515,216 462,188" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
+  <text x="515" y="185" text-anchor="middle" fill="#93c5fd" font-family="system-ui, sans-serif" font-size="10">Existing</text>
+  <text x="515" y="198" text-anchor="middle" fill="#93c5fd" font-family="system-ui, sans-serif" font-size="10">code?</text>
+
+  <!-- Yes - down to map-codebase -->
+  <path d="M 515 216 L 515 245" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="525" y="235" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="10">Yes</text>
+
+  <!-- map-codebase (optional) -->
+  <rect x="450" y="255" width="130" height="40" rx="6" fill="url(#blueGrad)" opacity="0.5" stroke="#3b82f6"/>
+  <text x="515" y="272" text-anchor="middle" fill="#fff" font-family="monospace" font-size="10">map-codebase</text>
+  <text x="515" y="286" text-anchor="middle" fill="#dbeafe" font-family="system-ui, sans-serif" font-size="9">(optional)</text>
+
+  <path d="M 580 275 L 628 275 L 628 188" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- No - to new-project -->
+  <path d="M 568 188 L 638 188" stroke="#64748b" stroke-width="2"/>
+  <text x="603" y="180" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="10">No</text>
+
+  <!-- new-project -->
+  <rect x="648" y="163" width="125" height="50" rx="8" fill="url(#blueGrad)" filter="url(#shadow)"/>
+  <text x="710" y="183" text-anchor="middle" fill="#fff" font-family="monospace" font-size="11" font-weight="bold">new-project</text>
+  <text x="710" y="201" text-anchor="middle" fill="#dbeafe" font-family="system-ui, sans-serif" font-size="10">PROJECT.md</text>
+
+  <path d="M 773 188 L 815 188" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- create-roadmap -->
+  <rect x="825" y="163" width="135" height="50" rx="8" fill="url(#blueGrad)" filter="url(#shadow)"/>
+  <text x="892" y="183" text-anchor="middle" fill="#fff" font-family="monospace" font-size="10" font-weight="bold">create-roadmap</text>
+  <text x="892" y="201" text-anchor="middle" fill="#dbeafe" font-family="system-ui, sans-serif" font-size="10">ROADMAP.md</text>
+
+  <path d="M 892 213 L 892 250" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ─────────────────────────────────────────────────────────────────────── -->
+  <!-- MILESTONE LOOP -->
+  <!-- ─────────────────────────────────────────────────────────────────────── -->
+
+  <rect x="320" y="260" width="1080" height="475" rx="12" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="10,5"/>
+  <rect x="320" y="260" width="150" height="24" rx="6" fill="url(#amberGrad)"/>
+  <text x="395" y="277" text-anchor="middle" fill="#fff" font-family="system-ui, sans-serif" font-size="11" font-weight="bold">MILESTONE LOOP</text>
+
+  <!-- Milestone Entry (M) -->
+  <circle cx="892" cy="300" r="18" fill="#f59e0b" stroke="#fcd34d" stroke-width="2"/>
+  <text x="892" y="306" text-anchor="middle" fill="#fff" font-family="system-ui, sans-serif" font-size="14" font-weight="bold">M</text>
+
+  <path d="M 892 318 L 892 350" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ─────────────────────────────────────────────────────────────────────── -->
+  <!-- PHASE LOOP -->
+  <!-- ─────────────────────────────────────────────────────────────────────── -->
+
+  <rect x="350" y="360" width="570" height="295" rx="10" fill="none" stroke="#22c55e" stroke-width="3" stroke-dasharray="6,3"/>
+  <rect x="350" y="360" width="115" height="22" rx="6" fill="url(#greenGrad)"/>
+  <text x="407" y="375" text-anchor="middle" fill="#fff" font-family="system-ui, sans-serif" font-size="10" font-weight="bold">PHASE LOOP</text>
+
+  <!-- Phase Entry (P) -->
+  <circle cx="620" cy="410" r="16" fill="#22c55e" stroke="#86efac" stroke-width="2"/>
+  <text x="620" y="415" text-anchor="middle" fill="#fff" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">P</text>
+
+  <!-- M to P connection -->
+  <path d="M 892 350 L 892 395 L 640 395 L 640 410 L 636 410" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <path d="M 620 426 L 620 455" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Decision: Need prep? -->
+  <polygon points="620,465 673,493 620,521 567,493" fill="#0f172a" stroke="#22c55e" stroke-width="2"/>
+  <text x="620" y="490" text-anchor="middle" fill="#86efac" font-family="system-ui, sans-serif" font-size="9">Need</text>
+  <text x="620" y="503" text-anchor="middle" fill="#86efac" font-family="system-ui, sans-serif" font-size="9">prep?</text>
+
+  <!-- Yes - left to optional -->
+  <path d="M 567 493 L 515 493" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="540" y="485" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="10">Yes</text>
+
+  <!-- Optional preparation box -->
+  <rect x="375" y="438" width="130" height="110" rx="6" fill="#22c55e" opacity="0.1" stroke="#22c55e" stroke-dasharray="4,2"/>
+  <text x="440" y="456" text-anchor="middle" fill="#86efac" font-family="system-ui, sans-serif" font-size="9" font-style="italic">Optional (any order)</text>
+  <rect x="385" y="466" width="110" height="22" rx="3" fill="#22c55e" opacity="0.3"/>
+  <text x="440" y="481" text-anchor="middle" fill="#e2e8f0" font-family="monospace" font-size="8">list-assumptions</text>
+  <rect x="385" y="492" width="110" height="22" rx="3" fill="#22c55e" opacity="0.3"/>
+  <text x="440" y="507" text-anchor="middle" fill="#e2e8f0" font-family="monospace" font-size="8">discuss-phase</text>
+  <rect x="385" y="518" width="110" height="22" rx="3" fill="#22c55e" opacity="0.3"/>
+  <text x="440" y="533" text-anchor="middle" fill="#e2e8f0" font-family="monospace" font-size="8">research-phase</text>
+
+  <!-- From optional down to plan-phase -->
+  <path d="M 440 548 L 440 570 L 620 570 L 620 550" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- No - down to plan-phase -->
+  <path d="M 620 521 L 620 550" stroke="#64748b" stroke-width="2"/>
+  <text x="632" y="540" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="10">No</text>
+
+  <!-- plan-phase -->
+  <rect x="555" y="560" width="130" height="46" rx="8" fill="url(#greenGrad)" filter="url(#shadow)"/>
+  <text x="620" y="578" text-anchor="middle" fill="#fff" font-family="monospace" font-size="11" font-weight="bold">plan-phase</text>
+  <text x="620" y="596" text-anchor="middle" fill="#dcfce7" font-family="system-ui, sans-serif" font-size="9">PLAN.md</text>
+
+  <path d="M 685 583 L 730 583" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- execute-plan -->
+  <rect x="740" y="560" width="130" height="46" rx="8" fill="url(#greenGrad)" filter="url(#shadow)"/>
+  <text x="805" y="578" text-anchor="middle" fill="#fff" font-family="monospace" font-size="11" font-weight="bold">execute-plan</text>
+  <text x="805" y="596" text-anchor="middle" fill="#dcfce7" font-family="system-ui, sans-serif" font-size="9">SUMMARY.md</text>
+
+  <path d="M 805 606 L 805 630" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Decision: More phases? -->
+  <polygon points="805,640 858,668 805,696 752,668" fill="#0f172a" stroke="#22c55e" stroke-width="2"/>
+  <text x="805" y="665" text-anchor="middle" fill="#86efac" font-family="system-ui, sans-serif" font-size="9">More</text>
+  <text x="805" y="678" text-anchor="middle" fill="#86efac" font-family="system-ui, sans-serif" font-size="9">phases?</text>
+
+  <!-- Yes - loop back (clean path along bottom, up left) -->
+  <path d="M 752 668 L 380 668 L 380 425 L 604 425" stroke="#22c55e" stroke-width="3" fill="none" marker-end="url(#arrowGreen)"/>
+  <text x="515" y="660" fill="#22c55e" font-family="system-ui, sans-serif" font-size="11" font-weight="bold">Yes → next phase</text>
+
+  <!-- No - exit phase loop -->
+  <path d="M 858 668 L 940 668" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="900" y="660" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="10">No</text>
+
+  <!-- ─────────────────────────────────────────────────────────────────────── -->
+  <!-- MILESTONE COMPLETION - Clean vertical column on right -->
+  <!-- ─────────────────────────────────────────────────────────────────────── -->
+
+  <!-- complete-milestone -->
+  <rect x="950" y="310" width="145" height="46" rx="8" fill="url(#amberGrad)" filter="url(#shadow)"/>
+  <text x="1022" y="328" text-anchor="middle" fill="#fff" font-family="monospace" font-size="10" font-weight="bold">complete-milestone</text>
+  <text x="1022" y="346" text-anchor="middle" fill="#fef3c7" font-family="system-ui, sans-serif" font-size="9">Git tag vX.X</text>
+
+  <!-- Arrow from phase exit to complete-milestone -->
+  <path d="M 950 668 L 1022 668 L 1022 356" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <path d="M 1022 356 L 1022 385" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Decision: More work? -->
+  <polygon points="1022,395 1075,423 1022,451 969,423" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+  <text x="1022" y="420" text-anchor="middle" fill="#fcd34d" font-family="system-ui, sans-serif" font-size="9">More</text>
+  <text x="1022" y="433" text-anchor="middle" fill="#fcd34d" font-family="system-ui, sans-serif" font-size="9">work?</text>
+
+  <!-- No - right to END -->
+  <path d="M 1075 423 L 1150 423" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1112" y="415" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="10">No</text>
+
+  <!-- END -->
+  <ellipse cx="1185" cy="423" rx="35" ry="20" fill="#0f172a" stroke="#64748b" stroke-width="2"/>
+  <text x="1185" y="428" text-anchor="middle" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="12">END</text>
+
+  <!-- Yes - down -->
+  <path d="M 1022 451 L 1022 485" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1034" y="473" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="10">Yes</text>
+
+  <!-- Decision: Discuss first? -->
+  <polygon points="1022,495 1075,523 1022,551 969,523" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+  <text x="1022" y="520" text-anchor="middle" fill="#fcd34d" font-family="system-ui, sans-serif" font-size="8">Discuss</text>
+  <text x="1022" y="532" text-anchor="middle" fill="#fcd34d" font-family="system-ui, sans-serif" font-size="8">first?</text>
+
+  <!-- Yes - right to discuss-milestone -->
+  <path d="M 1075 523 L 1130 523" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1102" y="515" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="10">Yes</text>
+
+  <!-- discuss-milestone (optional) -->
+  <rect x="1140" y="498" width="125" height="50" rx="8" fill="url(#amberGrad)" opacity="0.5" stroke="#f59e0b"/>
+  <text x="1202" y="518" text-anchor="middle" fill="#fff" font-family="monospace" font-size="9">discuss-milestone</text>
+  <text x="1202" y="536" text-anchor="middle" fill="#fef3c7" font-family="system-ui, sans-serif" font-size="8">(optional)</text>
+
+  <path d="M 1202 548 L 1202 600 L 1022 600 L 1022 580" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- No - down to new-milestone -->
+  <path d="M 1022 551 L 1022 590" stroke="#64748b" stroke-width="2"/>
+  <text x="1034" y="575" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="10">No</text>
+
+  <!-- new-milestone -->
+  <rect x="957" y="600" width="130" height="46" rx="8" fill="url(#amberGrad)" filter="url(#shadow)"/>
+  <text x="1022" y="618" text-anchor="middle" fill="#fff" font-family="monospace" font-size="10" font-weight="bold">new-milestone</text>
+  <text x="1022" y="636" text-anchor="middle" fill="#fef3c7" font-family="system-ui, sans-serif" font-size="9">ROADMAP.md</text>
+
+  <!-- Loop back to M -->
+  <path d="M 957 623 L 350 623 L 350 315 L 874 315" stroke="#f59e0b" stroke-width="3" fill="none" marker-end="url(#arrowAmber)"/>
+  <text x="580" y="638" fill="#f59e0b" font-family="system-ui, sans-serif" font-size="11" font-weight="bold">Start new milestone → back to M</text>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- BOTTOM: State Tracking -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+  <rect x="20" y="885" width="1400" height="90" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="110" y="912" text-anchor="middle" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="14" font-weight="bold">STATE TRACKING</text>
+
+  <text x="35" y="945" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="12">Status:</text>
+  <rect x="85" y="930" width="85" height="22" rx="3" fill="#3b82f6" opacity="0.3"/>
+  <text x="127" y="945" text-anchor="middle" fill="#93c5fd" font-family="monospace" font-size="10">Ready to plan</text>
+  <rect x="180" y="930" width="60" height="22" rx="3" fill="#f59e0b" opacity="0.3"/>
+  <text x="210" y="945" text-anchor="middle" fill="#fcd34d" font-family="monospace" font-size="10">Planning</text>
+  <rect x="250" y="930" width="90" height="22" rx="3" fill="#22c55e" opacity="0.3"/>
+  <text x="295" y="945" text-anchor="middle" fill="#86efac" font-family="monospace" font-size="10">Ready to execute</text>
+  <rect x="350" y="930" width="70" height="22" rx="3" fill="#06b6d4" opacity="0.3"/>
+  <text x="385" y="945" text-anchor="middle" fill="#67e8f9" font-family="monospace" font-size="10">In progress</text>
+  <rect x="430" y="930" width="85" height="22" rx="3" fill="#22c55e" opacity="0.5"/>
+  <text x="472" y="945" text-anchor="middle" fill="#86efac" font-family="monospace" font-size="10">Phase complete</text>
+
+  <text x="550" y="945" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="12">Position: Phase X of Y</text>
+  <text x="750" y="945" fill="#64748b" font-family="monospace" font-size="12">[============>        ] 60%</text>
+  <text x="1000" y="945" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="12">Tracks: Decisions, Blockers, Context</text>
+  <text x="1280" y="945" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="12">Resume: .continue-here.md</text>
+
+  <!-- Footer -->
+  <text x="721" y="1005" text-anchor="middle" fill="#64748b" font-family="system-ui, sans-serif" font-size="13">GSD Workflow | Project → Milestone → Phase → Plan | 18 Commands</text>
+</svg>

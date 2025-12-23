@@ -1,0 +1,319 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1442 1173" width="1442" height="1173">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <linearGradient id="setup" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a8a"/>
+      <stop offset="100%" style="stop-color:#1e40af"/>
+    </linearGradient>
+    <linearGradient id="milestone" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#78350f"/>
+      <stop offset="100%" style="stop-color:#92400e"/>
+    </linearGradient>
+    <linearGradient id="phase" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#14532d"/>
+      <stop offset="100%" style="stop-color:#166534"/>
+    </linearGradient>
+    <linearGradient id="util" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#334155"/>
+      <stop offset="100%" style="stop-color:#475569"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1442" height="1173" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="721" y="38" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#f1f5f9">GSD (Get Shit Done) Workflow</text>
+  <text x="721" y="60" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">18 Commands • Project → Milestone → Phase → Plan</text>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- LEFT COLUMN: MAIN WORKFLOW -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+  <!-- SECTION 1: PROJECT SETUP -->
+  <g transform="translate(25, 80)">
+    <rect x="0" y="0" width="520" height="145" rx="12" fill="url(#setup)" stroke="#3b82f6" stroke-width="2"/>
+    <text x="260" y="24" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#bfdbfe">1. PROJECT SETUP</text>
+    <text x="260" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#93c5fd">Run once to initialize (strict order)</text>
+
+    <!-- Commands -->
+    <rect x="15" y="55" width="150" height="40" rx="6" fill="#0f172a" stroke="#60a5fa" stroke-width="2" stroke-dasharray="5,3"/>
+    <text x="90" y="80" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#93c5fd">map-codebase</text>
+
+    <text x="175" y="80" font-family="Arial" font-size="18" fill="#60a5fa">→</text>
+
+    <rect x="185" y="55" width="150" height="40" rx="6" fill="#0f172a" stroke="#60a5fa" stroke-width="2"/>
+    <text x="260" y="80" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#93c5fd">new-project</text>
+
+    <text x="345" y="80" font-family="Arial" font-size="18" fill="#60a5fa">→</text>
+
+    <rect x="355" y="55" width="150" height="40" rx="6" fill="#0f172a" stroke="#60a5fa" stroke-width="2"/>
+    <text x="430" y="80" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#93c5fd">create-roadmap</text>
+
+    <!-- Labels -->
+    <text x="15" y="115" font-family="Arial, sans-serif" font-size="14" fill="#64748b">[optional]</text>
+    <text x="185" y="115" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">→ PROJECT.md</text>
+    <text x="355" y="115" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">→ ROADMAP.md</text>
+    <text x="355" y="132" font-family="Arial, sans-serif" font-size="14" fill="#fbbf24">Creates 1st milestone</text>
+  </g>
+
+  <!-- Arrow to milestone -->
+  <path d="M 285 225 L 285 245" stroke="#64748b" stroke-width="2" fill="none"/>
+  <polygon points="285,255 280,245 290,245" fill="#64748b"/>
+
+  <!-- SECTION 2: MILESTONE (contains phases) -->
+  <g transform="translate(25, 260)">
+    <!-- Milestone outer box -->
+    <rect x="0" y="0" width="900" height="540" rx="16" fill="url(#milestone)" stroke="#f59e0b" stroke-width="3"/>
+    <text x="450" y="28" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#fef3c7">2. MILESTONE (v1.0, v2.0, etc.)</text>
+    <text x="450" y="48" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#fde68a">Contains 3-6 phases • Repeat entire box for each milestone</text>
+
+    <!-- PHASE WORK box inside milestone -->
+    <g transform="translate(15, 60)">
+      <rect x="0" y="0" width="870" height="340" rx="12" fill="url(#phase)" stroke="#22c55e" stroke-width="2"/>
+      <text x="435" y="24" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#bbf7d0">PHASE WORK (repeat for each phase in milestone)</text>
+
+      <!-- Row 1: Optional Preparation -->
+      <text x="15" y="55" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#86efac">① Optional Preparation (order-independent):</text>
+
+      <rect x="15" y="70" width="170" height="45" rx="6" fill="#0f172a" stroke="#4ade80" stroke-width="2" stroke-dasharray="5,3"/>
+      <text x="100" y="88" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#bbf7d0">list-phase-</text>
+      <text x="100" y="105" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#bbf7d0">assumptions</text>
+
+      <rect x="200" y="70" width="140" height="45" rx="6" fill="#0f172a" stroke="#4ade80" stroke-width="2" stroke-dasharray="5,3"/>
+      <text x="270" y="98" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#bbf7d0">discuss-phase</text>
+
+      <rect x="355" y="70" width="145" height="45" rx="6" fill="#0f172a" stroke="#4ade80" stroke-width="2" stroke-dasharray="5,3"/>
+      <text x="427" y="98" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#bbf7d0">research-phase</text>
+
+      <!-- Labels under optional -->
+      <text x="15" y="132" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">surfaces assumptions</text>
+      <text x="200" y="132" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">→ CONTEXT.md</text>
+      <text x="355" y="132" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">→ RESEARCH.md</text>
+
+      <!-- Info box for optional commands -->
+      <rect x="520" y="65" width="335" height="80" rx="8" fill="#0f172a" stroke="#4ade80" stroke-width="1"/>
+      <text x="535" y="88" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#86efac">These 3 are order-independent:</text>
+      <text x="535" y="108" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">• Run any, all, or none</text>
+      <text x="535" y="128" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">• Can re-run after plan-phase</text>
+
+      <!-- Row 2: Required Execution -->
+      <text x="15" y="165" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#86efac">② Required Execution (strict order):</text>
+
+      <rect x="15" y="180" width="130" height="50" rx="6" fill="#0f172a" stroke="#4ade80" stroke-width="2"/>
+      <text x="80" y="210" text-anchor="middle" font-family="monospace" font-size="15" font-weight="bold" fill="#bbf7d0">plan-phase</text>
+
+      <text x="155" y="210" font-family="Arial" font-size="18" fill="#4ade80">→</text>
+
+      <rect x="170" y="180" width="130" height="50" rx="6" fill="#0f172a" stroke="#4ade80" stroke-width="2"/>
+      <text x="235" y="210" text-anchor="middle" font-family="monospace" font-size="15" font-weight="bold" fill="#bbf7d0">execute-plan</text>
+
+      <text x="310" y="210" font-family="Arial" font-size="18" fill="#4ade80">→</text>
+
+      <rect x="325" y="180" width="110" height="50" rx="6" fill="#0f172a" stroke="#4ade80" stroke-width="2"/>
+      <text x="380" y="210" text-anchor="middle" font-family="monospace" font-size="15" font-weight="bold" fill="#bbf7d0">progress</text>
+
+      <!-- Labels under required -->
+      <text x="15" y="245" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">→ PLAN.md</text>
+      <text x="170" y="245" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">→ SUMMARY.md</text>
+      <text x="325" y="245" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">routes to next</text>
+
+      <!-- Loop arrow back to phase work -->
+      <path d="M 435 205 L 480 205 L 480 290 L 80 290 L 80 232" stroke="#4ade80" stroke-width="2" fill="none" stroke-dasharray="6,3"/>
+      <polygon points="80,232 75,242 85,242" fill="#4ade80"/>
+      <text x="495" y="255" font-family="Arial, sans-serif" font-size="14" fill="#4ade80">more phases</text>
+      <text x="495" y="273" font-family="Arial, sans-serif" font-size="14" fill="#4ade80">↺ back to ①</text>
+
+      <!-- Smart routing box -->
+      <rect x="520" y="160" width="335" height="165" rx="8" fill="#0f172a" stroke="#4ade80" stroke-width="1"/>
+      <text x="687" y="183" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#86efac">Progress Routing Logic</text>
+
+      <text x="535" y="205" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">IF PLAN.md exists:</text>
+      <text x="550" y="222" font-family="Arial, sans-serif" font-size="14" fill="#4ade80">→ execute-plan</text>
+
+      <text x="535" y="244" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">ELSE IF more phases:</text>
+      <text x="550" y="261" font-family="Arial, sans-serif" font-size="14" fill="#4ade80">→ plan-phase [next]</text>
+
+      <text x="535" y="283" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">ELSE IF milestone 100%:</text>
+      <text x="550" y="300" font-family="Arial, sans-serif" font-size="14" fill="#fbbf24">→ complete-milestone</text>
+    </g>
+
+    <!-- Milestone completion row -->
+    <text x="15" y="420" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#fde68a">③ When all phases done:</text>
+
+    <rect x="15" y="435" width="175" height="40" rx="6" fill="#0f172a" stroke="#fbbf24" stroke-width="2"/>
+    <text x="102" y="460" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#fef3c7">complete-milestone</text>
+
+    <text x="200" y="460" font-family="Arial" font-size="18" fill="#fbbf24">→</text>
+
+    <rect x="215" y="435" width="175" height="40" rx="6" fill="#0f172a" stroke="#fbbf24" stroke-width="2" stroke-dasharray="5,3"/>
+    <text x="302" y="460" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#fef3c7">discuss-milestone</text>
+
+    <text x="400" y="460" font-family="Arial" font-size="18" fill="#fbbf24">→</text>
+
+    <rect x="415" y="435" width="150" height="40" rx="6" fill="#0f172a" stroke="#fbbf24" stroke-width="2"/>
+    <text x="490" y="460" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#fef3c7">new-milestone</text>
+
+    <!-- Labels under milestone completion -->
+    <text x="15" y="492" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">→ archives + git tag</text>
+    <text x="215" y="492" font-family="Arial, sans-serif" font-size="14" fill="#64748b">[optional]</text>
+    <text x="415" y="492" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">→ ROADMAP.md</text>
+
+    <!-- Loop back to milestone start -->
+    <text x="580" y="460" font-family="Arial" font-size="16" fill="#fbbf24">↻</text>
+    <text x="600" y="460" font-family="Arial, sans-serif" font-size="14" fill="#fde68a">repeat MILESTONE</text>
+
+    <!-- Outputs box -->
+    <rect x="610" y="410" width="275" height="115" rx="8" fill="#0f172a" stroke="#fbbf24" stroke-width="1"/>
+    <text x="747" y="432" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#fde68a">Milestone Outputs</text>
+    <text x="625" y="455" font-family="monospace" font-size="14" fill="#e2e8f0">.planning/MILESTONES.md</text>
+    <text x="625" y="475" font-family="monospace" font-size="14" fill="#e2e8f0">.planning/milestones/</text>
+    <text x="640" y="495" font-family="monospace" font-size="14" fill="#94a3b8">v1.0-mvp.md</text>
+    <text x="640" y="515" font-family="monospace" font-size="14" fill="#94a3b8">v2.0-enhanced.md</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- RIGHT COLUMN: UTILITIES + FILE STRUCTURE -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+  <!-- UTILITIES BOX -->
+  <g transform="translate(950, 80)">
+    <rect x="0" y="0" width="470" height="280" rx="12" fill="url(#util)" stroke="#64748b" stroke-width="2"/>
+    <text x="235" y="24" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#e2e8f0">UTILITIES (use anytime)</text>
+
+    <!-- Roadmap Adjustments -->
+    <text x="15" y="55" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#fb923c">Roadmap Adjustments:</text>
+
+    <rect x="15" y="70" width="130" height="32" rx="5" fill="#0f172a" stroke="#fb923c" stroke-width="2"/>
+    <text x="80" y="92" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#fed7aa">add-phase</text>
+    <text x="155" y="92" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">add to end</text>
+
+    <rect x="15" y="110" width="130" height="32" rx="5" fill="#0f172a" stroke="#fb923c" stroke-width="2"/>
+    <text x="80" y="132" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#fed7aa">insert-phase</text>
+    <text x="155" y="132" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">urgent (e.g. 7.1)</text>
+
+    <rect x="15" y="150" width="145" height="32" rx="5" fill="#0f172a" stroke="#fb923c" stroke-width="2"/>
+    <text x="87" y="172" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#fed7aa">consider-issues</text>
+    <text x="170" y="172" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">triage ISSUES.md</text>
+
+    <!-- Session Management -->
+    <text x="15" y="205" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#c084fc">Session Management:</text>
+
+    <rect x="15" y="220" width="115" height="32" rx="5" fill="#0f172a" stroke="#c084fc" stroke-width="2"/>
+    <text x="72" y="242" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#e9d5ff">pause-work</text>
+    <text x="140" y="242" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">→ .continue-here.md</text>
+
+    <rect x="320" y="220" width="130" height="32" rx="5" fill="#0f172a" stroke="#c084fc" stroke-width="2"/>
+    <text x="385" y="242" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#e9d5ff">resume-work</text>
+
+    <rect x="320" y="70" width="130" height="32" rx="5" fill="#0f172a" stroke="#64748b" stroke-width="2"/>
+    <text x="385" y="92" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#e2e8f0">help</text>
+
+    <rect x="320" y="110" width="130" height="32" rx="5" fill="#0f172a" stroke="#64748b" stroke-width="2"/>
+    <text x="385" y="132" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#e2e8f0">progress</text>
+    <text x="320" y="157" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">check status anytime</text>
+  </g>
+
+  <!-- FILE STRUCTURE BOX -->
+  <g transform="translate(950, 375)">
+    <rect x="0" y="0" width="470" height="425" rx="12" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="235" y="24" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#f1f5f9">FILE STRUCTURE</text>
+
+    <!-- File tree -->
+    <text x="15" y="50" font-family="monospace" font-size="14" fill="#60a5fa">.planning/</text>
+    <text x="30" y="70" font-family="monospace" font-size="14" fill="#e2e8f0">├── PROJECT.md</text>
+    <text x="200" y="70" font-family="Arial" font-size="14" fill="#64748b">vision</text>
+    <text x="30" y="90" font-family="monospace" font-size="14" fill="#e2e8f0">├── ROADMAP.md</text>
+    <text x="200" y="90" font-family="Arial" font-size="14" fill="#64748b">phases</text>
+    <text x="30" y="110" font-family="monospace" font-size="14" fill="#e2e8f0">├── STATE.md</text>
+    <text x="200" y="110" font-family="Arial" font-size="14" fill="#64748b">memory</text>
+    <text x="30" y="130" font-family="monospace" font-size="14" fill="#e2e8f0">├── ISSUES.md</text>
+    <text x="200" y="130" font-family="Arial" font-size="14" fill="#64748b">deferred</text>
+    <text x="30" y="150" font-family="monospace" font-size="14" fill="#e2e8f0">├── MILESTONES.md</text>
+    <text x="200" y="150" font-family="Arial" font-size="14" fill="#64748b">index</text>
+    <text x="30" y="170" font-family="monospace" font-size="14" fill="#fbbf24">├── milestones/</text>
+    <text x="45" y="190" font-family="monospace" font-size="14" fill="#94a3b8">│   └── v1.0-mvp.md</text>
+    <text x="30" y="210" font-family="monospace" font-size="14" fill="#60a5fa">├── codebase/</text>
+    <text x="200" y="210" font-family="Arial" font-size="14" fill="#64748b">[optional]</text>
+    <text x="30" y="230" font-family="monospace" font-size="14" fill="#4ade80">└── phases/</text>
+    <text x="45" y="250" font-family="monospace" font-size="14" fill="#4ade80">    └── 01-foundation/</text>
+    <text x="60" y="270" font-family="monospace" font-size="14" fill="#94a3b8">        ├── .continue-here.md</text>
+    <text x="60" y="290" font-family="monospace" font-size="14" fill="#94a3b8">        ├── 01-foundation-CONTEXT.md</text>
+    <text x="60" y="310" font-family="monospace" font-size="14" fill="#94a3b8">        ├── 01-foundation-RESEARCH.md</text>
+    <text x="60" y="330" font-family="monospace" font-size="14" fill="#94a3b8">        ├── 01-foundation-01-PLAN.md</text>
+    <text x="60" y="350" font-family="monospace" font-size="14" fill="#94a3b8">        └── 01-foundation-01-SUMMARY.md</text>
+
+    <!-- Naming convention -->
+    <line x1="15" y1="365" x2="455" y2="365" stroke="#475569" stroke-width="1"/>
+    <text x="235" y="385" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#e2e8f0">Naming: {phase} = directory name</text>
+    <text x="15" y="405" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">Example: 01-foundation-CONTEXT.md</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- BOTTOM: LEGEND -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+  <g transform="translate(25, 815)">
+    <rect x="0" y="0" width="900" height="115" rx="12" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="450" y="24" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#f1f5f9">Legend</text>
+
+    <!-- Visual legend row 1 -->
+    <rect x="20" y="45" width="40" height="20" rx="4" fill="#0f172a" stroke="#64748b" stroke-width="2"/>
+    <text x="70" y="60" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">Required</text>
+
+    <rect x="160" y="45" width="40" height="20" rx="4" fill="#0f172a" stroke="#64748b" stroke-width="2" stroke-dasharray="5,3"/>
+    <text x="210" y="60" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">[optional]</text>
+
+    <text x="320" y="60" font-family="Arial" font-size="18" fill="#64748b">→</text>
+    <text x="340" y="60" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">flow</text>
+
+    <text x="400" y="60" font-family="Arial" font-size="18" fill="#64748b">↻</text>
+    <text x="420" y="60" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">repeat</text>
+
+    <!-- Color legend row 2 -->
+    <rect x="20" y="80" width="20" height="20" rx="4" fill="url(#setup)" stroke="#3b82f6" stroke-width="1"/>
+    <text x="50" y="95" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">Setup</text>
+
+    <rect x="120" y="80" width="20" height="20" rx="4" fill="url(#milestone)" stroke="#f59e0b" stroke-width="1"/>
+    <text x="150" y="95" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">Milestone</text>
+
+    <rect x="250" y="80" width="20" height="20" rx="4" fill="url(#phase)" stroke="#22c55e" stroke-width="1"/>
+    <text x="280" y="95" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">Phase (inside milestone)</text>
+
+    <rect x="470" y="80" width="20" height="20" rx="4" fill="url(#util)" stroke="#64748b" stroke-width="1"/>
+    <text x="500" y="95" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">Utilities</text>
+
+    <text x="600" y="95" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">All commands: /gsd:command-name</text>
+  </g>
+
+  <!-- Key concepts box -->
+  <g transform="translate(950, 815)">
+    <rect x="0" y="0" width="470" height="115" rx="12" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="235" y="24" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#f1f5f9">Key Concepts</text>
+
+    <text x="15" y="50" font-family="Arial, sans-serif" font-size="14" fill="#fbbf24">•</text>
+    <text x="30" y="50" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">Milestone = versioned release (v1.0, v2.0)</text>
+
+    <text x="15" y="70" font-family="Arial, sans-serif" font-size="14" fill="#4ade80">•</text>
+    <text x="30" y="70" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">Phase = unit of work inside a milestone</text>
+
+    <text x="15" y="90" font-family="Arial, sans-serif" font-size="14" fill="#60a5fa">•</text>
+    <text x="30" y="90" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">create-roadmap = first milestone</text>
+
+    <text x="260" y="50" font-family="Arial, sans-serif" font-size="14" fill="#60a5fa">•</text>
+    <text x="275" y="50" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">new-milestone = subsequent ones</text>
+
+    <text x="260" y="70" font-family="Arial, sans-serif" font-size="14" fill="#c084fc">•</text>
+    <text x="275" y="70" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">resume-work restores context</text>
+
+    <text x="260" y="90" font-family="Arial, sans-serif" font-size="14" fill="#64748b">•</text>
+    <text x="275" y="90" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">STATE.md tracks position</text>
+  </g>
+
+  <!-- Version -->
+  <text x="1420" y="1160" text-anchor="end" font-family="Arial, sans-serif" font-size="14" fill="#475569">GSD Workflow v2.0 • Min text: 14px</text>
+</svg>
