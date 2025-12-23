@@ -1,0 +1,6 @@
+{
+  // Disable automatic port forwarding to prevent VS Code from detecting
+  // and forwarding ephemeral/internal ports. Only the ports explicitly
+  // listed in .devcontainer/devcontainer.json will be forwarded.
+  "remote.autoForwardPorts": false
+}
