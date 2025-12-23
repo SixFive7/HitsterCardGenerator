@@ -422,4 +422,6 @@ FodyWeavers.xsd
 .devcontainer/mounts/
 
 # Claude Code local settings (MCP approvals, session state)
-.claude/
+.claude/*
+# But keep the shared project settings
+!.claude/settings.json
