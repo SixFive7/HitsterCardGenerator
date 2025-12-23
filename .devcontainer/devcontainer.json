@@ -263,6 +263,12 @@
   // ═══════════════════════════════════════════════════════════════════════════════════════════════
   "customizations": {
     "vscode": {
+      "settings": {
+        // Disable automatic port forwarding to prevent VS Code from detecting
+        // and forwarding ephemeral/internal ports (e.g., Chrome debugging ports).
+        // Only the ports explicitly listed in forwardPorts will be forwarded.
+        "remote.autoForwardPorts": false
+      },
       "extensions": [
         // ─────────────────────────────────────────────────────────────────────────────────────────
         // Claude Code Extension
