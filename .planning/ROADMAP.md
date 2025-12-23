@@ -5,7 +5,7 @@
 - ✅ [v1.0 MVP](milestones/v1.0-ROADMAP.md) (Phases 1-4) - SHIPPED 2025-12-21
 - ✅ [v2.0 Web Interface](milestones/v2.0-ROADMAP.md) (Phases 5-9) - SHIPPED 2025-12-21
 - ✅ [v2.1 Enhancements](milestones/v2.1-ROADMAP.md) (Phases 10-11) - SHIPPED 2025-12-22
-- ✅ **v2.2 Polish** (Phase 12) - SHIPPED 2025-12-22
+- ✅ [v2.2 Polish](milestones/v2.2-ROADMAP.md) (Phase 12) - SHIPPED 2025-12-22
 
 ## Completed Milestones
 
@@ -56,19 +56,18 @@ See [milestones/v2.1-ROADMAP.md](milestones/v2.1-ROADMAP.md) for full details.
 
 </details>
 
-## ✅ v2.2 Polish (Complete)
+<details>
+<summary>✅ v2.2 Polish (Phase 12) - SHIPPED 2025-12-22</summary>
 
-**Milestone Goal:** Add devcontainer for Claude Code sandbox-free development
+Add devcontainer for Claude Code sandbox-free development.
 
-### Phase 12: Devcontainer Setup
+- [x] **Phase 12: Devcontainer Setup** - Devcontainer with Claude Code feature (1 plan)
 
-**Goal**: Configure devcontainer with Claude Code feature for unconstrained development
-**Depends on**: Phase 11
-**Research**: Complete (anthropics devcontainer-features)
-**Plans**: 1
+**Total:** 1 phase, 1 plan
 
-Plans:
-- [x] 12-01: Devcontainer with Claude Code feature
+See [milestones/v2.2-ROADMAP.md](milestones/v2.2-ROADMAP.md) for full details.
+
+</details>
 
 ## Progress
 

@@ -1,5 +1,31 @@
 # Project Milestones: Hitster Card Generator
 
+## v2.2 Polish (Shipped: 2025-12-22)
+
+**Delivered:** Devcontainer configuration with Claude Code for sandbox-free development in containerized environment.
+
+**Phases completed:** 12 (1 plan total)
+
+**Key accomplishments:**
+
+- Configured devcontainer with .NET 10 + Node.js 20 + Claude Code
+- Volume mount for Claude config persistence across rebuilds
+- VS Code extensions for C#, Svelte, Tailwind CSS
+- Port forwarding for API (5000) and Vite (5173)
+
+**Stats:**
+
+- 7 files created/modified
+- +332/-70 lines
+- 1 phase, 1 plan, 2 tasks
+- 1 day (2025-12-22)
+
+**Git range:** `366bfd4` → `8962386`
+
+**What's next:** All planned milestones complete. Project is production-ready with full devcontainer support.
+
+---
+
 ## v2.1 Enhancements (Shipped: 2025-12-22)
 
 **Delivered:** Single-process startup - `dotnet run` builds and serves complete application without needing separate frontend dev server.
