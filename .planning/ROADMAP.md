@@ -6,6 +6,47 @@
 - ✅ [v2.0 Web Interface](milestones/v2.0-ROADMAP.md) (Phases 5-9) - SHIPPED 2025-12-21
 - ✅ [v2.1 Enhancements](milestones/v2.1-ROADMAP.md) (Phases 10-11) - SHIPPED 2025-12-22
 - ✅ [v2.2 Polish](milestones/v2.2-ROADMAP.md) (Phase 12) - SHIPPED 2025-12-22
+- 🚧 **v2.3 Containerization** - Phases 13-15 (in progress)
+
+## 🚧 v2.3 Containerization (In Progress)
+
+**Milestone Goal:** Docker containerization with automated CI/CD pipeline for easy deployment via docker-compose.
+
+### Phase 13: Docker Image
+
+**Goal**: Multi-stage Dockerfile with environment variable configuration for Spotify credentials
+**Depends on**: Phase 12 (devcontainer provides base patterns)
+**Research**: Unlikely (established .NET Docker patterns)
+**Plans**: TBD
+
+Plans:
+- [ ] 13-01: TBD (run /gsd:plan-phase 13 to break down)
+
+### Phase 14: GitHub Actions CI
+
+**Goal**: Automated build and push to GitHub Container Registry on release tags
+**Depends on**: Phase 13
+**Research**: Likely (GHCR authentication patterns, workflow syntax)
+**Research topics**: GHCR auth with GITHUB_TOKEN, docker/build-push-action
+**Plans**: TBD
+
+Plans:
+- [ ] 14-01: TBD (run /gsd:plan-phase 14 to break down)
+
+### Phase 15: Multi-Architecture & User Docs
+
+**Goal**: Buildx for AMD64 + ARM64 builds, two docker-compose examples for end users
+**Depends on**: Phase 14
+**Research**: Likely (buildx multi-platform setup)
+**Research topics**: docker/setup-buildx-action, platform matrix strategy
+**Plans**: TBD
+
+**Deliverables:**
+- `docker-compose.yml` - Simple setup with direct port mapping (no reverse proxy)
+- `docker-compose.traefik.yml` - Traefik labels, no port exposure (user's preferred pattern)
+
+Plans:
+- [ ] 15-01: TBD (run /gsd:plan-phase 15 to break down)
 
 ## Completed Milestones
 
@@ -85,5 +126,8 @@ See [milestones/v2.2-ROADMAP.md](milestones/v2.2-ROADMAP.md) for full details.
 | 10. Static File Serving | v2.1 | 1/1 | Complete | 2025-12-22 |
 | 11. Build Integration | v2.1 | 1/1 | Complete | 2025-12-22 |
 | 12. Devcontainer Setup | v2.2 | 1/1 | Complete | 2025-12-22 |
+| 13. Docker Image | v2.3 | 0/? | Not started | - |
+| 14. GitHub Actions CI | v2.3 | 0/? | Not started | - |
+| 15. Multi-Arch & Docs | v2.3 | 0/? | Not started | - |
 
-**v1.0 Complete** — **v2.0 Complete** — **v2.1 Complete** — **v2.2 Complete**
+**v1.0 Complete** — **v2.0 Complete** — **v2.1 Complete** — **v2.2 Complete** — **v2.3 In Progress**
