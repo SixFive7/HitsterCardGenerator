@@ -249,6 +249,10 @@
     "5000": {"label": ".NET API", "onAutoForward": "notify"},
     "5173": {"label": "Vite Dev Server", "onAutoForward": "notify"}
   },
+  // Ignore all other auto-detected ports (Chrome debug ports, ephemeral ports, etc.)
+  "otherPortsAttributes": {
+    "onAutoForward": "ignore"
+  },
 
   // ═══════════════════════════════════════════════════════════════════════════════════════════════
   // VS CODE CUSTOMIZATIONS
