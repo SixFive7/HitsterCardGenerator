@@ -418,5 +418,5 @@ FodyWeavers.xsd
 *.msm
 *.msp
 
-# Devcontainer Claude settings (persisted locally)
-.devcontainer/.claude/
+# Devcontainer mounts (persisted locally per developer)
+.devcontainer/mounts/

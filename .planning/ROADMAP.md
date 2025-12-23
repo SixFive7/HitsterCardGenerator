@@ -5,7 +5,7 @@
 - ✅ [v1.0 MVP](milestones/v1.0-ROADMAP.md) (Phases 1-4) - SHIPPED 2025-12-21
 - ✅ [v2.0 Web Interface](milestones/v2.0-ROADMAP.md) (Phases 5-9) - SHIPPED 2025-12-21
 - ✅ [v2.1 Enhancements](milestones/v2.1-ROADMAP.md) (Phases 10-11) - SHIPPED 2025-12-22
-- 🚧 **v2.2 Polish** (Phase 12) - in progress
+- ✅ **v2.2 Polish** (Phase 12) - SHIPPED 2025-12-22
 
 ## Completed Milestones
 
@@ -56,7 +56,7 @@ See [milestones/v2.1-ROADMAP.md](milestones/v2.1-ROADMAP.md) for full details.
 
 </details>
 
-## 🚧 v2.2 Polish (In Progress)
+## ✅ v2.2 Polish (Complete)
 
 **Milestone Goal:** Add devcontainer for Claude Code sandbox-free development
 
@@ -64,12 +64,11 @@ See [milestones/v2.1-ROADMAP.md](milestones/v2.1-ROADMAP.md) for full details.
 
 **Goal**: Configure devcontainer with Claude Code feature for unconstrained development
 **Depends on**: Phase 11
-**Research**: Likely (anthropics devcontainer-features)
-**Research topics**: anthropics/devcontainer-features usage, mount configuration
-**Plans**: TBD
+**Research**: Complete (anthropics devcontainer-features)
+**Plans**: 1
 
 Plans:
-- [ ] 12-01: TBD (run /gsd:plan-phase 12 to break down)
+- [x] 12-01: Devcontainer with Claude Code feature
 
 ## Progress
 
@@ -86,6 +85,6 @@ Plans:
 | 9. PDF Export | v2.0 | 2/2 | Complete | 2025-12-21 |
 | 10. Static File Serving | v2.1 | 1/1 | Complete | 2025-12-22 |
 | 11. Build Integration | v2.1 | 1/1 | Complete | 2025-12-22 |
-| 12. Devcontainer Setup | v2.2 | 0/? | Not started | - |
+| 12. Devcontainer Setup | v2.2 | 1/1 | Complete | 2025-12-22 |
 
-**v1.0 Complete** — **v2.0 Complete** — **v2.1 Complete** — **v2.2 In Progress**
+**v1.0 Complete** — **v2.0 Complete** — **v2.1 Complete** — **v2.2 Complete**

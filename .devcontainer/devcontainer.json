@@ -1,46 +1,280 @@
 {
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  // CONTAINER IDENTITY
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
   "name": "HitsterCardGenerator",
-  "image": "mcr.microsoft.com/devcontainers/dotnet:10.0",
-  "runArgs": ["--name", "Blacklist"],
-  "initializeCommand": "mkdir -p .devcontainer/mounts/.claude",
 
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  // BASE IMAGE
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  // Microsoft's official .NET devcontainer image. Includes:
+  //   - .NET SDK 10.0 (LTS, released Nov 2025)
+  //   - Debian-based Linux (bookworm)
+  //   - Non-root user "vscode" with sudo access
+  //   - Common dev tools (git, curl, etc.)
+  //
+  // Why .NET base + Node feature (not Node base + .NET feature):
+  //   - This is a .NET-primary project (C# backend, MSBuild integration)
+  //   - .NET base image has better .NET tooling defaults
+  //   - Node.js is only needed for frontend build tooling, not runtime
+  //
+  // Image tag format: mcr.microsoft.com/devcontainers/dotnet:{version}
+  // Available tags: 10.0, 9.0, 8.0, etc. (check mcr.microsoft.com for current list)
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  "image": "mcr.microsoft.com/devcontainers/dotnet:10.0",
+
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  // CONTAINER RUNTIME ARGUMENTS
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  // --name: Sets a fixed container name instead of random Docker-generated name.
+  // Benefits:
+  //   - Easy to find in Docker Desktop or `docker ps`
+  //   - Consistent name for scripts that interact with the container
+  //   - Prevents orphaned containers with random names accumulating
+  //
+  // Note: If a container with this name exists, Docker will fail to create a new one.
+  // You must remove the old container first (happens automatically on "Rebuild Container").
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  "runArgs": ["--name", "Blacklist"],
+
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  // INITIALIZE COMMAND (runs on HOST before container creation)
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  // Creates bind mount source files on the HOST machine before container starts.
+  // Docker bind mounts require the source file/directory to exist BEFORE the container starts.
+  //
+  // Cross-platform strategy (workaround for devcontainers/spec#347):
+  //   - Windows: "cmd /c .devcontainer\init-host.cmd" runs the batch file
+  //   - Unix/Mac/WSL: cmd fails (not found), || triggers "sh .devcontainer/init-host"
+  //
+  // The init-host scripts create:
+  //   - .devcontainer/mounts/.claude/                    (directory)
+  //   - .devcontainer/mounts/.claude.json                (file with "{}")
+  //   - .devcontainer/mounts/.vscode-machine-settings.json (file with "{}")
+  //
+  // Why not use a single cross-platform script?
+  //   - sh/bash not available on Windows without WSL/Git Bash in PATH
+  //   - cmd not available on Unix
+  //   - devcontainer spec doesn't support OS-specific initializeCommand (yet)
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  "initializeCommand": "cmd /c .devcontainer\\init-host.cmd || sh .devcontainer/init-host",
+
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  // DEV CONTAINER FEATURES
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  // Features are pre-packaged tools/runtimes that install on top of the base image.
+  // They run in order listed, so dependencies should come first.
+  //
+  // Why features instead of custom Dockerfile?
+  //   - Simpler: Single JSON config vs Dockerfile + shell scripts
+  //   - Maintainable: Features auto-update with devcontainer CLI
+  //   - Composable: Mix and match without complex multi-stage builds
+  //   - Tested: Official features are tested across platforms
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
   "features": {
+    // ─────────────────────────────────────────────────────────────────────────────────────────────
+    // Node.js Runtime
+    // ─────────────────────────────────────────────────────────────────────────────────────────────
+    // Required for:
+    //   - Frontend build tooling (Vite, npm scripts)
+    //   - Claude Code CLI (npm-based installation)
+    //   - Package management (npm install)
+    //
+    // MUST come before Claude Code feature (Claude Code requires Node.js 18+).
+    // Source: https://github.com/devcontainers/features/tree/main/src/node
+    // ─────────────────────────────────────────────────────────────────────────────────────────────
     "ghcr.io/devcontainers/features/node:latest": {
       "version": "latest"
     },
+    // ─────────────────────────────────────────────────────────────────────────────────────────────
+    // Claude Code CLI
+    // ─────────────────────────────────────────────────────────────────────────────────────────────
+    // Anthropic's official devcontainer feature for Claude Code.
+    // Installs the Claude Code CLI globally via npm.
+    //
+    // Why use the feature instead of manual npm install?
+    //   - Official: Maintained by Anthropic
+    //   - Auto-updates: Gets latest version on container rebuild
+    //   - Dependencies: Handles any system dependencies
+    //
+    // Source: https://github.com/anthropics/devcontainer-features
+    // ─────────────────────────────────────────────────────────────────────────────────────────────
     "ghcr.io/anthropics/devcontainer-features/claude-code:latest": {}
   },
 
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  // BIND MOUNTS - Persist config across container rebuilds
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  //
+  // IMPORTANT: Docker bind mount permission behavior
+  // ────────────────────────────────────────────────
+  // When bind-mounting a file/directory, Docker creates any missing PARENT directories as root.
+  // This causes permission errors if the container user later needs to create siblings.
+  //
+  // Example problem:
+  //   Mount target: /home/vscode/.vscode-server/data/Machine/settings.json
+  //   Docker creates: /home/vscode/.vscode-server/ (as root:root)
+  //   VS Code tries:  mkdir /home/vscode/.vscode-server/bin/ → PERMISSION DENIED
+  //
+  // Solution: Only mount into directories that ALREADY EXIST in the base image.
+  // The base image provides /home/vscode/ with correct vscode:vscode ownership.
+  // Mounting directly into /home/vscode/ works; mounting into non-existent subdirs fails.
+  //
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
   "mounts": [
+    // ─────────────────────────────────────────────────────────────────────────────────────────────
+    // Claude Code CLI settings directory
+    // ─────────────────────────────────────────────────────────────────────────────────────────────
+    // Contains: model preference, conversation history, plugins, project configs
+    // Target: /home/vscode/.claude (directory in existing /home/vscode/)
+    // Why it works: /home/vscode/ exists in base image with correct ownership.
+    //               Docker just creates the .claude directory, no permission issues.
     {
       "source": "${localWorkspaceFolder}/.devcontainer/mounts/.claude",
       "target": "/home/vscode/.claude",
       "type": "bind"
+    },
+    // ─────────────────────────────────────────────────────────────────────────────────────────────
+    // Claude Code CLI onboarding state
+    // ─────────────────────────────────────────────────────────────────────────────────────────────
+    // Contains: API key acknowledgments, theme selection, safety warnings, folder trust, tips shown
+    // Target: /home/vscode/.claude.json (file in existing /home/vscode/)
+    // Why it works: Same as above - parent directory /home/vscode/ already exists.
+    //               This is a SIBLING to .claude/ directory, not inside it.
+    {
+      "source": "${localWorkspaceFolder}/.devcontainer/mounts/.claude.json",
+      "target": "/home/vscode/.claude.json",
+      "type": "bind"
+    },
+    // ─────────────────────────────────────────────────────────────────────────────────────────────
+    // VS Code "Remote" settings (Settings > Remote tab)
+    // ─────────────────────────────────────────────────────────────────────────────────────────────
+    // Contains: All extension settings changed in Remote scope (e.g., claudeCode.selectedModel)
+    // Actual location VS Code uses: /home/vscode/.vscode-server/data/Machine/settings.json
+    //
+    // WHY WE CAN'T MOUNT DIRECTLY TO .vscode-server/data/Machine/settings.json:
+    //   - /home/vscode/.vscode-server/ does NOT exist in the base image
+    //   - Docker would create .vscode-server/ as root:root
+    //   - VS Code Server startup then fails: "mkdir .vscode-server/bin: Permission denied"
+    //   - This happens BEFORE postCreateCommand runs, so we can't fix permissions in time
+    //
+    // WHY WE CAN'T MOUNT THE ENTIRE .vscode-server/ DIRECTORY:
+    //   - It contains VS Code Server binaries (~150MB per version)
+    //   - It contains all installed extensions (100s of MB)
+    //   - Version coupling: Different VS Code versions need different server binaries
+    //   - Platform issues: Extensions compiled for one architecture break on others
+    //   - Cache bloat: Logs and temp files would accumulate
+    //
+    // SOLUTION: Mount to neutral location, symlink in postCreateCommand (see below)
+    // Target: /home/vscode/.vscode-machine-settings.json (file in existing /home/vscode/)
+    // The symlink is created after VS Code Server has properly initialized .vscode-server/
+    {
+      "source": "${localWorkspaceFolder}/.devcontainer/mounts/.vscode-machine-settings.json",
+      "target": "/home/vscode/.vscode-machine-settings.json",
+      "type": "bind"
     }
   ],
 
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  // ENVIRONMENT VARIABLES (forwarded from host)
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  // ${localEnv:VAR_NAME} forwards environment variables from the HOST machine into the container.
+  // This avoids hardcoding secrets in version-controlled files.
+  //
+  // How to set on host:
+  //   - Windows: System Properties > Environment Variables, or $env:VAR="value" in PowerShell
+  //   - Mac/Linux: export VAR="value" in ~/.bashrc or ~/.zshrc
+  //
+  // ANTHROPIC_API_KEY: Required for Claude Code CLI to authenticate with Anthropic API
+  // ANTHROPIC_AUTH_TOKEN: Alternative auth method (OAuth token from claude.ai login)
+  //
+  // Security note: These are forwarded at container creation time.
+  // Changes to host env vars require container rebuild to take effect.
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
   "remoteEnv": {
     "ANTHROPIC_API_KEY": "${localEnv:ANTHROPIC_API_KEY}",
     "ANTHROPIC_AUTH_TOKEN": "${localEnv:ANTHROPIC_AUTH_TOKEN}"
   },
 
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  // PORT FORWARDING
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  // Makes container ports accessible from the host machine.
+  // VS Code automatically forwards these when the container starts.
+  //
+  // 5000: .NET Minimal API backend (configured in Properties/launchSettings.json)
+  //       Access via http://localhost:5000 from host browser
+  //
+  // 5173: Vite dev server for Svelte frontend (configured in web/vite.config.ts)
+  //       Only needed during development; production build is served by .NET on port 5000
+  //
+  // onAutoForward options:
+  //   - "notify": Show notification when port becomes active (non-intrusive)
+  //   - "openBrowser": Automatically open browser (can be annoying)
+  //   - "silent": Forward silently (might miss that server started)
+  //   - "ignore": Don't forward (use if port conflicts with host)
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
   "forwardPorts": [5000, 5173],
   "portsAttributes": {
     "5000": {"label": ".NET API", "onAutoForward": "notify"},
     "5173": {"label": "Vite Dev Server", "onAutoForward": "notify"}
   },
 
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  // VS CODE CUSTOMIZATIONS
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  // Extensions and settings specific to this devcontainer.
+  // These are installed in the container's VS Code Server, not on your local VS Code.
+  //
+  // Why list extensions here instead of recommending in .vscode/extensions.json?
+  //   - Automatic: Installed without prompts during container creation
+  //   - Isolated: Only installed in container, not on host
+  //   - Consistent: All developers get the same tooling
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
   "customizations": {
     "vscode": {
       "extensions": [
+        // ─────────────────────────────────────────────────────────────────────────────────────────
+        // Claude Code Extension
+        // ─────────────────────────────────────────────────────────────────────────────────────────
+        // Anthropic's official VS Code extension for Claude Code.
+        // Provides UI integration for the Claude Code CLI.
+        // Note: Listed twice (different casing) for compatibility with different marketplace IDs.
+        // ─────────────────────────────────────────────────────────────────────────────────────────
         "anthropic.claude-code",
+        "Anthropic.claude-code",
+        // ─────────────────────────────────────────────────────────────────────────────────────────
+        // .NET Development
+        // ─────────────────────────────────────────────────────────────────────────────────────────
+        // ms-dotnettools.csharp: C# language support (IntelliSense, debugging, refactoring)
+        // ms-dotnettools.vscode-dotnet-runtime: Ensures correct .NET runtime for extensions
+        // ─────────────────────────────────────────────────────────────────────────────────────────
         "ms-dotnettools.csharp",
         "ms-dotnettools.vscode-dotnet-runtime",
+        // ─────────────────────────────────────────────────────────────────────────────────────────
+        // Frontend Development
+        // ─────────────────────────────────────────────────────────────────────────────────────────
+        // svelte.svelte-vscode: Svelte 5 language support (syntax, IntelliSense, formatting)
+        // bradlc.vscode-tailwindcss: Tailwind CSS IntelliSense (class autocomplete, hover preview)
+        // ─────────────────────────────────────────────────────────────────────────────────────────
         "svelte.svelte-vscode",
         "bradlc.vscode-tailwindcss"
       ]
     }
   },
 
-  "postCreateCommand": "sudo chown -R vscode:vscode /home/vscode/.claude && npm install -g npm@latest && cd web && npm install"
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  // POST-CREATE COMMAND
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  // Runs after container is created and VS Code Server has initialized .vscode-server/
+  //
+  // 1. Fix .claude ownership (bind mounts can have root ownership issues)
+  // 2. Create VS Code Machine settings symlink:
+  //    - mkdir -p: Ensure .vscode-server/data/Machine/ exists (VS Code Server created the parent)
+  //    - rm -f: Remove any existing settings.json file
+  //    - ln -sf: Create symlink from VS Code's location → our mounted file
+  //    This makes settings changes persist to the host via the mounted file.
+  // 3. Update npm and install web dependencies
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  "postCreateCommand": "sudo chown -R vscode:vscode /home/vscode/.claude && mkdir -p /home/vscode/.vscode-server/data/Machine && rm -f /home/vscode/.vscode-server/data/Machine/settings.json && ln -sf /home/vscode/.vscode-machine-settings.json /home/vscode/.vscode-server/data/Machine/settings.json && npm install -g npm@latest && cd web && npm install"
 }
