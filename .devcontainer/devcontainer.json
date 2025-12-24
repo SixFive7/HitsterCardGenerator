@@ -313,5 +313,21 @@
   // 2. Create VS Code Machine settings symlink for persistence
   // 3. Update npm and install web dependencies
   // ═══════════════════════════════════════════════════════════════════════════════════════════════
-  "postCreateCommand": "sudo chown -R vscode:vscode /home/vscode/.claude && mkdir -p /home/vscode/.vscode-server/data/Machine && rm -f /home/vscode/.vscode-server/data/Machine/settings.json && ln -sf /home/vscode/.vscode-machine-settings.json /home/vscode/.vscode-server/data/Machine/settings.json && npm install -g npm@latest && cd web && npm install"
+  "postCreateCommand": "sudo chown -R vscode:vscode /home/vscode/.claude && mkdir -p /home/vscode/.vscode-server/data/Machine && rm -f /home/vscode/.vscode-server/data/Machine/settings.json && ln -sf /home/vscode/.vscode-machine-settings.json /home/vscode/.vscode-server/data/Machine/settings.json && npm install -g npm@latest && cd web && npm install",
+
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  // POST-START COMMAND
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  // Runs every time the container starts (not just on creation).
+  //
+  // Purpose: Warm up 9p filesystem mounts (WSL2) to prevent race conditions.
+  // The 9p mount between Windows and Linux can be "cold" on container start, causing
+  // Claude Code to not see user commands/skills in ~/.claude/commands/ on first launch.
+  //
+  // Steps:
+  // 1. Touch/read all mounted Claude config directories to warm up the 9p cache
+  // 2. Fix ownership in case it got reset (bind mounts can have permission issues)
+  // 3. Sync filesystem to ensure changes are flushed
+  // ═══════════════════════════════════════════════════════════════════════════════════════════════
+  "postStartCommand": "ls -laR /home/vscode/.claude/ > /dev/null 2>&1; sudo chown -R vscode:vscode /home/vscode/.claude /home/vscode/.claude.json 2>/dev/null; sync"
 }
