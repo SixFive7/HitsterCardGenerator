@@ -39,16 +39,15 @@ Plans:
 Plans:
 - [x] 14-01: Multi-stage Dockerfile with non-root user and health check
 
-### Phase 15: GitHub Actions CI
+### Phase 15: GitHub Actions CI (Complete)
 
 **Goal**: Automated build and push to GitHub Container Registry on release tags
 **Depends on**: Phase 14
-**Research**: Likely (GHCR authentication patterns, workflow syntax)
-**Research topics**: GHCR auth with GITHUB_TOKEN, docker/build-push-action
-**Plans**: TBD
+**Research**: Complete (GHCR authentication patterns, workflow syntax)
+**Plans**: 1
 
 Plans:
-- [ ] 15-01: TBD (run /gsd:plan-phase 15 to break down)
+- [x] 15-01: Release workflow with GHCR push + CHANGELOG-based release notes
 
 ### Phase 16: Multi-Architecture & User Docs
 
@@ -145,7 +144,7 @@ See [milestones/v2.2-ROADMAP.md](milestones/v2.2-ROADMAP.md) for full details.
 | 12. Devcontainer Setup | v2.2 | 1/1 | Complete | 2025-12-22 |
 | 13. Dev Experience | v2.3 | 1/1 | Complete | 2025-12-23 |
 | 14. Docker Image | v2.3 | 1/1 | Complete | 2025-12-24 |
-| 15. GitHub Actions CI | v2.3 | 0/? | Not started | - |
+| 15. GitHub Actions CI | v2.3 | 1/1 | Complete | 2025-12-24 |
 | 16. Multi-Arch & Docs | v2.3 | 0/? | Not started | - |
 
 **v1.0 Complete** — **v2.0 Complete** — **v2.1 Complete** — **v2.2 Complete** — **v2.3 In Progress**
