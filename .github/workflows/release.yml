@@ -8,6 +8,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  NODE_OPTIONS: --disable-warning=DEP0040
 
 jobs:
   verify:
