@@ -32,6 +32,9 @@ app.MapCsvEndpoints();
 // Map match endpoints
 app.MapMatchEndpoints();
 
+// Map search endpoints
+app.MapSearchEndpoints();
+
 // Map export endpoints
 app.MapExportEndpoints();
 

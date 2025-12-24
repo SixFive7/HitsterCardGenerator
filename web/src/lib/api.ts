@@ -1,4 +1,4 @@
-import type { CsvUploadResponse, MatchResponse, Song, ExportRequest } from './types'
+import type { CsvUploadResponse, MatchResponse, Song, ExportRequest, SearchResult } from './types'
 
 export async function fetchHealth(): Promise<{ status: string; timestamp: string }> {
   const response = await fetch('/api/health')
@@ -47,4 +47,15 @@ export async function exportPdf(request: ExportRequest): Promise<Blob> {
   })
   if (!response.ok) throw new Error('Failed to export PDF')
   return response.blob()
+}
+
+export async function searchSpotify(query: string): Promise<SearchResult[]> {
+  // Return empty array for empty queries (don't call API)
+  if (!query.trim()) {
+    return []
+  }
+
+  const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`)
+  if (!response.ok) throw new Error('Failed to search Spotify')
+  return response.json()
 }

@@ -23,6 +23,16 @@ export interface SpotifyMatch {
   spotifyUrl: string
 }
 
+export interface SearchResult {
+  trackId: string
+  trackName: string
+  artistName: string
+  albumName: string
+  albumImageUrl: string
+  spotifyUrl: string
+  releaseYear: number
+}
+
 export interface MatchResult {
   index: number
   originalTitle: string

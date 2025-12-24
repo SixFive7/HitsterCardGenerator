@@ -15,15 +15,15 @@
 
 **Milestone Goal:** Add playlist builder as alternative to CSV upload - search Spotify and build a playlist directly in the app.
 
-#### Phase 17: Spotify Search
+#### Phase 17: Spotify Search ✅
 
 **Goal**: Backend search endpoint + search UI component with results display
 **Depends on**: Previous milestone complete
 **Research**: Unlikely (SpotifyAPI.Web already integrated)
-**Plans**: TBD
+**Plans**: 1
 
 Plans:
-- [ ] 17-01: TBD (run /gsd:plan-phase 17 to break down)
+- [x] 17-01: Search endpoint + UI component (2 tasks)
 
 #### Phase 18: Playlist Builder
 
@@ -143,7 +143,7 @@ See [milestones/v2.3-ROADMAP.md](milestones/v2.3-ROADMAP.md) for full details.
 | 14. Docker Image | v2.3 | 1/1 | Complete | 2025-12-24 |
 | 15. GitHub Actions CI | v2.3 | 1/1 | Complete | 2025-12-24 |
 | 16. Multi-Arch & Docs | v2.3 | 2/2 | Complete | 2025-12-24 |
-| 17. Spotify Search | v2.4 | 0/? | Not started | - |
+| 17. Spotify Search | v2.4 | 1/1 | Complete | 2025-12-24 |
 | 18. Playlist Builder | v2.4 | 0/? | Not started | - |
 | 19. Flow Integration | v2.4 | 0/? | Not started | - |
 
