@@ -7,7 +7,9 @@
   import CardControls from './lib/CardPreview/CardControls.svelte'
   import GenreColorPicker from './lib/ColorSettings/GenreColorPicker.svelte'
   import ExportStep from './lib/ExportStep.svelte'
-  import type { CsvUploadResponse, MatchResult, SpotifyMatch } from './lib/types'
+  import SpotifySearch from './lib/SpotifySearch.svelte'
+  import PlaylistBuilder from './lib/PlaylistBuilder.svelte'
+  import type { CsvUploadResponse, MatchResult, SpotifyMatch, PlaylistTrack } from './lib/types'
   import {
     getCardCustomizationState,
     initializeIncludedCards,
@@ -15,11 +17,19 @@
     isCardIncluded,
     getIncludedCount
   } from './lib/stores/cardCustomization.svelte'
+  import {
+    getPlaylistState,
+    addTrack,
+    removeTrack,
+    updateTrackGenre,
+    clearPlaylist
+  } from './lib/stores/playlist.svelte'
 
   // Svelte 5 runes
   let apiStatus = $state<'loading' | 'connected' | 'error'>('loading')
   let errorMessage = $state<string>('')
-  let currentStep = $state<'landing' | 'upload' | 'results' | 'matching' | 'matched' | 'preview' | 'export'>('landing')
+  let currentStep = $state<'landing' | 'upload' | 'build' | 'results' | 'matching' | 'matched' | 'preview' | 'export'>('landing')
+  let flowMode = $state<'csv' | 'playlist' | null>(null)
   let uploadResult = $state<CsvUploadResponse | null>(null)
   let matchResults = $state<MatchResult[]>([])
   let isMatching = $state<boolean>(false)
@@ -28,6 +38,9 @@
   // Card customization state
   const customizationState = getCardCustomizationState()
   let flippedCards = $state<Set<number>>(new Set())
+
+  // Playlist state
+  const playlistState = getPlaylistState()
 
   // Fetch API health on mount
   $effect(() => {
@@ -41,8 +54,14 @@
       })
   })
 
-  function handleGetStarted() {
+  function handleUploadCSV() {
+    flowMode = 'csv'
     currentStep = 'upload'
+  }
+
+  function handleBuildPlaylist() {
+    flowMode = 'playlist'
+    currentStep = 'build'
   }
 
   function handleUploaded(response: CsvUploadResponse) {
@@ -90,6 +109,27 @@
     })
   }
 
+  // Convert PlaylistTrack[] to MatchResult[] for unified preview/export
+  function playlistToMatchResults(tracks: PlaylistTrack[]): MatchResult[] {
+    return tracks.map((track, index) => ({
+      index,
+      originalTitle: track.trackName,
+      originalArtist: track.artistName,
+      originalYear: track.releaseYear,
+      originalGenre: track.genre,
+      match: {
+        trackId: track.trackId,
+        trackName: track.trackName,
+        artistName: track.artistName,
+        albumName: track.albumName,
+        albumImageUrl: track.albumImageUrl,
+        spotifyUrl: track.spotifyUrl
+      },
+      confidence: 'high' as const,
+      alternatives: []
+    }))
+  }
+
   function handleContinueToPreview() {
     // Initialize all cards as included
     initializeIncludedCards(matchResults.length)
@@ -101,8 +141,26 @@
     currentStep = 'preview'
   }
 
+  function handleContinueToPreviewFromBuild() {
+    // Convert playlist tracks to match results
+    matchResults = playlistToMatchResults(playlistState.tracks)
+    // Initialize all cards as included
+    initializeIncludedCards(matchResults.length)
+    // Reset current card index
+    customizationState.currentCardIndex = 0
+    // Clear flipped cards
+    flippedCards = new Set()
+    // Navigate to preview step
+    currentStep = 'preview'
+  }
+
   function handleBackToMatches() {
-    currentStep = 'matched'
+    // Flow-aware back navigation
+    if (flowMode === 'playlist') {
+      currentStep = 'build'
+    } else {
+      currentStep = 'matched'
+    }
   }
 
   function handleContinueToExport() {
@@ -114,12 +172,14 @@
     uploadResult = null
     matchResults = []
     matchError = null
+    flowMode = null
+    clearPlaylist()
     // Clear included cards from localStorage (keep genre colors)
     if (typeof window !== 'undefined') {
       localStorage.removeItem('hitster-included-cards')
     }
-    // Navigate to upload step
-    currentStep = 'upload'
+    // Navigate to landing
+    currentStep = 'landing'
   }
 
   // Preview control handlers
@@ -198,14 +258,24 @@
           {/if}
         </div>
 
-        <!-- Get Started Button -->
+        <!-- Path Choice -->
         {#if apiStatus === 'connected'}
-          <div class="flex justify-center mb-16" in:fly={{ y: 20, duration: 500, delay: 300 }}>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16" in:fly={{ y: 20, duration: 500, delay: 300 }}>
             <button
-              onclick={handleGetStarted}
-              class="bg-[#1DB954] hover:bg-[#1ed760] text-white font-bold text-xl px-12 py-4 rounded-full transform hover:scale-105 transition-all shadow-lg"
+              onclick={handleUploadCSV}
+              class="bg-[#282828] hover:bg-[#383838] p-8 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer border-2 border-transparent hover:border-[#1DB954]"
             >
-              Get Started
+              <div class="text-6xl mb-4">📄</div>
+              <h3 class="text-2xl font-bold text-white mb-2">Upload CSV</h3>
+              <p class="text-gray-400">Import songs from a CSV file</p>
+            </button>
+            <button
+              onclick={handleBuildPlaylist}
+              class="bg-[#282828] hover:bg-[#383838] p-8 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer border-2 border-transparent hover:border-[#1DB954]"
+            >
+              <div class="text-6xl mb-4">🎵</div>
+              <h3 class="text-2xl font-bold text-white mb-2">Build Playlist</h3>
+              <p class="text-gray-400">Search Spotify and build your list</p>
             </button>
           </div>
         {/if}
@@ -241,6 +311,43 @@
         <div class="mt-8 text-center">
           <button
             onclick={() => currentStep = 'landing'}
+            class="text-gray-400 hover:text-white transition-colors"
+          >
+            ← Back to Home
+          </button>
+        </div>
+      </div>
+
+    <!-- Build Playlist Page -->
+    {:else if currentStep === 'build'}
+      <div in:fly={{ y: 50, duration: 600 }}>
+        <h2 class="text-5xl font-bold text-center mb-4 text-white">Build Your Playlist</h2>
+        <p class="text-center text-gray-400 mb-12">Search for tracks and add them to your playlist</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- Left: Spotify Search -->
+          <div>
+            <h3 class="text-2xl font-bold text-white mb-4">Search Spotify</h3>
+            <SpotifySearch
+              onAddTrack={addTrack}
+              playlistTrackIds={new Set(playlistState.tracks.map(t => t.trackId))}
+            />
+          </div>
+
+          <!-- Right: Playlist Builder -->
+          <div>
+            <PlaylistBuilder
+              tracks={playlistState.tracks}
+              onRemoveTrack={removeTrack}
+              onUpdateGenre={updateTrackGenre}
+              onContinueToPreview={handleContinueToPreviewFromBuild}
+            />
+          </div>
+        </div>
+
+        <div class="mt-8 text-center">
+          <button
+            onclick={() => { clearPlaylist(); currentStep = 'landing' }}
             class="text-gray-400 hover:text-white transition-colors"
           >
             ← Back to Home

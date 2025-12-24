@@ -7,43 +7,13 @@
 - ✅ [v2.1 Enhancements](milestones/v2.1-ROADMAP.md) (Phases 10-11) - SHIPPED 2025-12-22
 - ✅ [v2.2 Polish](milestones/v2.2-ROADMAP.md) (Phase 12) - SHIPPED 2025-12-22
 - ✅ [v2.3 Containerization](milestones/v2.3-ROADMAP.md) (Phases 13-16) - SHIPPED 2025-12-24
-- 🚧 **v2.4 Features** - Phases 17-19 (in progress)
+- ✅ [v2.4 Features](milestones/v2.4-ROADMAP.md) (Phases 17-19) - SHIPPED 2025-12-24
 
 ## Current Milestone
 
-### 🚧 v2.4 Features (In Progress)
+No active milestone. All planned milestones complete.
 
-**Milestone Goal:** Add playlist builder as alternative to CSV upload - search Spotify and build a playlist directly in the app.
-
-#### Phase 17: Spotify Search ✅
-
-**Goal**: Backend search endpoint + search UI component with results display
-**Depends on**: Previous milestone complete
-**Research**: Unlikely (SpotifyAPI.Web already integrated)
-**Plans**: 1
-
-Plans:
-- [x] 17-01: Search endpoint + UI component (2 tasks)
-
-#### Phase 18: Playlist Builder ✅
-
-**Goal**: Add/remove tracks from list, manage playlist state, continue to preview
-**Depends on**: Phase 17
-**Research**: Unlikely (Svelte patterns established)
-**Plans**: 1
-
-Plans:
-- [x] 18-01: Playlist store + PlaylistBuilder component (2 tasks)
-
-#### Phase 19: Flow Integration
-
-**Goal**: Landing page choice (CSV vs Build), skip matching for built playlists
-**Depends on**: Phase 18
-**Research**: Unlikely (internal routing)
-**Plans**: TBD
-
-Plans:
-- [ ] 19-01: TBD
+Run `/gsd:new-milestone` to plan the next milestone.
 
 ## Completed Milestones
 
@@ -123,6 +93,21 @@ See [milestones/v2.3-ROADMAP.md](milestones/v2.3-ROADMAP.md) for full details.
 
 </details>
 
+<details>
+<summary>✅ v2.4 Features (Phases 17-19) - SHIPPED 2025-12-24</summary>
+
+Add playlist builder as alternative to CSV upload - search Spotify and build a playlist directly in the app.
+
+- [x] **Phase 17: Spotify Search** - Backend search endpoint + search UI component (1 plan)
+- [x] **Phase 18: Playlist Builder** - Playlist store + PlaylistBuilder component (1 plan)
+- [x] **Phase 19: Flow Integration** - Landing page dual-path, skip matching for playlists (1 plan)
+
+**Total:** 3 phases, 3 plans
+
+See [milestones/v2.4-ROADMAP.md](milestones/v2.4-ROADMAP.md) for full details.
+
+</details>
+
 ## Progress
 
 | Phase | Milestone | Plans Complete | Status | Completed |
@@ -145,6 +130,6 @@ See [milestones/v2.3-ROADMAP.md](milestones/v2.3-ROADMAP.md) for full details.
 | 16. Multi-Arch & Docs | v2.3 | 2/2 | Complete | 2025-12-24 |
 | 17. Spotify Search | v2.4 | 1/1 | Complete | 2025-12-24 |
 | 18. Playlist Builder | v2.4 | 1/1 | Complete | 2025-12-24 |
-| 19. Flow Integration | v2.4 | 0/? | Not started | - |
+| 19. Flow Integration | v2.4 | 1/1 | Complete | 2025-12-24 |
 
-**v1.0 Complete** — **v2.0 Complete** — **v2.1 Complete** — **v2.2 Complete** — **v2.3 Complete** — **v2.4 In Progress**
+**v1.0 Complete** — **v2.0 Complete** — **v2.1 Complete** — **v2.2 Complete** — **v2.3 Complete** — **v2.4 Complete**
