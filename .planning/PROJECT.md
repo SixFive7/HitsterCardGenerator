@@ -1,16 +1,19 @@
 # Hitster Card Generator
 
-## Current State (Updated: 2025-12-23)
+## Current State (Updated: 2025-12-24)
 
-**Shipped:** v2.2 Polish (2025-12-22)
+**Shipped:** v2.3 Containerization (2025-12-24)
 **Status:** Production-ready
-**Codebase:** ~10,500 lines (C# backend + Svelte/TypeScript frontend)
+**Codebase:** ~13,000 lines (C# backend + Svelte/TypeScript frontend)
 **Stack:** .NET 10 Minimal API, Svelte 5, Tailwind v4, QuestPDF, QRCoder
 
-**v2.2 Improvements:**
-- Devcontainer with .NET 10 + Node.js 20 + Claude Code
-- Volume mount for Claude config persistence across rebuilds
-- VS Code extensions for C#, Svelte, Tailwind CSS pre-configured
+**v2.3 Improvements:**
+- F5 compound launch for full-stack development (Vite HMR + .NET API)
+- Multi-stage Dockerfile with non-root user on port 8080
+- GitHub Actions CI/CD with GHCR publishing
+- Multi-arch Docker images (AMD64 + ARM64)
+- Comprehensive README with screenshots and docker-compose examples
+- MIT LICENSE for open-source distribution
 
 The application is complete with both console and web interfaces:
 
@@ -145,3 +148,4 @@ Things to figure out during execution:
 *v2.0 Shipped: 2025-12-21*
 *v2.1 Shipped: 2025-12-22*
 *v2.2 Shipped: 2025-12-22*
+*v2.3 Shipped: 2025-12-24*

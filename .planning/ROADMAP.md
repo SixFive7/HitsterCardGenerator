@@ -8,58 +8,6 @@
 - ✅ [v2.2 Polish](milestones/v2.2-ROADMAP.md) (Phase 12) - SHIPPED 2025-12-22
 - ✅ [v2.3 Containerization](milestones/v2.3-ROADMAP.md) (Phases 13-16) - SHIPPED 2025-12-24
 
-## ✅ v2.3 Containerization (Complete)
-
-**Milestone Goal:** Docker containerization with automated CI/CD pipeline for easy deployment via docker-compose.
-
-### Phase 13: Dev Experience (Complete)
-
-**Goal**: Enable HMR during development, configure VS Code launch/tasks for optimal debugging workflow
-**Depends on**: Phase 12 (devcontainer provides dev environment)
-**Research**: Likely (VS Code launch.json/tasks.json options, compound launch configs)
-**Research topics**: VS Code debugging configurations, .NET + Vite compound launch, preLaunchTask patterns
-**Plans**: 1
-
-**Deliverables:**
-- Fix NpmBuild to only run in Release mode (enables fast debug cycles)
-- Documented launch.json with all debug options explained
-- Documented tasks.json for build/watch tasks
-- Compound launch config (start both .NET and Vite with F5)
-
-Plans:
-- [x] 13-01: VS Code dev workflow (MSBuild condition + tasks + compound launch)
-
-### Phase 14: Docker Image (Complete)
-
-**Goal**: Multi-stage Dockerfile with environment variable configuration for Spotify credentials
-**Depends on**: Phase 13 (dev experience ensures clean build separation)
-**Research**: Unlikely (established .NET Docker patterns)
-**Plans**: 1
-
-Plans:
-- [x] 14-01: Multi-stage Dockerfile with non-root user and health check
-
-### Phase 15: GitHub Actions CI (Complete)
-
-**Goal**: Automated build and push to GitHub Container Registry on release tags
-**Depends on**: Phase 14
-**Research**: Complete (GHCR authentication patterns, workflow syntax)
-**Plans**: 1
-
-Plans:
-- [x] 15-01: Release workflow with GHCR push + CHANGELOG-based release notes
-
-### Phase 16: Multi-Architecture & User Docs (Complete)
-
-**Goal**: Buildx for AMD64 + ARM64 builds, project meta files
-**Depends on**: Phase 15
-**Research**: Complete (QEMU approach for multi-arch)
-**Plans**: 2
-
-Plans:
-- [x] 16-01: QEMU + platforms config, MIT LICENSE, CLAUDE.md
-- [x] 16-02: Comprehensive README with screenshots and docker-compose examples
-
 ## Completed Milestones
 
 <details>
@@ -119,6 +67,22 @@ Add devcontainer for Claude Code sandbox-free development.
 **Total:** 1 phase, 1 plan
 
 See [milestones/v2.2-ROADMAP.md](milestones/v2.2-ROADMAP.md) for full details.
+
+</details>
+
+<details>
+<summary>✅ v2.3 Containerization (Phases 13-16) - SHIPPED 2025-12-24</summary>
+
+Docker containerization with automated CI/CD pipeline for easy deployment via docker-compose.
+
+- [x] **Phase 13: Dev Experience** - F5 compound launch with Release-only NpmBuild (1 plan)
+- [x] **Phase 14: Docker Image** - Multi-stage Dockerfile with non-root user (1 plan)
+- [x] **Phase 15: GitHub Actions CI** - GHCR publishing + CHANGELOG-based release notes (1 plan)
+- [x] **Phase 16: Multi-Arch & Docs** - AMD64 + ARM64 builds, README with screenshots (2 plans)
+
+**Total:** 4 phases, 5 plans
+
+See [milestones/v2.3-ROADMAP.md](milestones/v2.3-ROADMAP.md) for full details.
 
 </details>
 
