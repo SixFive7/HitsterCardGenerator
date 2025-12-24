@@ -425,3 +425,6 @@ FodyWeavers.xsd
 .claude/*
 # But keep the shared project settings
 !.claude/settings.json
+
+# User's personal docker-compose reference
+example.yaml

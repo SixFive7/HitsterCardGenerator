@@ -6,9 +6,9 @@
 - ✅ [v2.0 Web Interface](milestones/v2.0-ROADMAP.md) (Phases 5-9) - SHIPPED 2025-12-21
 - ✅ [v2.1 Enhancements](milestones/v2.1-ROADMAP.md) (Phases 10-11) - SHIPPED 2025-12-22
 - ✅ [v2.2 Polish](milestones/v2.2-ROADMAP.md) (Phase 12) - SHIPPED 2025-12-22
-- 🚧 **v2.3 Containerization** - Phases 13-16 (in progress)
+- ✅ [v2.3 Containerization](milestones/v2.3-ROADMAP.md) (Phases 13-16) - SHIPPED 2025-12-24
 
-## 🚧 v2.3 Containerization (In Progress)
+## ✅ v2.3 Containerization (Complete)
 
 **Milestone Goal:** Docker containerization with automated CI/CD pipeline for easy deployment via docker-compose.
 
@@ -49,20 +49,15 @@ Plans:
 Plans:
 - [x] 15-01: Release workflow with GHCR push + CHANGELOG-based release notes
 
-### Phase 16: Multi-Architecture & User Docs
+### Phase 16: Multi-Architecture & User Docs (Complete)
 
-**Goal**: Buildx for AMD64 + ARM64 builds, two docker-compose examples for end users
+**Goal**: Buildx for AMD64 + ARM64 builds, project meta files
 **Depends on**: Phase 15
-**Research**: Likely (buildx multi-platform setup)
-**Research topics**: docker/setup-buildx-action, platform matrix strategy
-**Plans**: TBD
-
-**Deliverables:**
-- `docker-compose.yml` - Simple setup with direct port mapping (no reverse proxy)
-- `docker-compose.traefik.yml` - Traefik labels, no port exposure (user's preferred pattern)
+**Research**: Complete (QEMU approach for multi-arch)
+**Plans**: 1
 
 Plans:
-- [ ] 16-01: TBD (run /gsd:plan-phase 16 to break down)
+- [x] 16-01: QEMU + platforms config, MIT LICENSE, CLAUDE.md
 
 ## Completed Milestones
 
@@ -145,6 +140,6 @@ See [milestones/v2.2-ROADMAP.md](milestones/v2.2-ROADMAP.md) for full details.
 | 13. Dev Experience | v2.3 | 1/1 | Complete | 2025-12-23 |
 | 14. Docker Image | v2.3 | 1/1 | Complete | 2025-12-24 |
 | 15. GitHub Actions CI | v2.3 | 1/1 | Complete | 2025-12-24 |
-| 16. Multi-Arch & Docs | v2.3 | 0/? | Not started | - |
+| 16. Multi-Arch & Docs | v2.3 | 1/1 | Complete | 2025-12-24 |
 
-**v1.0 Complete** — **v2.0 Complete** — **v2.1 Complete** — **v2.2 Complete** — **v2.3 In Progress**
+**v1.0 Complete** — **v2.0 Complete** — **v2.1 Complete** — **v2.2 Complete** — **v2.3 Complete**
