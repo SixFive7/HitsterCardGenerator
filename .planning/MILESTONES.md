@@ -1,5 +1,32 @@
 # Project Milestones: Hitster Card Generator
 
+## v2.4 Features (Shipped: 2025-12-24)
+
+**Delivered:** Playlist builder as alternative to CSV upload - search Spotify and build a playlist directly in the app.
+
+**Phases completed:** 17-19 (3 plans total)
+
+**Key accomplishments:**
+
+- Spotify search API endpoint with debounced SpotifySearch component
+- Playlist store with add/remove/genre functionality and visual curation
+- PlaylistBuilder component with genre dropdown and track management
+- Landing page dual-path choice (Upload CSV vs Build Playlist)
+- Playlist-to-preview direct flow that skips Spotify matching
+
+**Stats:**
+
+- 21 files created/modified
+- +1,722 lines
+- 3 phases, 3 plans, 6 tasks
+- 1 day (2025-12-24, 16 min active dev)
+
+**Git range:** `feat(17-01)` → `feat(19-01)`
+
+**What's next:** All planned milestones complete. Project offers two paths: CSV upload with Spotify matching, or build playlist directly.
+
+---
+
 ## v2.3 Containerization (Shipped: 2025-12-24)
 
 **Delivered:** Docker containerization with automated CI/CD pipeline for easy deployment via docker-compose.

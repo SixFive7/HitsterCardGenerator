@@ -2,18 +2,17 @@
 
 ## Current State (Updated: 2025-12-24)
 
-**Shipped:** v2.3 Containerization (2025-12-24)
+**Shipped:** v2.4 Features (2025-12-24)
 **Status:** Production-ready
-**Codebase:** ~13,000 lines (C# backend + Svelte/TypeScript frontend)
+**Codebase:** ~14,700 lines (C# backend + Svelte/TypeScript frontend)
 **Stack:** .NET 10 Minimal API, Svelte 5, Tailwind v4, QuestPDF, QRCoder
 
-**v2.3 Improvements:**
-- F5 compound launch for full-stack development (Vite HMR + .NET API)
-- Multi-stage Dockerfile with non-root user on port 8080
-- GitHub Actions CI/CD with GHCR publishing
-- Multi-arch Docker images (AMD64 + ARM64)
-- Comprehensive README with screenshots and docker-compose examples
-- MIT LICENSE for open-source distribution
+**v2.4 Improvements:**
+- Spotify search API with debounced search component
+- Playlist builder as alternative to CSV upload
+- Dual-path landing page (Upload CSV / Build Playlist)
+- Built playlists skip Spotify matching step entirely
+- Flow-aware navigation between paths
 
 The application is complete with both console and web interfaces:
 
@@ -149,3 +148,4 @@ Things to figure out during execution:
 *v2.1 Shipped: 2025-12-22*
 *v2.2 Shipped: 2025-12-22*
 *v2.3 Shipped: 2025-12-24*
+*v2.4 Shipped: 2025-12-24*
