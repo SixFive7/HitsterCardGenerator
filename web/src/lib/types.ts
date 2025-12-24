@@ -33,6 +33,17 @@ export interface SearchResult {
   releaseYear: number
 }
 
+export interface PlaylistTrack {
+  trackId: string
+  trackName: string
+  artistName: string
+  albumName: string
+  albumImageUrl: string
+  spotifyUrl: string
+  releaseYear: number
+  genre: string
+}
+
 export interface MatchResult {
   index: number
   originalTitle: string

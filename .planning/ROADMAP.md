@@ -25,15 +25,15 @@
 Plans:
 - [x] 17-01: Search endpoint + UI component (2 tasks)
 
-#### Phase 18: Playlist Builder
+#### Phase 18: Playlist Builder ✅
 
 **Goal**: Add/remove tracks from list, manage playlist state, continue to preview
 **Depends on**: Phase 17
 **Research**: Unlikely (Svelte patterns established)
-**Plans**: TBD
+**Plans**: 1
 
 Plans:
-- [ ] 18-01: TBD
+- [x] 18-01: Playlist store + PlaylistBuilder component (2 tasks)
 
 #### Phase 19: Flow Integration
 
@@ -144,7 +144,7 @@ See [milestones/v2.3-ROADMAP.md](milestones/v2.3-ROADMAP.md) for full details.
 | 15. GitHub Actions CI | v2.3 | 1/1 | Complete | 2025-12-24 |
 | 16. Multi-Arch & Docs | v2.3 | 2/2 | Complete | 2025-12-24 |
 | 17. Spotify Search | v2.4 | 1/1 | Complete | 2025-12-24 |
-| 18. Playlist Builder | v2.4 | 0/? | Not started | - |
+| 18. Playlist Builder | v2.4 | 1/1 | Complete | 2025-12-24 |
 | 19. Flow Integration | v2.4 | 0/? | Not started | - |
 
 **v1.0 Complete** — **v2.0 Complete** — **v2.1 Complete** — **v2.2 Complete** — **v2.3 Complete** — **v2.4 In Progress**

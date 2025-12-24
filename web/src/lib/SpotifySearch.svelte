@@ -3,6 +3,14 @@
   import type { SearchResult } from './types'
   import { onMount } from 'svelte'
 
+  // Props
+  interface Props {
+    onAddTrack?: (track: SearchResult) => void
+    playlistTrackIds?: Set<string>
+  }
+
+  let { onAddTrack, playlistTrackIds }: Props = $props()
+
   // State using Svelte 5 runes
   let query = $state('')
   let results = $state<SearchResult[]>([])
@@ -34,6 +42,18 @@
     debounceTimer = setTimeout(() => {
       performSearch()
     }, 300)
+  }
+
+  // Handle adding track to playlist
+  function handleAddTrack(result: SearchResult) {
+    if (onAddTrack) {
+      onAddTrack(result)
+    }
+  }
+
+  // Check if track is already in playlist
+  function isInPlaylist(trackId: string): boolean {
+    return playlistTrackIds?.has(trackId) ?? false
   }
 
   // Auto-focus on mount
@@ -81,6 +101,20 @@
               {/if}
             </div>
           </div>
+          {#if onAddTrack}
+            <button
+              onclick={() => handleAddTrack(result)}
+              class="add-button"
+              disabled={isInPlaylist(result.trackId)}
+              title={isInPlaylist(result.trackId) ? 'Already in playlist' : 'Add to playlist'}
+            >
+              {#if isInPlaylist(result.trackId)}
+                ✓
+              {:else}
+                +
+              {/if}
+            </button>
+          {/if}
         </div>
       {/each}
     {:else if query.trim() && !isLoading}
@@ -236,6 +270,38 @@
 
   .year {
     color: #888;
+  }
+
+  .add-button {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    background-color: #1DB954;
+    color: white;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .add-button:hover:not(:disabled) {
+    background-color: #1ed760;
+    transform: scale(1.05);
+  }
+
+  .add-button:active:not(:disabled) {
+    transform: scale(0.95);
+  }
+
+  .add-button:disabled {
+    background-color: #383838;
+    color: #1DB954;
+    cursor: default;
   }
 
   .no-results {
