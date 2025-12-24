@@ -16,7 +16,7 @@ RUN dotnet restore
 COPY . ./
 
 # Build and publish (triggers NpmInstall and NpmBuild MSBuild targets automatically)
-RUN dotnet publish -c Release -o /app/publish
+RUN dotnet publish HitsterCardGenerator.csproj -c Release -o /app/publish
 
 # Stage 2: Runtime
 FROM mcr.microsoft.com/dotnet/aspnet:10.0
