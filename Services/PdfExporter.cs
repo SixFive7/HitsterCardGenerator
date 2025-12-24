@@ -67,26 +67,26 @@ public static class PdfExporter
                         // Cards layer
                         layers.PrimaryLayer().Table(table =>
                         {
-                        table.ColumnsDefinition(columns =>
-                        {
-                            for (int i = 0; i < Columns; i++)
-                                columns.ConstantColumn(CardWidth, Unit.Millimetre);
-                        });
-
-                        for (int row = 0; row < Rows; row++)
-                        {
-                            for (int colIdx = 0; colIdx < Columns; colIdx++)
+                            table.ColumnsDefinition(columns =>
                             {
-                                var cardIndex = row * Columns + colIdx;
-                                table.Cell().Element(c =>
+                                for (int i = 0; i < Columns; i++)
+                                    columns.ConstantColumn(CardWidth, Unit.Millimetre);
+                            });
+
+                            for (int row = 0; row < Rows; row++)
+                            {
+                                for (int colIdx = 0; colIdx < Columns; colIdx++)
                                 {
-                                    if (cardIndex < sheetCards.Count)
-                                        RenderFrontCard(c, sheetCards[cardIndex]);
-                                    else
-                                        RenderEmptyCard(c);
-                                });
+                                    var cardIndex = row * Columns + colIdx;
+                                    table.Cell().Element(c =>
+                                    {
+                                        if (cardIndex < sheetCards.Count)
+                                            RenderFrontCard(c, sheetCards[cardIndex]);
+                                        else
+                                            RenderEmptyCard(c);
+                                    });
+                                }
                             }
-                        }
                         });
                     });
                 });
