@@ -54,10 +54,11 @@ Plans:
 **Goal**: Buildx for AMD64 + ARM64 builds, project meta files
 **Depends on**: Phase 15
 **Research**: Complete (QEMU approach for multi-arch)
-**Plans**: 1
+**Plans**: 2
 
 Plans:
 - [x] 16-01: QEMU + platforms config, MIT LICENSE, CLAUDE.md
+- [x] 16-02: Comprehensive README with screenshots and docker-compose examples
 
 ## Completed Milestones
 
@@ -140,6 +141,6 @@ See [milestones/v2.2-ROADMAP.md](milestones/v2.2-ROADMAP.md) for full details.
 | 13. Dev Experience | v2.3 | 1/1 | Complete | 2025-12-23 |
 | 14. Docker Image | v2.3 | 1/1 | Complete | 2025-12-24 |
 | 15. GitHub Actions CI | v2.3 | 1/1 | Complete | 2025-12-24 |
-| 16. Multi-Arch & Docs | v2.3 | 1/1 | Complete | 2025-12-24 |
+| 16. Multi-Arch & Docs | v2.3 | 2/2 | Complete | 2025-12-24 |
 
 **v1.0 Complete** — **v2.0 Complete** — **v2.1 Complete** — **v2.2 Complete** — **v2.3 Complete**
