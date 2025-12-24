@@ -1,0 +1,31 @@
+# Build artifacts
+**/bin/
+**/obj/
+
+# Node dependencies (installed fresh in build stage)
+**/node_modules/
+
+# Version control
+**/.git/
+**/.gitignore
+
+# IDE files
+**/.vs/
+**/.vscode/
+
+# Docker meta files
+**/Dockerfile*
+**/.dockerignore
+
+# User and documentation files
+**/*.user
+**/*.md
+
+# GSD workflow files
+.planning/
+
+# Dev environment
+.devcontainer/
+
+# Frontend build output (built fresh from web/ source)
+wwwroot/

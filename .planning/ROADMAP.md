@@ -29,15 +29,15 @@
 Plans:
 - [x] 13-01: VS Code dev workflow (MSBuild condition + tasks + compound launch)
 
-### Phase 14: Docker Image
+### Phase 14: Docker Image (Complete)
 
 **Goal**: Multi-stage Dockerfile with environment variable configuration for Spotify credentials
 **Depends on**: Phase 13 (dev experience ensures clean build separation)
 **Research**: Unlikely (established .NET Docker patterns)
-**Plans**: TBD
+**Plans**: 1
 
 Plans:
-- [ ] 14-01: TBD (run /gsd:plan-phase 14 to break down)
+- [x] 14-01: Multi-stage Dockerfile with non-root user and health check
 
 ### Phase 15: GitHub Actions CI
 
@@ -144,7 +144,7 @@ See [milestones/v2.2-ROADMAP.md](milestones/v2.2-ROADMAP.md) for full details.
 | 11. Build Integration | v2.1 | 1/1 | Complete | 2025-12-22 |
 | 12. Devcontainer Setup | v2.2 | 1/1 | Complete | 2025-12-22 |
 | 13. Dev Experience | v2.3 | 1/1 | Complete | 2025-12-23 |
-| 14. Docker Image | v2.3 | 0/? | Not started | - |
+| 14. Docker Image | v2.3 | 1/1 | Complete | 2025-12-24 |
 | 15. GitHub Actions CI | v2.3 | 0/? | Not started | - |
 | 16. Multi-Arch & Docs | v2.3 | 0/? | Not started | - |
 

@@ -38,9 +38,6 @@ app.MapExportEndpoints();
 // SPA fallback - serve index.html for client-side routing
 app.MapFallbackToFile("index.html");
 
-// Configure to listen on port 5000
-app.Urls.Add("http://localhost:5000");
-
 app.Run();
 
 // Extension methods for endpoint mapping (defined in Endpoints/ folder)
