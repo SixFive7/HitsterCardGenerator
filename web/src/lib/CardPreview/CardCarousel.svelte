@@ -28,7 +28,7 @@
 
   // State
   let emblaApi = $state<EmblaCarouselType | undefined>(undefined)
-  let selectedIndex = $state(currentIndex)
+  let selectedIndex = $state(0)
 
   // Initialize embla
   function onEmblaInit(event: CustomEvent<EmblaCarouselType>) {
