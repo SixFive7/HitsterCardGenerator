@@ -99,7 +99,7 @@
     // Source: https://github.com/devcontainers/features/tree/main/src/node
     // ─────────────────────────────────────────────────────────────────────────────────────────────
     "ghcr.io/devcontainers/features/node:latest": {
-      "version": "latest"
+      "version": "24"
     },
     // ─────────────────────────────────────────────────────────────────────────────────────────────
     // Claude Code CLI
