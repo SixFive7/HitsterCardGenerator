@@ -1,5 +1,32 @@
 # Project Milestones: Hitster Card Generator
 
+## v2.5 Self-Hosting (Shipped: 2025-12-25)
+
+**Delivered:** Remove CI/CD pipeline and registry dependency - users build locally from any git source with zero-friction docker-compose.
+
+**Phases completed:** 20-21 (2 plans total)
+
+**Key accomplishments:**
+
+- Deleted GitHub Actions CI/CD workflow and .github/ directory structure
+- Created .env.example with documented Spotify and container environment variables
+- Added Portainer-friendly build-from-URL docker-compose in Quick Start
+- Added Traefik reverse proxy example with build-from-URL approach
+- Updated documentation for zero-registry self-hosting workflow
+
+**Stats:**
+
+- 11 files modified
+- +542/-151 lines
+- 2 phases, 2 plans, 4 tasks
+- Same day (2025-12-25, 47 min)
+
+**Git range:** `feat(20-01)` → `feat(21-01)`
+
+**What's next:** Project complete with full self-hosting support. Users can deploy from any git source without container registry access.
+
+---
+
 ## v2.4 Features (Shipped: 2025-12-24)
 
 **Delivered:** Playlist builder as alternative to CSV upload - search Spotify and build a playlist directly in the app.

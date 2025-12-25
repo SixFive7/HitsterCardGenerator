@@ -12,33 +12,23 @@
 
 ## Current Milestone
 
-### ✅ v2.5 Self-Hosting (Complete)
-
-**Milestone Goal:** Remove CI/CD pipeline and registry dependency - users build locally from any git source.
-
-#### Phase 20: Remove CI/CD ✓
-
-**Goal**: Delete release.yml workflow and create .env.example for clearer setup
-**Depends on**: Previous milestone complete
-**Research**: Unlikely (file deletion + simple config)
-**Plans**: 1
-**Completed**: 2025-12-25
-
-Plans:
-- [x] 20-01: Delete CI/CD workflow + create .env.example (2 tasks)
-
-#### Phase 21: Local Build Docs ✓
-
-**Goal**: Update README for clone + docker compose build workflow
-**Depends on**: Phase 20
-**Research**: Unlikely (documentation only)
-**Plans**: 1
-**Completed**: 2025-12-25
-
-Plans:
-- [x] 21-01: README with build-from-URL docker-compose examples (2 tasks)
+No active milestone. Project is feature-complete with self-hosting support.
 
 ## Completed Milestones
+
+<details>
+<summary>✅ v2.5 Self-Hosting (Phases 20-21) - SHIPPED 2025-12-25</summary>
+
+Remove CI/CD pipeline and registry dependency - users build locally from any git source with zero-friction docker-compose.
+
+- [x] **Phase 20: Remove CI/CD** - Delete release.yml workflow, create .env.example (1 plan)
+- [x] **Phase 21: Local Build Docs** - README with build-from-URL docker-compose examples (1 plan)
+
+**Total:** 2 phases, 2 plans
+
+See [milestones/v2.5-ROADMAP.md](milestones/v2.5-ROADMAP.md) for full details.
+
+</details>
 
 <details>
 <summary>✅ v1.0 MVP (Phases 1-4) - SHIPPED 2025-12-21</summary>
@@ -157,4 +147,4 @@ See [milestones/v2.4-ROADMAP.md](milestones/v2.4-ROADMAP.md) for full details.
 | 20. Remove CI/CD | v2.5 | 1/1 | Complete | 2025-12-25 |
 | 21. Local Build Docs | v2.5 | 1/1 | Complete | 2025-12-25 |
 
-**v1.0 Complete** — **v2.0 Complete** — **v2.1 Complete** — **v2.2 Complete** — **v2.3 Complete** — **v2.4 Complete** — **v2.5 Complete**
+**All milestones complete** — v1.0, v2.0, v2.1, v2.2, v2.3, v2.4, v2.5 shipped
