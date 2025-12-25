@@ -1,5 +1,30 @@
 # Project Milestones: Hitster Card Generator
 
+## v2.6 Improvements (Shipped: 2025-12-25)
+
+**Delivered:** Rainbow gradient favicon and landing page music note SVG replacing default Vite icon and emoji.
+
+**Phases completed:** 22 (1 plan total)
+
+**Key accomplishments:**
+
+- Created rainbow gradient favicon with beamed eighth notes design
+- Replaced emoji music note with inline SVG using matching rainbow gradient
+- Updated page title from "web" to "Hitster Card Generator"
+
+**Stats:**
+
+- 8 files modified
+- +261/-26 lines
+- 1 phase, 1 plan, 3 tasks
+- Same day (2025-12-25, 2 min)
+
+**Git range:** `feat(22-01)`
+
+**What's next:** Project fully branded with custom visual identity. Ready for next milestone.
+
+---
+
 ## v2.5 Self-Hosting (Shipped: 2025-12-25)
 
 **Delivered:** Remove CI/CD pipeline and registry dependency - users build locally from any git source with zero-friction docker-compose.

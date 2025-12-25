@@ -2,16 +2,15 @@
 
 ## Current State (Updated: 2025-12-25)
 
-**Shipped:** v2.5 Self-Hosting (2025-12-25)
-**Status:** Production-ready, self-hostable
+**Shipped:** v2.6 Improvements (2025-12-25)
+**Status:** Production-ready, self-hostable, branded
 **Codebase:** ~14,700 lines (C# backend + Svelte/TypeScript frontend)
 **Stack:** .NET 10 Minimal API, Svelte 5, Tailwind v4, QuestPDF, QRCoder
 
-**v2.5 Improvements:**
-- Removed CI/CD pipeline and container registry dependency
-- Build-from-URL docker-compose for zero-friction deployment
-- .env.example with documented environment variables
-- Portainer and Traefik reverse proxy examples in README
+**v2.6 Improvements:**
+- Rainbow gradient favicon with beamed eighth notes design
+- Landing page music note as inline SVG with matching gradient
+- Updated page title to "Hitster Card Generator"
 
 The application is complete with both console and web interfaces:
 
@@ -149,3 +148,4 @@ Things to figure out during execution:
 *v2.3 Shipped: 2025-12-24*
 *v2.4 Shipped: 2025-12-24*
 *v2.5 Shipped: 2025-12-25*
+*v2.6 Shipped: 2025-12-25*
