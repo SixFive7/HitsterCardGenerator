@@ -20,4 +20,4 @@ A .NET 10 web application that generates printable PDF cards for a custom Hitste
 
 ## Documentation
 
-When making significant changes to the project (new features, configuration changes, deployment updates), ensure the README.md is updated to reflect those changes.
+When making any changes to the project ensure the README.md is updated to reflect those changes.
