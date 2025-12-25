@@ -27,18 +27,28 @@ RUN dotnet publish HitsterCardGenerator.csproj -c Release -o /app/publish
 FROM mcr.microsoft.com/dotnet/aspnet:10.0
 WORKDIR /app
 
+# Install gosu for dropping privileges and bash for entrypoint
+RUN apt-get update && apt-get install -y --no-install-recommends gosu \
+    && rm -rf /var/lib/apt/lists/*
+
 # Copy published output from build stage
 COPY --from=build /app/publish .
 
-# Configure port (non-root user requires port >= 1024)
+# Copy entrypoint script
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Configure port
 ENV ASPNETCORE_HTTP_PORTS=8080
+
+# Default environment variables for container customization
+ENV TZ=Europe/Amsterdam \
+    PUID=1000 \
+    PGID=1000
 
 # Required at runtime (pass via docker run -e or docker-compose environment):
 # - SPOTIFY_CLIENT_ID: Spotify API client ID
 # - SPOTIFY_CLIENT_SECRET: Spotify API client secret
-
-# Switch to non-root user (built-in 'app' user, UID 1654)
-USER $APP_UID
 
 # Expose port for container networking
 EXPOSE 8080
@@ -47,5 +57,5 @@ EXPOSE 8080
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD wget --no-verbose --tries=1 --spider http://localhost:8080/api/health || exit 1
 
-# Start the application
-ENTRYPOINT ["dotnet", "HitsterCardGenerator.dll"]
+# Start via entrypoint (handles PUID/PGID user creation)
+ENTRYPOINT ["docker-entrypoint.sh"]

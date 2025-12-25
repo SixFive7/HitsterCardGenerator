@@ -15,6 +15,9 @@ Upload a CSV of songs, match them to Spotify tracks, customize your card colors,
 ```bash
 docker run -d \
   -p 8080:8080 \
+  -e TZ=Europe/Amsterdam \
+  -e PUID=1000 \
+  -e PGID=1000 \
   -e SPOTIFY_CLIENT_ID=your_client_id \
   -e SPOTIFY_CLIENT_SECRET=your_client_secret \
   ghcr.io/sixfive7/histercardgenerator:latest
@@ -54,6 +57,9 @@ services:
     ports:
       - "8080:8080"              # Access at http://localhost:8080
     environment:
+      TZ: Europe/Amsterdam
+      PUID: 1000
+      PGID: 1000
       SPOTIFY_CLIENT_ID: your_client_id_here
       SPOTIFY_CLIENT_SECRET: your_client_secret_here
 ```
@@ -74,20 +80,15 @@ services:
     container_name: hitster
     restart: unless-stopped
     environment:
+      TZ: Europe/Amsterdam
+      PUID: 1000
+      PGID: 1000
       SPOTIFY_CLIENT_ID: your_client_id_here
       SPOTIFY_CLIENT_SECRET: your_client_secret_here
-    networks:
-      - traefik                   # Your Traefik network
     labels:
       traefik.enable: true
       traefik.http.routers.hitster.rule: Host(`hitster.yourdomain.com`)
-      traefik.http.routers.hitster.entrypoints: https
-      traefik.http.routers.hitster.tls.certresolver: letsencrypt
       traefik.http.services.hitster.loadbalancer.server.port: 8080
-
-networks:
-  traefik:
-    external: true
 ```
 
 > **Multi-architecture support:** The image supports both AMD64 (Intel/AMD) and ARM64 (Apple Silicon, Raspberry Pi).
@@ -96,12 +97,17 @@ networks:
 
 ## Environment Variables
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `SPOTIFY_CLIENT_ID` | Yes | Your Spotify API client ID |
-| `SPOTIFY_CLIENT_SECRET` | Yes | Your Spotify API client secret |
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `SPOTIFY_CLIENT_ID` | Yes | - | Your Spotify API client ID |
+| `SPOTIFY_CLIENT_SECRET` | Yes | - | Your Spotify API client secret |
+| `TZ` | No | `Europe/Amsterdam` | Container timezone |
+| `PUID` | No | `1000` | User ID for file ownership |
+| `PGID` | No | `1000` | Group ID for file ownership |
 
-Get your credentials from the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard). Create an app, and you'll find the Client ID and Secret in the app settings.
+Get your Spotify credentials from the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard). Create an app, and you'll find the Client ID and Secret in the app settings.
+
+> **Unraid users:** Set `PUID=99` and `PGID=100` to match the default nobody/users permissions.
 
 ---
 

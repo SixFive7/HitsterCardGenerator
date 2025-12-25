@@ -1,0 +1,16 @@
+services:
+  hitster:
+    build: .
+    container_name: hitster-card-generator
+    ports:
+      - "8080:8080"
+    environment:
+      - TZ=Europe/Amsterdam
+      - PUID=99
+      - PGID=100
+      - SPOTIFY_CLIENT_ID=${SPOTIFY_CLIENT_ID}
+      - SPOTIFY_CLIENT_SECRET=${SPOTIFY_CLIENT_SECRET}
+    volumes:
+      # Optional: persist generated PDFs
+      - ./output:/app/output
+    restart: unless-stopped
