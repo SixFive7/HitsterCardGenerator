@@ -8,11 +8,11 @@
 - ✅ [v2.2 Polish](milestones/v2.2-ROADMAP.md) (Phase 12) - SHIPPED 2025-12-22
 - ✅ [v2.3 Containerization](milestones/v2.3-ROADMAP.md) (Phases 13-16) - SHIPPED 2025-12-24
 - ✅ [v2.4 Features](milestones/v2.4-ROADMAP.md) (Phases 17-19) - SHIPPED 2025-12-24
-- 🚧 **v2.5 Self-Hosting** - Phases 20-21 (in progress)
+- ✅ [v2.5 Self-Hosting](milestones/v2.5-ROADMAP.md) (Phases 20-21) - SHIPPED 2025-12-25
 
 ## Current Milestone
 
-### 🚧 v2.5 Self-Hosting (In Progress)
+### ✅ v2.5 Self-Hosting (Complete)
 
 **Milestone Goal:** Remove CI/CD pipeline and registry dependency - users build locally from any git source.
 
@@ -27,15 +27,16 @@
 Plans:
 - [x] 20-01: Delete CI/CD workflow + create .env.example (2 tasks)
 
-#### Phase 21: Local Build Docs
+#### Phase 21: Local Build Docs ✓
 
 **Goal**: Update README for clone + docker compose build workflow
 **Depends on**: Phase 20
 **Research**: Unlikely (documentation only)
-**Plans**: TBD
+**Plans**: 1
+**Completed**: 2025-12-25
 
 Plans:
-- [ ] 21-01: TBD (run /gsd:plan-phase 21 to break down)
+- [x] 21-01: README with build-from-URL docker-compose examples (2 tasks)
 
 ## Completed Milestones
 
@@ -154,6 +155,6 @@ See [milestones/v2.4-ROADMAP.md](milestones/v2.4-ROADMAP.md) for full details.
 | 18. Playlist Builder | v2.4 | 1/1 | Complete | 2025-12-24 |
 | 19. Flow Integration | v2.4 | 1/1 | Complete | 2025-12-24 |
 | 20. Remove CI/CD | v2.5 | 1/1 | Complete | 2025-12-25 |
-| 21. Local Build Docs | v2.5 | 0/? | Not started | - |
+| 21. Local Build Docs | v2.5 | 1/1 | Complete | 2025-12-25 |
 
-**v1.0 Complete** — **v2.0 Complete** — **v2.1 Complete** — **v2.2 Complete** — **v2.3 Complete** — **v2.4 Complete**
+**v1.0 Complete** — **v2.0 Complete** — **v2.1 Complete** — **v2.2 Complete** — **v2.3 Complete** — **v2.4 Complete** — **v2.5 Complete**

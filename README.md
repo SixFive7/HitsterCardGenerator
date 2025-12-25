@@ -2,9 +2,7 @@
 
 **Generate printable QR code cards for your custom Hitster music game**
 
-[![Build](https://github.com/SixFive7/HitsterCardGenerator/actions/workflows/release.yml/badge.svg)](https://github.com/SixFive7/HitsterCardGenerator/actions/workflows/release.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Docker](https://img.shields.io/badge/docker-ghcr.io%2Fsixfive7%2Fhistercardgenerator-blue)](https://ghcr.io/sixfive7/histercardgenerator)
 
 Upload a CSV of songs, match them to Spotify tracks, customize your card colors, and export a PDF ready for printing and cutting. Perfect for creating custom Hitster decks with your favorite music!
 
@@ -12,15 +10,25 @@ Upload a CSV of songs, match them to Spotify tracks, customize your card colors,
 
 ## Quick Start
 
+```yaml
+# docker-compose.yml
+services:
+  hitster:
+    build: https://github.com/SixFive7/HitsterCardGenerator.git
+    container_name: hitster-card-generator
+    ports:
+      - "8080:8080"
+    environment:
+      TZ: Europe/Amsterdam
+      PUID: 1000
+      PGID: 1000
+      SPOTIFY_CLIENT_ID: your_client_id_here
+      SPOTIFY_CLIENT_SECRET: your_client_secret_here
+    restart: unless-stopped
+```
+
 ```bash
-docker run -d \
-  -p 8080:8080 \
-  -e TZ=Europe/Amsterdam \
-  -e PUID=1000 \
-  -e PGID=1000 \
-  -e SPOTIFY_CLIENT_ID=your_client_id \
-  -e SPOTIFY_CLIENT_SECRET=your_client_secret \
-  ghcr.io/sixfive7/histercardgenerator:latest
+docker compose up -d
 ```
 
 Then open http://localhost:8080 in your browser.
@@ -43,31 +51,6 @@ Then open http://localhost:8080 in your browser.
 
 ## Deployment
 
-### Simple Setup (Direct Port)
-
-The quickest way to get running. Exposes the app on port 8080.
-
-```yaml
-# docker-compose.yml
-services:
-  hitster:
-    image: ghcr.io/sixfive7/histercardgenerator:latest
-    container_name: hitster
-    restart: unless-stopped
-    ports:
-      - "8080:8080"              # Access at http://localhost:8080
-    environment:
-      TZ: Europe/Amsterdam
-      PUID: 1000
-      PGID: 1000
-      SPOTIFY_CLIENT_ID: your_client_id_here
-      SPOTIFY_CLIENT_SECRET: your_client_secret_here
-```
-
-```bash
-docker compose up -d
-```
-
 ### Traefik Setup (Reverse Proxy)
 
 For production with SSL. No port exposure - Traefik handles routing.
@@ -76,9 +59,8 @@ For production with SSL. No port exposure - Traefik handles routing.
 # docker-compose.yml
 services:
   hitster:
-    image: ghcr.io/sixfive7/histercardgenerator:latest
-    container_name: hitster
-    restart: unless-stopped
+    build: https://github.com/SixFive7/HitsterCardGenerator.git
+    container_name: hitster-card-generator
     environment:
       TZ: Europe/Amsterdam
       PUID: 1000
@@ -89,9 +71,10 @@ services:
       traefik.enable: true
       traefik.http.routers.hitster.rule: Host(`hitster.yourdomain.com`)
       traefik.http.services.hitster.loadbalancer.server.port: 8080
+    restart: unless-stopped
 ```
 
-> **Multi-architecture support:** The image supports both AMD64 (Intel/AMD) and ARM64 (Apple Silicon, Raspberry Pi).
+> **Multi-architecture:** Builds on both AMD64 (Intel/AMD) and ARM64 (Apple Silicon, Raspberry Pi).
 
 ---
 
