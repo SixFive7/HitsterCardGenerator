@@ -56,9 +56,7 @@ Songs that can't be found show clearly as "Not found" — the user can skip them
 
 The roadmap suggested OAuth redirect flow, but the actual need is simpler: host provides credentials, users just see the matching UI. This reuses the SpotifyService from v1.0 which already implements Client Credentials flow and smart track selection (preferring albums over singles, avoiding remasters).
 
-User provided Spotify API credentials to store in project:
-- Client ID: ***REMOVED***
-- Client Secret: ***REMOVED***
+User provided Spotify API credentials via environment variables (see .env.example).
 
 </notes>
 
