@@ -230,7 +230,29 @@
 
         <!-- Animated Music Note -->
         <div class="flex justify-center mb-8">
-          <div class="text-8xl animate-bounce">🎵</div>
+          <div class="animate-bounce">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="128" height="128">
+              <defs>
+                <linearGradient id="rainbow-hero" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#FF0000"/>
+                  <stop offset="17%" stop-color="#FF8000"/>
+                  <stop offset="33%" stop-color="#FFFF00"/>
+                  <stop offset="50%" stop-color="#00FF00"/>
+                  <stop offset="67%" stop-color="#0080FF"/>
+                  <stop offset="83%" stop-color="#8000FF"/>
+                  <stop offset="100%" stop-color="#FF00FF"/>
+                </linearGradient>
+              </defs>
+              <g fill="url(#rainbow-hero)">
+                <ellipse cx="8" cy="24" rx="4" ry="3" transform="rotate(-20 8 24)"/>
+                <ellipse cx="22" cy="21" rx="4" ry="3" transform="rotate(-20 22 21)"/>
+                <rect x="11" y="5" width="2.5" height="19" rx="1"/>
+                <rect x="25" y="2" width="2.5" height="19" rx="1"/>
+                <polygon points="11,5 13.5,5 27.5,2 25,2"/>
+                <polygon points="11,9 13.5,9 27.5,6 25,6"/>
+              </g>
+            </svg>
+          </div>
         </div>
 
         <!-- Tagline -->

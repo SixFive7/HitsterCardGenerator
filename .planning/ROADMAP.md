@@ -9,23 +9,24 @@
 - ✅ [v2.3 Containerization](milestones/v2.3-ROADMAP.md) (Phases 13-16) - SHIPPED 2025-12-24
 - ✅ [v2.4 Features](milestones/v2.4-ROADMAP.md) (Phases 17-19) - SHIPPED 2025-12-24
 - ✅ [v2.5 Self-Hosting](milestones/v2.5-ROADMAP.md) (Phases 20-21) - SHIPPED 2025-12-25
-- 🚧 **v2.6 Improvements** (Phase 22) - In progress
+- ✅ [v2.6 Improvements](milestones/v2.6-ROADMAP.md) (Phase 22) - SHIPPED 2025-12-25
 
 ## Current Milestone
 
-### 🚧 v2.6 Improvements (In Progress)
+No active milestone. Ready for next milestone.
 
-**Milestone Goal:** Add branded favicon and update main page music note with rainbow gradient.
+## Completed Milestones (Recent)
 
-#### Phase 22: Branding
+<details>
+<summary>✅ v2.6 Improvements (Phase 22) - SHIPPED 2025-12-25</summary>
 
-**Goal**: Add gradient favicon and update main page music note with rainbow gradient
-**Depends on**: Phase 21 (v2.5 complete)
-**Research**: Unlikely (internal work - SVG defined, standard patterns)
-**Plans**: TBD
+Add branded favicon and update main page music note with rainbow gradient.
 
-Plans:
-- [ ] 22-01: TBD (run /gsd:plan-phase 22 to break down)
+- [x] **Phase 22: Branding** - Gradient favicon + SVG music note (1 plan)
+
+**Total:** 1 phase, 1 plan
+
+</details>
 
 ## Completed Milestones
 
@@ -159,4 +160,4 @@ See [milestones/v2.4-ROADMAP.md](milestones/v2.4-ROADMAP.md) for full details.
 | 19. Flow Integration | v2.4 | 1/1 | Complete | 2025-12-24 |
 | 20. Remove CI/CD | v2.5 | 1/1 | Complete | 2025-12-25 |
 | 21. Local Build Docs | v2.5 | 1/1 | Complete | 2025-12-25 |
-| 22. Branding | v2.6 | 0/? | Not started | - |
+| 22. Branding | v2.6 | 1/1 | Complete | 2025-12-25 |
