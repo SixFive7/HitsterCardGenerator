@@ -19,12 +19,12 @@
 
 ## Current Position
 
-Phase: 19 of 19 (Flow Integration)
-Plan: 1 of 1 in current phase
-Status: Phase complete - Milestone v2.4 complete
-Last activity: 2025-12-24 - Completed 19-01-PLAN.md
+Phase: 20 of 21 (Remove CI/CD)
+Plan: Not started
+Status: Ready to plan
+Last activity: 2025-12-25 - Milestone v2.5 created
 
-Progress: ██████████ 100%
+Progress: ░░░░░░░░░░ 0%
 
 ## Performance Metrics
 
@@ -125,9 +125,10 @@ Drift notes: None
 - Milestone v2.2 archived: 2025-12-23
 - Milestone v2.3 created: Containerization (Dev Experience + Docker + CI/CD + multi-arch), 4 phases (Phase 13-16)
 - Milestone v2.4 created: Features - Playlist Builder as CSV alternative, 3 phases (Phase 17-19)
+- Milestone v2.5 created: Self-Hosting - Remove CI/CD and GHCR dependency, 2 phases (Phase 20-21)
 
 ## Session Continuity
 
-Last session: 2025-12-24
-Stopped at: Completed 19-01-PLAN.md (Phase 19 + Milestone v2.4 complete)
+Last session: 2025-12-25
+Stopped at: Milestone v2.5 initialization
 Resume file: None

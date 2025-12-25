@@ -8,12 +8,33 @@
 - ✅ [v2.2 Polish](milestones/v2.2-ROADMAP.md) (Phase 12) - SHIPPED 2025-12-22
 - ✅ [v2.3 Containerization](milestones/v2.3-ROADMAP.md) (Phases 13-16) - SHIPPED 2025-12-24
 - ✅ [v2.4 Features](milestones/v2.4-ROADMAP.md) (Phases 17-19) - SHIPPED 2025-12-24
+- 🚧 **v2.5 Self-Hosting** - Phases 20-21 (in progress)
 
 ## Current Milestone
 
-No active milestone. All planned milestones complete.
+### 🚧 v2.5 Self-Hosting (In Progress)
 
-Run `/gsd:new-milestone` to plan the next milestone.
+**Milestone Goal:** Remove CI/CD pipeline and registry dependency - users build locally from any git source.
+
+#### Phase 20: Remove CI/CD
+
+**Goal**: Delete release.yml workflow and create .env.example for clearer setup
+**Depends on**: Previous milestone complete
+**Research**: Unlikely (file deletion + simple config)
+**Plans**: TBD
+
+Plans:
+- [ ] 20-01: TBD (run /gsd:plan-phase 20 to break down)
+
+#### Phase 21: Local Build Docs
+
+**Goal**: Update README for clone + docker compose build workflow
+**Depends on**: Phase 20
+**Research**: Unlikely (documentation only)
+**Plans**: TBD
+
+Plans:
+- [ ] 21-01: TBD (run /gsd:plan-phase 21 to break down)
 
 ## Completed Milestones
 
@@ -131,5 +152,7 @@ See [milestones/v2.4-ROADMAP.md](milestones/v2.4-ROADMAP.md) for full details.
 | 17. Spotify Search | v2.4 | 1/1 | Complete | 2025-12-24 |
 | 18. Playlist Builder | v2.4 | 1/1 | Complete | 2025-12-24 |
 | 19. Flow Integration | v2.4 | 1/1 | Complete | 2025-12-24 |
+| 20. Remove CI/CD | v2.5 | 0/? | Not started | - |
+| 21. Local Build Docs | v2.5 | 0/? | Not started | - |
 
 **v1.0 Complete** — **v2.0 Complete** — **v2.1 Complete** — **v2.2 Complete** — **v2.3 Complete** — **v2.4 Complete**
