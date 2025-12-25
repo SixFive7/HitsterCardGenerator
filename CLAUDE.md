@@ -21,3 +21,12 @@ A .NET 10 web application that generates printable PDF cards for a custom Hitste
 ## Documentation
 
 When making any changes to the project ensure the README.md is updated to reflect those changes.
+
+## Visual Verification
+
+Use Chrome DevTools MCP tools for visual verification instead of human checkpoints:
+- `mcp__chrome-devtools__take_screenshot` - Capture page/element screenshots
+- `mcp__chrome-devtools__take_snapshot` - Get accessibility tree snapshot
+- `mcp__chrome-devtools__navigate_page` - Navigate to URLs for testing
+
+Use these to verify UI changes yourself rather than asking the user to check.
