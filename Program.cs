@@ -1,5 +1,7 @@
 ﻿using HitsterCardGenerator.Services;
 using HitsterCardGenerator.Endpoints;
+using HitsterCardGenerator.Data;
+using HitsterCardGenerator.Repositories;
 using QuestPDF.Infrastructure;
 
 // Set QuestPDF community license
@@ -10,6 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Register services for dependency injection
 builder.Services.AddSingleton<GenreValidator>();
 builder.Services.AddSingleton<CsvParser>();
+
+// Add LiteDB database
+builder.Services.Configure<LiteDbOptions>(
+    builder.Configuration.GetSection("LiteDbOptions"));
+builder.Services.AddSingleton<ILiteDbContext, LiteDbContext>();
+builder.Services.AddSingleton<IPlaylistRepository, PlaylistRepository>();
+builder.Services.AddSingleton<ITrackRepository, TrackRepository>();
 
 // Add memory cache and card preview cache
 builder.Services.AddMemoryCache();
