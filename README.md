@@ -168,6 +168,34 @@ Then open http://localhost:5173 for the Vite dev server.
 
 The project includes a devcontainer configuration. Open in VS Code with the Dev Containers extension, and everything is pre-configured.
 
+### E2E Testing
+
+The project includes an E2E test procedure that can be executed using Chrome DevTools MCP tools.
+
+**Test File:**
+- `tests/e2e-test-procedure.md` - Complete test procedure with steps
+
+**Running Tests:**
+
+1. Start the application:
+   ```bash
+   dotnet run
+   ```
+
+2. Use Chrome DevTools MCP to execute the test procedure:
+   - Open the test procedure file
+   - Execute each step using the appropriate MCP tool
+   - Verify expected outcomes at each step
+
+**Test Coverage:**
+- Landing page load and API connection
+- CSV file upload and validation
+- Spotify track matching
+- Card preview with carousel
+- Card flip functionality
+- PDF export
+- Flow restart (Start New Batch)
+
 ---
 
 ## License
