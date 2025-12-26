@@ -19,7 +19,7 @@
 ## Files Created/Modified
 
 - `.dockerignore` - Excludes bin/, obj/, node_modules/, .git/, .vs/, .planning/, .devcontainer/, wwwroot/
-- `Program.cs` - Removed `app.Urls.Add("http://localhost:5000")` line
+- `Program.cs` - Removed `app.Urls.Add("http://localhost:5657")` line
 - `Dockerfile` - Multi-stage build (sdk:10.0 → aspnet:10.0), Node.js installation, $APP_UID user, port 8080
 
 ## Decisions Made

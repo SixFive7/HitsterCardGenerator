@@ -70,7 +70,7 @@ The user accepts running `--dangerously-skip-permissions` without firewall restr
     "ghcr.io/devcontainers/features/node:1": { "version": "20" },
     "ghcr.io/anthropics/devcontainer-features/claude-code:1": {}
   },
-  "forwardPorts": [5000],
+  "forwardPorts": [5657],
   "mounts": [
     "source=hitster-claude-config,target=/home/vscode/.claude,type=volume"
   ],
@@ -152,7 +152,7 @@ Verified patterns from official sources:
     "ghcr.io/devcontainers/features/node:1": { "version": "20" },
     "ghcr.io/anthropics/devcontainer-features/claude-code:1": {}
   },
-  "forwardPorts": [5000],
+  "forwardPorts": [5657],
   "mounts": [
     "source=hitster-claude-config,target=/home/vscode/.claude,type=volume"
   ],

@@ -50,7 +50,7 @@ None - plan executed successfully.
 - All success criteria met:
   - `dotnet build` triggers npm install and npm build
   - wwwroot/ contains Vite output (index.html, assets/)
-  - `dotnet run` starts server and app works at http://localhost:5000
+  - `dotnet run` starts server and app works at http://localhost:5657
   - No manual steps required between git clone and running app
 - Phase 11 complete, v2.1 milestone ready for completion
 

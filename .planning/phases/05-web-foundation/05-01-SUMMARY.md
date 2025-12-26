@@ -1,6 +1,6 @@
 # Phase 5 Plan 1: Web SDK & Minimal API Foundation Summary
 
-**Minimal API with health endpoints on port 5000, service DI registration, and OpenAPI documentation**
+**Minimal API with health endpoints on port 5657, service DI registration, and OpenAPI documentation**
 
 ## Performance
 

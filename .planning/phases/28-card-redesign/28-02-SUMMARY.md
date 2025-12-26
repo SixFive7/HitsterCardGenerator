@@ -32,7 +32,7 @@ Update Svelte components to pass album data to the card preview API and verify t
 
 ### Visual Verification (Tasks 7-12)
 - Application built successfully
-- Navigated to http://localhost:5000
+- Navigated to http://localhost:5657
 - Used playlist builder to add "Hey Jude" by The Beatles
 - Verified front card design:
   - Genre background color (pink for Pop) fills card

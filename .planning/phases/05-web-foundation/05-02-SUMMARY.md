@@ -15,7 +15,7 @@
 - Svelte 5 + Vite 6 project scaffolded with TypeScript
 - Tailwind CSS v4 configured with @tailwindcss/vite plugin
 - Custom theme with Spotify-inspired colors (green, coral, dark surface)
-- Vite proxy configured to forward /api/* to .NET backend on port 5000
+- Vite proxy configured to forward /api/* to .NET backend on port 5657
 - Animated landing page with gradient title, bouncing music note, feature cards
 - API health check with visual status indicator (loading/connected/error)
 - Svelte 5 runes ($state, $effect) for reactive state management

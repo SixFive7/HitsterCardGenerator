@@ -47,7 +47,7 @@
         {
             // Full development environment - starts both servers with F5
             // Access frontend at http://localhost:5173 (HMR enabled)
-            // API available at http://localhost:5000 (proxied by Vite)
+            // API available at http://localhost:5657 (proxied by Vite)
             "name": "Full Stack (F5)",
             "configurations": [".NET API (Debug)", "Vite Dev Server"],
             "stopAll": true,

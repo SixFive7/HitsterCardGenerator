@@ -7,7 +7,7 @@
 - Created devcontainer.json with .NET 10 + Node.js 20 + Claude Code
 - Configured volume mount for Claude config persistence
 - Added VS Code extensions for C#, Svelte, Tailwind CSS
-- Set up port forwarding for API (5000) and Vite (5173)
+- Set up port forwarding for API (5657) and Vite (5173)
 
 ## Files Created/Modified
 

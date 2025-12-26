@@ -232,11 +232,11 @@
   // Makes container ports accessible from the host machine.
   // VS Code automatically forwards these when the container starts.
   //
-  // 5000: .NET Minimal API backend (configured in Properties/launchSettings.json)
-  //       Access via http://localhost:5000 from host browser
+  // 5657: .NET Minimal API backend (configured in Properties/launchSettings.json)
+  //       Access via http://localhost:5657 from host browser
   //
   // 5173: Vite dev server for Svelte frontend (configured in web/vite.config.ts)
-  //       Only needed during development; production build is served by .NET on port 5000
+  //       Only needed during development; production build is served by .NET on port 5657
   //
   // onAutoForward options:
   //   - "notify": Show notification when port becomes active (non-intrusive)
@@ -244,9 +244,9 @@
   //   - "silent": Forward silently (might miss that server started)
   //   - "ignore": Don't forward (use if port conflicts with host)
   // ═══════════════════════════════════════════════════════════════════════════════════════════════
-  "forwardPorts": [5000, 5173],
+  "forwardPorts": [5657, 5173],
   "portsAttributes": {
-    "5000": {"label": ".NET API", "onAutoForward": "notify"},
+    "5657": {"label": ".NET API", "onAutoForward": "notify"},
     "5173": {"label": "Vite Dev Server", "onAutoForward": "notify"}
   },
   // Ignore all other auto-detected ports (Chrome debug ports, ephemeral ports, etc.)

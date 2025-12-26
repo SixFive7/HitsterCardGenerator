@@ -143,7 +143,7 @@
 - Configured devcontainer with .NET 10 + Node.js 20 + Claude Code
 - Volume mount for Claude config persistence across rebuilds
 - VS Code extensions for C#, Svelte, Tailwind CSS
-- Port forwarding for API (5000) and Vite (5173)
+- Port forwarding for API (5657) and Vite (5173)
 
 **Stats:**
 

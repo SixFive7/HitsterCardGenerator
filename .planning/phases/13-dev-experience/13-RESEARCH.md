@@ -34,8 +34,8 @@ Key finding: The current `NpmBuild` target runs unconditionally on every build, 
 ### Already Configured (Project Context)
 | Component | Port | Purpose |
 |-----------|------|---------|
-| .NET API | 5000 | Backend serving API endpoints |
-| Vite dev server | 5173 | Frontend with HMR, proxies /api to 5000 |
+| .NET API | 5657 | Backend serving API endpoints |
+| Vite dev server | 5173 | Frontend with HMR, proxies /api to 5657 |
 | wwwroot | - | Static files output for Release builds |
 </standard_stack>
 
@@ -159,7 +159,7 @@ Key finding: The current `NpmBuild` target runs unconditionally on every build, 
 **Warning signs:** "WebSocket connection failed" in browser console
 
 ### Pitfall 4: Debug Launch Opens Production URL
-**What goes wrong:** serverReadyAction opens .NET port (5000) instead of Vite (5173)
+**What goes wrong:** serverReadyAction opens .NET port (5657) instead of Vite (5173)
 **Why it happens:** Pattern matches .NET's "Now listening" message
 **How to avoid:** Either: (a) remove serverReadyAction for API-only debugging, or (b) configure it to open Vite port
 **Warning signs:** Browser shows "no static files" or API JSON instead of UI
@@ -320,7 +320,7 @@ Key finding: The current `NpmBuild` target runs unconditionally on every build, 
    - Recommendation: Test with current Vite version; adjust patterns if needed
 
 2. **Should serverReadyAction open Vite port (5173) or be disabled?**
-   - What we know: Current config opens .NET port (5000) which shows API, not UI
+   - What we know: Current config opens .NET port (5657) which shows API, not UI
    - What's unclear: User preference - some want auto-open, some prefer manual
    - Recommendation: Document both options, let user choose in implementation
 </open_questions>

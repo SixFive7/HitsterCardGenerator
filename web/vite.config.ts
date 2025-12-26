@@ -14,7 +14,7 @@ export default defineConfig({
     host: true, // Bind to 0.0.0.0 so host can access via port forwarding
     proxy: {
       '/api': {
-        target: 'http://localhost:5000',
+        target: 'http://localhost:5657',
         changeOrigin: true
       }
     }

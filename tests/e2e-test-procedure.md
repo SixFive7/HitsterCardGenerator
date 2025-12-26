@@ -14,7 +14,7 @@ This document describes how to run a complete E2E test of the Hitster Card Gener
 
 **Tool:** `mcp__chrome-devtools__navigate_page`
 **Parameters:**
-- URL: http://localhost:5000
+- URL: http://localhost:5657
 - type: url
 
 **Expected:** Page loads successfully
