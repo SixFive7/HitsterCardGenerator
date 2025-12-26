@@ -34,10 +34,10 @@ Plans:
 **Goal:** RESTful API endpoints for playlist management
 **Depends on:** Phase 32
 **Research:** Unlikely (internal patterns)
-**Plans:** TBD
+**Plans:** 1
 
 Plans:
-- [ ] 33-01: TBD
+- [x] 33-01: Playlist CRUD endpoints and track management
 
 #### Phase 34: Playlist Selection UI
 **Goal:** Playlist selection page with browser UUID identity
@@ -250,7 +250,7 @@ See [milestones/v2.4-ROADMAP.md](milestones/v2.4-ROADMAP.md) for full details.
 | 30. Automated E2E Testing | v2.8 | 1/1 | Complete | 2025-12-26 |
 | 31. SkiaSharp Rendering | v2.9 | 1/1 | Complete | 2025-12-26 |
 | 32. LiteDB Setup | v3.0 | 1/1 | Complete | 2025-12-26 |
-| 33. Playlist CRUD API | v3.0 | 0/? | Not started | - |
+| 33. Playlist CRUD API | v3.0 | 1/1 | Complete | 2025-12-26 |
 | 34. Playlist Selection UI | v3.0 | 0/? | Not started | - |
 | 35. Flow Integration | v3.0 | 0/? | Not started | - |
 | 36. UX Polish | v3.0 | 0/? | Not started | - |

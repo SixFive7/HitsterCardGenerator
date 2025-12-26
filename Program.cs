@@ -54,6 +54,9 @@ app.MapExportEndpoints();
 // Map card preview endpoints
 app.MapCardPreviewEndpoints();
 
+// Map playlist endpoints
+app.MapPlaylistEndpoints();
+
 // SPA fallback - serve index.html for client-side routing
 app.MapFallbackToFile("index.html");
 
