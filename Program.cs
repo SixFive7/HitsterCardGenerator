@@ -11,6 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<GenreValidator>();
 builder.Services.AddSingleton<CsvParser>();
 
+// Add memory cache and card preview cache
+builder.Services.AddMemoryCache();
+builder.Services.AddSingleton<CardPreviewCache>();
+
 // Add OpenAPI services
 builder.Services.AddOpenApi();
 
@@ -37,6 +41,9 @@ app.MapSearchEndpoints();
 
 // Map export endpoints
 app.MapExportEndpoints();
+
+// Map card preview endpoints
+app.MapCardPreviewEndpoints();
 
 // SPA fallback - serve index.html for client-side routing
 app.MapFallbackToFile("index.html");
