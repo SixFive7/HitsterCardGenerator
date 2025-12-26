@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.7.0] - 2025-12-26
+
+v2.7 is a bug fix release addressing UI responsiveness issues in the card preview.
+
+### Fixed
+- Card flip button now correctly flips the current card (was passing MouseEvent as index)
+- Color palette selection now updates card preview in real-time (fixed Svelte 5 reactive binding)
+
+### Removed
+- Inclusion/exclusion feature removed (all matched cards are now included by default)
+
 ## [2.6.0] - 2025-12-25
 
 v2.6 adds visual branding with a colorful rainbow gradient theme for the favicon and landing page.
