@@ -12,9 +12,11 @@
     year: number
     genre: string
     backgroundColor: string
+    albumImageUrl?: string
+    albumName?: string
   }
 
-  let { trackId, title, artist, year, genre, backgroundColor }: Props = $props()
+  let { trackId, title, artist, year, genre, backgroundColor, albumImageUrl, albumName }: Props = $props()
 </script>
 
 <div class="card-front">
@@ -26,6 +28,8 @@
     {year}
     {genre}
     {backgroundColor}
+    {albumImageUrl}
+    {albumName}
   />
 </div>
 

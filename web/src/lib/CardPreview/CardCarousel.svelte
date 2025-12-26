@@ -47,6 +47,8 @@
     year: number
     genre: string
     backgroundColor: string
+    albumImageUrl?: string
+    albumName?: string
   }) {
     fetch(`/api/card-preview/${side}`, {
       method: 'POST',
@@ -69,7 +71,9 @@
       artist: card.originalArtist,
       year: card.originalYear,
       genre: card.originalGenre,
-      backgroundColor
+      backgroundColor,
+      albumImageUrl: card.match?.albumImageUrl,
+      albumName: card.match?.albumName
     }
 
     preloadCardImage('front', cardData)
@@ -167,6 +171,8 @@
                   year={card.originalYear}
                   genre={card.originalGenre}
                   backgroundColor={getGenreColor(card.originalGenre)}
+                  albumImageUrl={card.match?.albumImageUrl}
+                  albumName={card.match?.albumName}
                 />
               </div>
 
@@ -179,6 +185,8 @@
                   year={card.originalYear}
                   genre={card.originalGenre}
                   backgroundColor={getGenreColor(card.originalGenre)}
+                  albumImageUrl={card.match?.albumImageUrl}
+                  albumName={card.match?.albumName}
                 />
               </div>
             </div>

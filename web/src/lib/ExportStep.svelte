@@ -61,7 +61,9 @@
           title: result.match!.trackName,
           artist: result.match!.artistName,
           year: result.originalYear,
-          genre: result.originalGenre
+          genre: result.originalGenre,
+          albumImageUrl: result.match!.albumImageUrl,
+          albumName: result.match!.albumName
         })),
         genreColors: genreColors,
         cuttingLines: cuttingLineStyle

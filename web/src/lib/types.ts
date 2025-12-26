@@ -81,4 +81,6 @@ export interface ExportCard {
   artist: string
   year: number
   genre: string
+  albumImageUrl?: string
+  albumName?: string
 }

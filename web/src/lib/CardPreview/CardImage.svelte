@@ -13,9 +13,11 @@
     year: number
     genre: string
     backgroundColor: string
+    albumImageUrl?: string
+    albumName?: string
   }
 
-  let { side, trackId, title, artist, year, genre, backgroundColor }: Props = $props()
+  let { side, trackId, title, artist, year, genre, backgroundColor, albumImageUrl, albumName }: Props = $props()
 
   // State for image loading
   let imageUrl = $state<string | null>(null)
@@ -35,6 +37,8 @@
     const currentYear = year
     const currentGenre = genre
     const currentBgColor = backgroundColor
+    const currentAlbumImageUrl = albumImageUrl
+    const currentAlbumName = albumName
 
     // Reset state
     loading = true
@@ -48,7 +52,7 @@
     }
 
     // Fetch the card image from server
-    fetchCardImage(currentSide, currentTrackId, currentTitle, currentArtist, currentYear, currentGenre, currentBgColor)
+    fetchCardImage(currentSide, currentTrackId, currentTitle, currentArtist, currentYear, currentGenre, currentBgColor, currentAlbumImageUrl, currentAlbumName)
   })
 
   async function fetchCardImage(
@@ -58,7 +62,9 @@
     artist: string,
     year: number,
     genre: string,
-    backgroundColor: string
+    backgroundColor: string,
+    albumImageUrl?: string,
+    albumName?: string
   ) {
     try {
       const response = await fetch(`/api/card-preview/${side}`, {
@@ -72,7 +78,9 @@
           artist,
           year,
           genre,
-          backgroundColor
+          backgroundColor,
+          albumImageUrl,
+          albumName
         })
       })
 
