@@ -13,12 +13,59 @@
 - ✅ [v2.7 Fixes](milestones/v2.7-ROADMAP.md) (Phases 23-25) - SHIPPED 2025-12-26
 - ✅ [v2.8 Simplification](milestones/v2.8-ROADMAP.md) (Phases 26-30) - SHIPPED 2025-12-26
 - ✅ [v2.9 SkiaSharp Rendering](milestones/v2.9-ROADMAP.md) (Phase 31) - SHIPPED 2025-12-26
+- 🚧 [v3.0 Playlist Management](milestones/v3.0-ROADMAP.md) (Phases 32-36) - IN PROGRESS
 
 ## Current Milestone
 
-No active milestone. All milestones through v2.9 have been shipped.
+### 🚧 v3.0 Playlist Management (In Progress)
 
-Use `/gsd:new-milestone` to create the next milestone when ready.
+**Milestone Goal:** Multi-playlist management with server-side LiteDB persistence and browser UUID identity.
+
+#### Phase 32: LiteDB Setup
+**Goal:** Add LiteDB and create data model with repository pattern
+**Depends on:** v2.9 complete
+**Research:** Likely (new library integration)
+**Research topics:** LiteDB setup, document storage patterns
+**Plans:** TBD
+
+Plans:
+- [ ] 32-01: TBD
+
+#### Phase 33: Playlist CRUD API
+**Goal:** RESTful API endpoints for playlist management
+**Depends on:** Phase 32
+**Research:** Unlikely (internal patterns)
+**Plans:** TBD
+
+Plans:
+- [ ] 33-01: TBD
+
+#### Phase 34: Playlist Selection UI
+**Goal:** Playlist selection page with browser UUID identity
+**Depends on:** Phase 33
+**Research:** Unlikely (internal patterns)
+**Plans:** TBD
+
+Plans:
+- [ ] 34-01: TBD
+
+#### Phase 35: Flow Integration
+**Goal:** Connect existing flow to playlist persistence
+**Depends on:** Phase 34
+**Research:** Unlikely (internal patterns)
+**Plans:** TBD
+
+Plans:
+- [ ] 35-01: TBD
+
+#### Phase 36: UX Polish
+**Goal:** Error handling, loading states, edge cases
+**Depends on:** Phase 35
+**Research:** Unlikely (internal patterns)
+**Plans:** TBD
+
+Plans:
+- [ ] 36-01: TBD
 
 ## Completed Milestones (Recent)
 
@@ -203,3 +250,8 @@ See [milestones/v2.4-ROADMAP.md](milestones/v2.4-ROADMAP.md) for full details.
 | 29. Design Polish | v2.8 | 1/1 | Complete | 2025-12-26 |
 | 30. Automated E2E Testing | v2.8 | 1/1 | Complete | 2025-12-26 |
 | 31. SkiaSharp Rendering | v2.9 | 1/1 | Complete | 2025-12-26 |
+| 32. LiteDB Setup | v3.0 | 0/? | Not started | - |
+| 33. Playlist CRUD API | v3.0 | 0/? | Not started | - |
+| 34. Playlist Selection UI | v3.0 | 0/? | Not started | - |
+| 35. Flow Integration | v3.0 | 0/? | Not started | - |
+| 36. UX Polish | v3.0 | 0/? | Not started | - |
