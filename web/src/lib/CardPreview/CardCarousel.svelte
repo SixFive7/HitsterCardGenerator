@@ -1,7 +1,8 @@
 <script lang="ts">
   /**
    * CardCarousel - Embla carousel with CSS 3D flip animation
-   * Each card can be flipped to show front (album art) or back (song info)
+   * Each card can be flipped to show front (QR code) or back (song info)
+   * Uses server-rendered QuestPDF images for pixel-perfect preview
    */
   import emblaCarouselSvelte from 'embla-carousel-svelte'
   import type { EmblaOptionsType, EmblaCarouselType } from 'embla-carousel'
@@ -30,17 +31,85 @@
   let emblaApi = $state<EmblaCarouselType | undefined>(undefined)
   let selectedIndex = $state(0)
 
+  // Extract track ID from Spotify URL
+  function extractTrackId(spotifyUrl: string | undefined): string {
+    if (!spotifyUrl) return ''
+    // URL format: https://open.spotify.com/track/TRACK_ID
+    const match = spotifyUrl.match(/track\/([a-zA-Z0-9]+)/)
+    return match ? match[1] : ''
+  }
+
+  // Preload card images for smooth transitions
+  function preloadCardImage(side: 'front' | 'back', cardData: {
+    trackId: string
+    title: string
+    artist: string
+    year: number
+    genre: string
+    backgroundColor: string
+  }) {
+    fetch(`/api/card-preview/${side}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(cardData),
+      cache: 'force-cache'
+    }).catch(() => {
+      // Silently ignore preload errors
+    })
+  }
+
+  // Preload both sides of a card
+  function preloadCard(card: MatchResult, backgroundColor: string) {
+    const trackId = extractTrackId(card.match?.spotifyUrl)
+    if (!trackId) return
+
+    const cardData = {
+      trackId,
+      title: card.originalTitle,
+      artist: card.originalArtist,
+      year: card.originalYear,
+      genre: card.originalGenre,
+      backgroundColor
+    }
+
+    preloadCardImage('front', cardData)
+    preloadCardImage('back', cardData)
+  }
+
+  // Preload adjacent cards when carousel index changes
+  function preloadAdjacentCards(index: number) {
+    // Preload current card
+    if (cards[index]) {
+      preloadCard(cards[index], getGenreColor(cards[index].originalGenre))
+    }
+
+    // Preload previous card
+    if (index > 0 && cards[index - 1]) {
+      preloadCard(cards[index - 1], getGenreColor(cards[index - 1].originalGenre))
+    }
+
+    // Preload next card
+    if (index < cards.length - 1 && cards[index + 1]) {
+      preloadCard(cards[index + 1], getGenreColor(cards[index + 1].originalGenre))
+    }
+  }
+
   // Initialize embla
   function onEmblaInit(event: CustomEvent<EmblaCarouselType>) {
     emblaApi = event.detail
 
-    // Track selected index
+    // Track selected index and preload adjacent cards
     emblaApi.on('select', () => {
       selectedIndex = emblaApi.selectedScrollSnap()
       if (onIndexChange) {
         onIndexChange(selectedIndex)
       }
+      // Preload adjacent cards for smooth swiping
+      preloadAdjacentCards(selectedIndex)
     })
+
+    // Initial preload
+    preloadAdjacentCards(selectedIndex)
   }
 
   // Sync external currentIndex with embla
@@ -89,20 +158,25 @@
             aria-label="Click to flip card"
           >
             <div class="card-flip-inner">
-              <!-- Front face (album art) -->
+              <!-- Front face (QR code) -->
               <div class="card-face card-face-front">
                 <CardFront
-                  spotifyUrl={card.match?.spotifyUrl || ''}
-                  albumImageUrl={card.match?.albumImageUrl || null}
+                  trackId={extractTrackId(card.match?.spotifyUrl)}
+                  title={card.originalTitle}
+                  artist={card.originalArtist}
+                  year={card.originalYear}
+                  genre={card.originalGenre}
+                  backgroundColor={getGenreColor(card.originalGenre)}
                 />
               </div>
 
               <!-- Back face (song info) -->
               <div class="card-face card-face-back">
                 <CardBack
+                  trackId={extractTrackId(card.match?.spotifyUrl)}
+                  title={card.originalTitle}
                   artist={card.originalArtist}
                   year={card.originalYear}
-                  title={card.originalTitle}
                   genre={card.originalGenre}
                   backgroundColor={getGenreColor(card.originalGenre)}
                 />

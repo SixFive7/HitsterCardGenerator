@@ -19,7 +19,7 @@
 
 Simplify the application by unifying card rendering, hardcoding the color scheme, redesigning cards, and adding automated E2E testing.
 
-- [ ] **Phase 26: Unified Rendering** - Research and implement unified card rendering approach (1/2 plans done)
+- [x] **Phase 26: Unified Rendering** - Research and implement unified card rendering approach (2/2 plans done)
 - [ ] **Phase 27: Simplify Color System** - Remove palette selection, hardcode Spotify palette
 - [ ] **Phase 28: Card Redesign** - New front/back design with centered elements
 - [ ] **Phase 29: Design Polish** - Visual iteration until cards look beautiful
@@ -189,3 +189,4 @@ See [milestones/v2.4-ROADMAP.md](milestones/v2.4-ROADMAP.md) for full details.
 | 23. Remove Inclusion Feature | v2.7 | 1/1 | Complete | 2025-12-26 |
 | 24. Fix Card Flip | v2.7 | 1/1 | Complete | 2025-12-26 |
 | 25. Fix Color Palettes | v2.7 | 1/1 | Complete | 2025-12-26 |
+| 26. Unified Rendering | v2.8 | 2/2 | Complete | 2025-12-26 |
