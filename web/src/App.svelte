@@ -19,9 +19,12 @@
   import {
     getPlaylistState,
     addTrack,
+    addTrackWithData,
     removeTrack,
     updateTrackGenre,
-    clearPlaylist
+    clearPlaylist,
+    loadTracksFromPlaylist,
+    setCurrentPlaylistId
   } from './lib/stores/playlist.svelte'
   import {
     getSelectedPlaylistState,
@@ -72,6 +75,14 @@
   $effect(() => {
     if (apiStatus === 'connected') {
       loadPlaylists()
+    }
+  })
+
+  // Load tracks when selected playlist changes
+  $effect(() => {
+    const playlistId = selectedPlaylistState.selectedPlaylistId
+    if (playlistId && apiStatus === 'connected') {
+      loadTracksFromPlaylist(playlistId)
     }
   })
 
@@ -202,7 +213,27 @@
     }))
   }
 
-  function handleContinueToPreview() {
+  async function handleContinueToPreview() {
+    // Save matched tracks to selected playlist
+    const playlistId = selectedPlaylistState.selectedPlaylistId
+    if (playlistId) {
+      // Save each matched track to the API
+      for (const result of matchResults) {
+        if (result.match) {
+          await addTrackWithData({
+            spotifyId: result.match.trackId,
+            title: result.match.trackName,
+            artist: result.match.artistName,
+            year: result.originalYear,
+            genre: result.originalGenre,
+            albumImageUrl: result.match.albumImageUrl,
+            albumName: result.match.albumName,
+            spotifyUrl: result.match.spotifyUrl
+          }, playlistId)
+        }
+      }
+    }
+
     // Reset current card index
     customizationState.currentCardIndex = 0
     // Clear flipped cards
@@ -436,7 +467,7 @@
           <div>
             <h3 class="text-2xl font-bold text-white mb-4">Search Spotify</h3>
             <SpotifySearch
-              onAddTrack={addTrack}
+              onAddTrack={(track) => addTrack(track, selectedPlaylistState.selectedPlaylistId ?? undefined)}
               playlistTrackIds={new Set(playlistState.tracks.map(t => t.trackId))}
             />
           </div>

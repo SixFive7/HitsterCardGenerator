@@ -52,10 +52,10 @@ Plans:
 **Goal:** Connect existing flow to playlist persistence
 **Depends on:** Phase 34
 **Research:** Unlikely (internal patterns)
-**Plans:** TBD
+**Plans:** 1
 
 Plans:
-- [ ] 35-01: TBD
+- [x] 35-01: Sync card store with API, update CSV/Spotify flows to persist tracks
 
 #### Phase 36: UX Polish
 **Goal:** Error handling, loading states, edge cases
@@ -252,5 +252,5 @@ See [milestones/v2.4-ROADMAP.md](milestones/v2.4-ROADMAP.md) for full details.
 | 32. LiteDB Setup | v3.0 | 1/1 | Complete | 2025-12-26 |
 | 33. Playlist CRUD API | v3.0 | 1/1 | Complete | 2025-12-26 |
 | 34. Playlist Selection UI | v3.0 | 1/1 | Complete | 2025-12-26 |
-| 35. Flow Integration | v3.0 | 0/? | Not started | - |
+| 35. Flow Integration | v3.0 | 1/1 | Complete | 2025-12-26 |
 | 36. UX Polish | v3.0 | 0/? | Not started | - |

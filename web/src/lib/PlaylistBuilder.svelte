@@ -5,7 +5,7 @@
   // Props
   interface Props {
     tracks: PlaylistTrack[]
-    onRemoveTrack: (trackId: string) => void
+    onRemoveTrack: (trackId: string) => void | Promise<void>
     onUpdateGenre: (trackId: string, genre: string) => void
     onContinueToPreview: () => void
   }

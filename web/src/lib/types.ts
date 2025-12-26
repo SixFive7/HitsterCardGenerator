@@ -93,3 +93,22 @@ export interface Playlist {
   createdAt: string
   updatedAt: string
 }
+
+// API response types for playlist detail
+export interface TrackDto {
+  id: string
+  spotifyId: string
+  title: string
+  artist: string
+  year: number
+  genre: string
+  albumArtUrl: string | null
+}
+
+export interface PlaylistDetail {
+  id: string
+  name: string
+  tracks: TrackDto[]
+  createdAt: string
+  updatedAt: string
+}

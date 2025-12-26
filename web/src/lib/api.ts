@@ -1,4 +1,4 @@
-import type { CsvUploadResponse, MatchResponse, Song, ExportRequest, SearchResult, Playlist } from './types'
+import type { CsvUploadResponse, MatchResponse, Song, ExportRequest, SearchResult, Playlist, PlaylistDetail, TrackDto } from './types'
 import { getBrowserId } from './stores/browser.svelte'
 
 /**
@@ -105,4 +105,55 @@ export async function getPlaylist(id: string): Promise<Playlist> {
   })
   if (!response.ok) throw new Error('Failed to get playlist')
   return response.json()
+}
+
+export async function getPlaylistDetail(id: string): Promise<PlaylistDetail> {
+  const response = await fetch(`/api/playlists/${encodeURIComponent(id)}`, {
+    headers: getHeaders()
+  })
+  if (!response.ok) throw new Error('Failed to get playlist')
+  return response.json()
+}
+
+export interface AddTrackRequest {
+  spotifyId: string
+  title: string
+  artist: string
+  year: number
+  genre: string
+  albumArtUrl?: string
+}
+
+export interface AddTrackResponse {
+  trackId: string
+  playlistId: string
+  track: TrackDto
+}
+
+export async function addTrackToPlaylist(
+  playlistId: string,
+  track: AddTrackRequest
+): Promise<AddTrackResponse> {
+  const response = await fetch(`/api/playlists/${encodeURIComponent(playlistId)}/tracks`, {
+    method: 'POST',
+    headers: getHeaders('application/json'),
+    body: JSON.stringify({
+      spotifyId: track.spotifyId,
+      title: track.title,
+      artist: track.artist,
+      year: track.year,
+      genre: track.genre,
+      albumArtUrl: track.albumArtUrl
+    })
+  })
+  if (!response.ok) throw new Error('Failed to add track to playlist')
+  return response.json()
+}
+
+export async function removeTrackFromPlaylist(playlistId: string, trackId: string): Promise<void> {
+  const response = await fetch(`/api/playlists/${encodeURIComponent(playlistId)}/tracks/${encodeURIComponent(trackId)}`, {
+    method: 'DELETE',
+    headers: getHeaders()
+  })
+  if (!response.ok) throw new Error('Failed to remove track from playlist')
 }

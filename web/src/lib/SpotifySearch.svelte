@@ -5,7 +5,7 @@
 
   // Props
   interface Props {
-    onAddTrack?: (track: SearchResult) => void
+    onAddTrack?: (track: SearchResult) => void | Promise<void>
     playlistTrackIds?: Set<string>
   }
 
