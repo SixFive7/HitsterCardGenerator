@@ -16,7 +16,6 @@
     "@types/node": "^24.10.1",
     "embla-carousel-svelte": "^8.6.0",
     "svelte": "^5.43.8",
-    "svelte-awesome-color-picker": "^4.1.0",
     "svelte-check": "^4.3.4",
     "tailwindcss": "^4.1.18",
     "typescript": "~5.9.3",

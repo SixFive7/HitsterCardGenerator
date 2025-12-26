@@ -1,9 +1,10 @@
 /**
  * Card customization store using Svelte 5 runes
- * Manages genre colors and current card index
+ * Manages genre colors (read-only) and current card index
  */
 
 // Default genre colors ported from Models/GenreColors.cs (35 genres)
+// This is now the only palette - hardcoded Spotify colors
 export const DEFAULT_GENRE_COLORS: Record<string, string> = {
   // Popular genres (30)
   "Rock": "#E63946",
@@ -45,72 +46,20 @@ export const DEFAULT_GENRE_COLORS: Record<string, string> = {
   "Musette": "#EF4135"
 }
 
-// LocalStorage keys
-const STORAGE_KEY_COLORS = 'hitster-genre-colors'
-
-// Load from localStorage
-function loadGenreColors(): Record<string, string> {
-  if (typeof window === 'undefined') return { ...DEFAULT_GENRE_COLORS }
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY_COLORS)
-    if (stored) {
-      return JSON.parse(stored)
-    }
-  } catch (e) {
-    console.error('Failed to load genre colors from localStorage', e)
-  }
-  return { ...DEFAULT_GENRE_COLORS }
-}
-
-// Save to localStorage
-function saveGenreColors(colors: Record<string, string>) {
-  if (typeof window === 'undefined') return
-  try {
-    localStorage.setItem(STORAGE_KEY_COLORS, JSON.stringify(colors))
-  } catch (e) {
-    console.error('Failed to save genre colors to localStorage', e)
-  }
-}
-
-// Create the store state
-let genreColors = $state<Record<string, string>>(loadGenreColors())
+// Create the store state for carousel
 let currentCardIndex = $state<number>(0)
 
 /**
- * Sets a custom color for a genre
- */
-export function setGenreColor(genre: string, color: string) {
-  genreColors[genre] = color
-  saveGenreColors(genreColors)
-}
-
-/**
  * Gets the color for a genre (with fallback to gray)
+ * Now reads directly from DEFAULT_GENRE_COLORS (no customization)
  */
 export function getGenreColor(genre: string): string {
-  return genreColors[genre] || '#808080'
+  return DEFAULT_GENRE_COLORS[genre] || '#808080'
 }
 
-/**
- * Resets all genre colors to defaults
- */
-export function resetGenreColors() {
-  genreColors = { ...DEFAULT_GENRE_COLORS }
-  saveGenreColors(genreColors)
-}
-
-/**
- * Applies a palette to all genres
- */
-export function applyPalette(palette: Record<string, string>) {
-  genreColors = { ...palette }
-  saveGenreColors(genreColors)
-}
-
-// Export reactive state
+// Export reactive state for carousel
 export function getCardCustomizationState() {
   return {
-    get genreColors() { return genreColors },
     get currentCardIndex() { return currentCardIndex },
     set currentCardIndex(value: number) { currentCardIndex = value }
   }
