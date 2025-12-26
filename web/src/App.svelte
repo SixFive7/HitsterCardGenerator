@@ -11,11 +11,7 @@
   import PlaylistBuilder from './lib/PlaylistBuilder.svelte'
   import type { CsvUploadResponse, MatchResult, SpotifyMatch, PlaylistTrack } from './lib/types'
   import {
-    getCardCustomizationState,
-    initializeIncludedCards,
-    toggleCardInclusion,
-    isCardIncluded,
-    getIncludedCount
+    getCardCustomizationState
   } from './lib/stores/cardCustomization.svelte'
   import {
     getPlaylistState,
@@ -131,8 +127,6 @@
   }
 
   function handleContinueToPreview() {
-    // Initialize all cards as included
-    initializeIncludedCards(matchResults.length)
     // Reset current card index
     customizationState.currentCardIndex = 0
     // Clear flipped cards
@@ -144,8 +138,6 @@
   function handleContinueToPreviewFromBuild() {
     // Convert playlist tracks to match results
     matchResults = playlistToMatchResults(playlistState.tracks)
-    // Initialize all cards as included
-    initializeIncludedCards(matchResults.length)
     // Reset current card index
     customizationState.currentCardIndex = 0
     // Clear flipped cards
@@ -174,10 +166,6 @@
     matchError = null
     flowMode = null
     clearPlaylist()
-    // Clear included cards from localStorage (keep genre colors)
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('hitster-included-cards')
-    }
     // Navigate to landing
     currentStep = 'landing'
   }
@@ -195,10 +183,6 @@
     }
   }
 
-  function handleToggleInclude() {
-    toggleCardInclusion(customizationState.currentCardIndex)
-  }
-
   function handleFlipCard(index?: number) {
     const cardIndex = index !== undefined ? index : customizationState.currentCardIndex
     if (flippedCards.has(cardIndex)) {
@@ -213,9 +197,6 @@
   const uniqueGenres = $derived(
     Array.from(new Set(matchResults.map(r => r.originalGenre))).sort()
   )
-
-  // Get included count
-  const includedCount = $derived(getIncludedCount())
 </script>
 
 <main class="min-h-screen bg-gradient-to-br from-[#191414] via-[#282828] to-[#191414] p-8">
@@ -538,14 +519,6 @@
               <span class="text-gray-400">Total Cards:</span>
               <span class="text-white font-bold ml-2">{matchResults.length}</span>
             </div>
-            <div>
-              <span class="text-gray-400">Included:</span>
-              <span class="text-[#1DB954] font-bold ml-2">{includedCount}</span>
-            </div>
-            <div>
-              <span class="text-gray-400">Excluded:</span>
-              <span class="text-[#FF6B6B] font-bold ml-2">{matchResults.length - includedCount}</span>
-            </div>
           </div>
         </div>
 
@@ -565,10 +538,8 @@
             <CardControls
               totalCards={matchResults.length}
               currentIndex={customizationState.currentCardIndex}
-              isIncluded={isCardIncluded(customizationState.currentCardIndex)}
               onPrev={handlePrevCard}
               onNext={handleNextCard}
-              onToggleInclude={handleToggleInclude}
               onFlip={handleFlipCard}
             />
           </div>
@@ -589,10 +560,10 @@
           </button>
           <button
             onclick={handleContinueToExport}
-            disabled={includedCount === 0}
+            disabled={matchResults.length === 0}
             class="bg-[#1DB954] hover:bg-[#1ed760] text-white font-bold px-8 py-3 rounded-full transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
           >
-            Continue to Export {includedCount > 0 ? `(${includedCount} cards)` : ''}
+            Continue to Export ({matchResults.length} cards)
           </button>
         </div>
       </div>
@@ -603,7 +574,7 @@
         <h2 class="text-5xl font-bold text-center mb-8 text-white">Export Your Cards</h2>
 
         <ExportStep
-          matchResults={matchResults.filter((_, index) => isCardIncluded(index))}
+          matchResults={matchResults}
           genreColors={customizationState.genreColors}
           onStartNewBatch={handleStartNewBatch}
         />

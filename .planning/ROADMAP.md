@@ -23,10 +23,10 @@
 **Goal**: Remove "included" button from UI and all code paths
 **Depends on**: Previous milestone complete
 **Research**: Unlikely (internal refactoring)
-**Plans**: TBD
+**Plans**: 1
 
 Plans:
-- [ ] 23-01: TBD (run /gsd:plan-phase 23 to break down)
+- [x] 23-01: Remove inclusion feature from store, types, and UI (3 tasks) - 2025-12-26
 
 #### Phase 24: Fix Card Flip
 
@@ -194,6 +194,6 @@ See [milestones/v2.4-ROADMAP.md](milestones/v2.4-ROADMAP.md) for full details.
 | 20. Remove CI/CD | v2.5 | 1/1 | Complete | 2025-12-25 |
 | 21. Local Build Docs | v2.5 | 1/1 | Complete | 2025-12-25 |
 | 22. Branding | v2.6 | 1/1 | Complete | 2025-12-25 |
-| 23. Remove Inclusion Feature | v2.7 | 0/? | Not started | - |
+| 23. Remove Inclusion Feature | v2.7 | 1/1 | Complete | 2025-12-26 |
 | 24. Fix Card Flip | v2.7 | 0/? | Not started | - |
 | 25. Fix Color Palettes | v2.7 | 0/? | Not started | - |

@@ -64,7 +64,6 @@ export interface MatchResponse {
 
 export interface CardCustomization {
   genreColors: Record<string, string>
-  includedCards: Set<number>
   currentCardIndex: number
 }
 

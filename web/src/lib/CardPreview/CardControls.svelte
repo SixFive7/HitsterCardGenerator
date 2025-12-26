@@ -1,20 +1,18 @@
 <script lang="ts">
   /**
    * CardControls - Navigation and card curation controls
-   * Provides prev/next navigation, card counter, and include/exclude toggle
+   * Provides prev/next navigation, card counter, and flip button
    */
 
   interface Props {
     totalCards: number
     currentIndex: number
-    isIncluded: boolean
     onPrev: () => void
     onNext: () => void
-    onToggleInclude: () => void
     onFlip: () => void
   }
 
-  let { totalCards, currentIndex, isIncluded, onPrev, onNext, onToggleInclude, onFlip }: Props = $props()
+  let { totalCards, currentIndex, onPrev, onNext, onFlip }: Props = $props()
 
   // Computed values
   const isFirstCard = $derived(currentIndex === 0)
@@ -37,32 +35,11 @@
     </button>
   </div>
 
-  <!-- Center: Counter and Include/Exclude toggle -->
+  <!-- Center: Counter and Flip button -->
   <div class="controls-section controls-center">
     <div class="card-counter">
       Card <span class="current">{currentIndex + 1}</span> of <span class="total">{totalCards}</span>
     </div>
-
-    <button
-      class="toggle-button"
-      class:included={isIncluded}
-      class:excluded={!isIncluded}
-      onclick={onToggleInclude}
-      aria-label={isIncluded ? 'Exclude card' : 'Include card'}
-    >
-      {#if isIncluded}
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="20 6 9 17 4 12"></polyline>
-        </svg>
-        <span>Included</span>
-      {:else}
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-        <span>Excluded</span>
-      {/if}
-    </button>
 
     <button
       class="flip-button"
@@ -167,44 +144,6 @@
     color: #999;
   }
 
-  /* Toggle button */
-  .toggle-button {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 20px;
-    border: 2px solid;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-
-  .toggle-button.included {
-    background: #1DB954;
-    border-color: #1DB954;
-    color: white;
-  }
-
-  .toggle-button.included:hover {
-    background: #1ed760;
-    border-color: #1ed760;
-    transform: scale(1.05);
-  }
-
-  .toggle-button.excluded {
-    background: #FF6B6B;
-    border-color: #FF6B6B;
-    color: white;
-  }
-
-  .toggle-button.excluded:hover {
-    background: #ff8888;
-    border-color: #ff8888;
-    transform: scale(1.05);
-  }
-
   /* Flip button */
   .flip-button {
     display: flex;
@@ -240,13 +179,11 @@
     }
 
     .nav-button span,
-    .toggle-button span,
     .flip-button span {
       display: none;
     }
 
     .nav-button,
-    .toggle-button,
     .flip-button {
       padding: 12px;
       justify-content: center;
