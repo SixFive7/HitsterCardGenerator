@@ -11,23 +11,28 @@
 - ✅ [v2.5 Self-Hosting](milestones/v2.5-ROADMAP.md) (Phases 20-21) - SHIPPED 2025-12-25
 - ✅ [v2.6 Improvements](milestones/v2.6-ROADMAP.md) (Phase 22) - SHIPPED 2025-12-25
 - ✅ [v2.7 Fixes](milestones/v2.7-ROADMAP.md) (Phases 23-25) - SHIPPED 2025-12-26
-- 🔄 [v2.8 Simplification](milestones/v2.8-ROADMAP.md) (Phases 26-30) - IN PROGRESS
+- ✅ [v2.8 Simplification](milestones/v2.8-ROADMAP.md) (Phases 26-30) - SHIPPED 2025-12-26
 
 ## Current Milestone
 
-### v2.8 Simplification (Phases 26-30)
-
-Simplify the application by unifying card rendering, hardcoding the color scheme, redesigning cards, and adding automated E2E testing.
-
-- [x] **Phase 26: Unified Rendering** - Research and implement unified card rendering approach (2/2 plans done)
-- [x] **Phase 27: Simplify Color System** - Remove palette selection, hardcode Spotify palette (1/1 plan done)
-- [x] **Phase 28: Card Redesign** - New front/back design with centered elements (2/2 plans done)
-- [x] **Phase 29: Design Polish** - Visual iteration until cards look beautiful (1/1 plan done)
-- [x] **Phase 30: Automated E2E Testing** - Full flow testing with Chrome DevTools MCP (1/1 plan done)
-
-**Total:** 5 phases
+No active milestone.
 
 ## Completed Milestones (Recent)
+
+<details>
+<summary>✅ v2.8 Simplification (Phases 26-30) - SHIPPED 2025-12-26</summary>
+
+Simplified application with unified rendering, hardcoded colors, and redesigned cards.
+
+- [x] **Phase 26: Unified Rendering** - Server-side QuestPDF rendering for pixel-perfect preview/PDF parity (2 plans)
+- [x] **Phase 27: Simplify Color System** - Removed palette selection, hardcoded Spotify palette (1 plan)
+- [x] **Phase 28: Card Redesign** - Centered QR front, album art + metadata back (2 plans)
+- [x] **Phase 29: Design Polish** - Improved proportions and readability (1 plan)
+- [x] **Phase 30: Automated E2E Testing** - Chrome DevTools MCP verification (1 plan)
+
+**Total:** 5 phases, 7 plans
+
+</details>
 
 <details>
 <summary>✅ v2.7 Fixes (Phases 23-25) - SHIPPED 2025-12-26</summary>
