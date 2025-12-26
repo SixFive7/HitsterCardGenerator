@@ -10,10 +10,43 @@
 - ✅ [v2.4 Features](milestones/v2.4-ROADMAP.md) (Phases 17-19) - SHIPPED 2025-12-24
 - ✅ [v2.5 Self-Hosting](milestones/v2.5-ROADMAP.md) (Phases 20-21) - SHIPPED 2025-12-25
 - ✅ [v2.6 Improvements](milestones/v2.6-ROADMAP.md) (Phase 22) - SHIPPED 2025-12-25
+- 🚧 **v2.7 Fixes** - Phases 23-25 (in progress)
 
 ## Current Milestone
 
-No active milestone. Ready for next milestone.
+### 🚧 v2.7 Fixes (In Progress)
+
+**Milestone Goal:** Bug fixes and stability improvements - remove obsolete inclusion feature, fix card flip, fix color palettes.
+
+#### Phase 23: Remove Inclusion Feature
+
+**Goal**: Remove "included" button from UI and all code paths
+**Depends on**: Previous milestone complete
+**Research**: Unlikely (internal refactoring)
+**Plans**: TBD
+
+Plans:
+- [ ] 23-01: TBD (run /gsd:plan-phase 23 to break down)
+
+#### Phase 24: Fix Card Flip
+
+**Goal**: Fix the flip button functionality
+**Depends on**: Phase 23
+**Research**: Unlikely (bug fix)
+**Plans**: TBD
+
+Plans:
+- [ ] 24-01: TBD
+
+#### Phase 25: Fix Color Palettes
+
+**Goal**: Make color palettes actually apply to cards
+**Depends on**: Phase 24
+**Research**: Unlikely (bug fix)
+**Plans**: TBD
+
+Plans:
+- [ ] 25-01: TBD
 
 ## Completed Milestones (Recent)
 
@@ -161,3 +194,6 @@ See [milestones/v2.4-ROADMAP.md](milestones/v2.4-ROADMAP.md) for full details.
 | 20. Remove CI/CD | v2.5 | 1/1 | Complete | 2025-12-25 |
 | 21. Local Build Docs | v2.5 | 1/1 | Complete | 2025-12-25 |
 | 22. Branding | v2.6 | 1/1 | Complete | 2025-12-25 |
+| 23. Remove Inclusion Feature | v2.7 | 0/? | Not started | - |
+| 24. Fix Card Flip | v2.7 | 0/? | Not started | - |
+| 25. Fix Color Palettes | v2.7 | 0/? | Not started | - |
