@@ -1,16 +1,16 @@
 # Hitster Card Generator
 
-## Current State (Updated: 2025-12-25)
+## Current State (Updated: 2025-12-26)
 
-**Shipped:** v2.6 Improvements (2025-12-25)
+**Shipped:** v2.7 Fixes (2025-12-26)
 **Status:** Production-ready, self-hostable, branded
 **Codebase:** ~14,700 lines (C# backend + Svelte/TypeScript frontend)
 **Stack:** .NET 10 Minimal API, Svelte 5, Tailwind v4, QuestPDF, QRCoder
 
-**v2.6 Improvements:**
-- Rainbow gradient favicon with beamed eighth notes design
-- Landing page music note as inline SVG with matching gradient
-- Updated page title to "Hitster Card Generator"
+**v2.7 Fixes:**
+- Removed obsolete inclusion feature (was never fully implemented)
+- Fixed card flip button not responding to clicks (MouseEvent handling)
+- Fixed color palettes not updating card previews (Svelte 5 reactivity)
 
 The application is complete with both console and web interfaces:
 
@@ -149,3 +149,4 @@ Things to figure out during execution:
 *v2.4 Shipped: 2025-12-24*
 *v2.5 Shipped: 2025-12-25*
 *v2.6 Shipped: 2025-12-25*
+*v2.7 Shipped: 2025-12-26*

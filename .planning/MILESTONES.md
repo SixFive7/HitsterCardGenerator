@@ -1,5 +1,30 @@
 # Project Milestones: Hitster Card Generator
 
+## v2.7 Fixes (Shipped: 2025-12-26)
+
+**Delivered:** Bug fixes and stability improvements - remove obsolete inclusion feature, fix card flip, fix color palettes.
+
+**Phases completed:** 23-25 (3 plans total)
+
+**Key accomplishments:**
+
+- Removed obsolete inclusion feature that was never fully implemented
+- Fixed card flip button that wasn't responding to clicks (MouseEvent passed as card index)
+- Fixed color palettes not updating card previews (Svelte 5 reactivity issue with derived stores)
+
+**Stats:**
+
+- 23 files modified
+- +1,114/-231 lines
+- 3 phases, 3 plans, 8 tasks
+- Same day (2025-12-26, ~14 min)
+
+**Git range:** `fix: remove inclusion feature` → `fix: add reactive binding for color palettes`
+
+**What's next:** All planned milestones complete. Ready for next milestone.
+
+---
+
 ## v2.6 Improvements (Shipped: 2025-12-25)
 
 **Delivered:** Rainbow gradient favicon and landing page music note SVG replacing default Vite icon and emoji.
