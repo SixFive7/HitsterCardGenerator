@@ -33,10 +33,10 @@ Plans:
 **Goal**: Fix the flip button functionality
 **Depends on**: Phase 23
 **Research**: Unlikely (bug fix)
-**Plans**: TBD
+**Plans**: 1
 
 Plans:
-- [ ] 24-01: TBD
+- [x] 24-01: Fix onclick handler in CardControls.svelte (2 tasks) - 2025-12-26
 
 #### Phase 25: Fix Color Palettes
 
@@ -195,5 +195,5 @@ See [milestones/v2.4-ROADMAP.md](milestones/v2.4-ROADMAP.md) for full details.
 | 21. Local Build Docs | v2.5 | 1/1 | Complete | 2025-12-25 |
 | 22. Branding | v2.6 | 1/1 | Complete | 2025-12-25 |
 | 23. Remove Inclusion Feature | v2.7 | 1/1 | Complete | 2025-12-26 |
-| 24. Fix Card Flip | v2.7 | 0/? | Not started | - |
+| 24. Fix Card Flip | v2.7 | 1/1 | Complete | 2025-12-26 |
 | 25. Fix Color Palettes | v2.7 | 0/? | Not started | - |
