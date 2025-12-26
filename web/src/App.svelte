@@ -11,7 +11,8 @@
   import PlaylistBuilder from './lib/PlaylistBuilder.svelte'
   import type { CsvUploadResponse, MatchResult, SpotifyMatch, PlaylistTrack } from './lib/types'
   import {
-    getCardCustomizationState
+    getCardCustomizationState,
+    getGenreColor
   } from './lib/stores/cardCustomization.svelte'
   import {
     getPlaylistState,
@@ -197,6 +198,18 @@
   const uniqueGenres = $derived(
     Array.from(new Set(matchResults.map(r => r.originalGenre))).sort()
   )
+
+  // Create a derived reactive object for genre colors from match results
+  // This properly tracks store changes through getGenreColor() calls
+  const reactiveGenreColors = $derived.by(() => {
+    const colors: Record<string, string> = {}
+    for (const result of matchResults) {
+      if (result.originalGenre) {
+        colors[result.originalGenre] = getGenreColor(result.originalGenre)
+      }
+    }
+    return colors
+  })
 </script>
 
 <main class="min-h-screen bg-gradient-to-br from-[#191414] via-[#282828] to-[#191414] p-8">
@@ -528,7 +541,7 @@
           <div class="lg:col-span-2">
             <CardCarousel
               cards={matchResults}
-              genreColors={customizationState.genreColors}
+              genreColors={reactiveGenreColors}
               currentIndex={customizationState.currentCardIndex}
               onIndexChange={(index) => { customizationState.currentCardIndex = index }}
               flippedCards={flippedCards}
@@ -575,7 +588,7 @@
 
         <ExportStep
           matchResults={matchResults}
-          genreColors={customizationState.genreColors}
+          genreColors={reactiveGenreColors}
           onStartNewBatch={handleStartNewBatch}
         />
 

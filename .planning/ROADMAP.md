@@ -10,45 +10,26 @@
 - ✅ [v2.4 Features](milestones/v2.4-ROADMAP.md) (Phases 17-19) - SHIPPED 2025-12-24
 - ✅ [v2.5 Self-Hosting](milestones/v2.5-ROADMAP.md) (Phases 20-21) - SHIPPED 2025-12-25
 - ✅ [v2.6 Improvements](milestones/v2.6-ROADMAP.md) (Phase 22) - SHIPPED 2025-12-25
-- 🚧 **v2.7 Fixes** - Phases 23-25 (in progress)
+- ✅ [v2.7 Fixes](milestones/v2.7-ROADMAP.md) (Phases 23-25) - SHIPPED 2025-12-26
 
 ## Current Milestone
 
-### 🚧 v2.7 Fixes (In Progress)
-
-**Milestone Goal:** Bug fixes and stability improvements - remove obsolete inclusion feature, fix card flip, fix color palettes.
-
-#### Phase 23: Remove Inclusion Feature
-
-**Goal**: Remove "included" button from UI and all code paths
-**Depends on**: Previous milestone complete
-**Research**: Unlikely (internal refactoring)
-**Plans**: 1
-
-Plans:
-- [x] 23-01: Remove inclusion feature from store, types, and UI (3 tasks) - 2025-12-26
-
-#### Phase 24: Fix Card Flip
-
-**Goal**: Fix the flip button functionality
-**Depends on**: Phase 23
-**Research**: Unlikely (bug fix)
-**Plans**: 1
-
-Plans:
-- [x] 24-01: Fix onclick handler in CardControls.svelte (2 tasks) - 2025-12-26
-
-#### Phase 25: Fix Color Palettes
-
-**Goal**: Make color palettes actually apply to cards
-**Depends on**: Phase 24
-**Research**: Unlikely (bug fix)
-**Plans**: TBD
-
-Plans:
-- [ ] 25-01: TBD
+No active milestone. Ready for next milestone.
 
 ## Completed Milestones (Recent)
+
+<details>
+<summary>✅ v2.7 Fixes (Phases 23-25) - SHIPPED 2025-12-26</summary>
+
+Bug fixes and stability improvements - remove obsolete inclusion feature, fix card flip, fix color palettes.
+
+- [x] **Phase 23: Remove Inclusion Feature** - Remove "included" button from UI and all code paths (1 plan)
+- [x] **Phase 24: Fix Card Flip** - Fix the flip button functionality (1 plan)
+- [x] **Phase 25: Fix Color Palettes** - Make color palettes actually apply to cards (1 plan)
+
+**Total:** 3 phases, 3 plans
+
+</details>
 
 <details>
 <summary>✅ v2.6 Improvements (Phase 22) - SHIPPED 2025-12-25</summary>
@@ -196,4 +177,4 @@ See [milestones/v2.4-ROADMAP.md](milestones/v2.4-ROADMAP.md) for full details.
 | 22. Branding | v2.6 | 1/1 | Complete | 2025-12-25 |
 | 23. Remove Inclusion Feature | v2.7 | 1/1 | Complete | 2025-12-26 |
 | 24. Fix Card Flip | v2.7 | 1/1 | Complete | 2025-12-26 |
-| 25. Fix Color Palettes | v2.7 | 0/? | Not started | - |
+| 25. Fix Color Palettes | v2.7 | 1/1 | Complete | 2025-12-26 |
