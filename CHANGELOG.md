@@ -7,6 +7,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.6.0] - 2025-12-25
+
+v2.6 adds visual branding with a colorful rainbow gradient theme for the favicon and landing page.
+
+### Added
+- Rainbow gradient favicon replacing the plain black music note
+- Animated rainbow gradient music note SVG on landing page
+
+## [2.5.0] - 2025-12-25
+
+v2.5 focuses on self-hosting simplicity by removing CI/CD dependencies and providing clear local build documentation.
+
+### Added
+- `.env.example` with documented Spotify API configuration
+- Docker Compose examples for building from GitHub URL directly
+
+### Removed
+- GitHub Actions CI/CD pipeline (simplified to local builds)
+
+### Changed
+- README updated with comprehensive self-hosting instructions
+
+## [2.4.1] - 2025-12-25
+
+Patch release adding container permission controls for NAS and shared hosting environments.
+
+### Added
+- PUID/PGID environment variables for custom user/group IDs in Docker
+- TZ environment variable for timezone configuration
+
+## [2.4.0] - 2025-12-24
+
+v2.4 introduces Spotify search and playlist building, allowing users to create card sets by searching for songs directly instead of uploading a CSV.
+
+### Added
+- Spotify search endpoint with track search API
+- SpotifySearch component with real-time search results
+- Playlist builder with add/remove functionality
+- Genre assignment for playlist tracks
+- Landing page with dual-path choice (CSV upload or playlist builder)
+- Direct flow from playlist builder to card preview
+
+### Fixed
+- Vite dev server now binds to all interfaces for proper port forwarding
+
 ## [2.3.0] - 2025-12-24
 
 v2.3 completes the Containerization milestone, enabling deployment via Docker and automated releases through GitHub Actions.

@@ -1,0 +1,60 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Extract release notes from CHANGELOG
+        id: changelog
+        run: |
+          # Get version from tag (strip 'v' prefix)
+          TAG_VERSION="${GITHUB_REF#refs/tags/v}"
+
+          # Normalize to semver (v2.4 -> 2.4.0, v2.4.1 -> 2.4.1)
+          if [[ "$TAG_VERSION" =~ ^[0-9]+\.[0-9]+$ ]]; then
+            CHANGELOG_VERSION="${TAG_VERSION}.0"
+          else
+            CHANGELOG_VERSION="$TAG_VERSION"
+          fi
+
+          echo "Looking for version [$CHANGELOG_VERSION] in CHANGELOG.md"
+
+          # Extract section between this version header and the next version header
+          awk -v ver="$CHANGELOG_VERSION" '
+            /^## \[/ {
+              if (found) exit
+              if ($0 ~ "\\[" ver "\\]") found=1
+              next
+            }
+            found { print }
+          ' CHANGELOG.md > notes.md
+
+          # Trim leading/trailing whitespace
+          sed -i 's/^[[:space:]]*$//' notes.md
+          sed -i '/./,$!d' notes.md
+
+          if [ ! -s notes.md ]; then
+            echo "No changelog entry found for version $CHANGELOG_VERSION"
+            echo "Release for ${{ github.ref_name }}" > notes.md
+          fi
+
+          cat notes.md
+
+      - name: Create GitHub Release
+        run: |
+          gh release create "${{ github.ref_name }}" \
+            --title "${{ github.ref_name }}" \
+            --notes-file notes.md
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
