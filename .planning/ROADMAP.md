@@ -25,10 +25,10 @@
 **Goal**: Replace QuestPDF with SkiaSharp for unified card rendering
 **Depends on**: Phase 30 (Previous milestone complete)
 **Research**: Unlikely (SkiaSharp is established .NET library)
-**Plans**: TBD
+**Plans**: 1
 
 Plans:
-- [ ] 31-01: TBD (run /gsd:plan-phase 31 to break down)
+- [x] 31-01: SkiaSharp rendering implementation (CardRenderer, CardDesigner update, PdfExporter update, E2E verification)
 
 ## Completed Milestones (Recent)
 
@@ -212,4 +212,4 @@ See [milestones/v2.4-ROADMAP.md](milestones/v2.4-ROADMAP.md) for full details.
 | 28. Card Redesign | v2.8 | 2/2 | Complete | 2025-12-26 |
 | 29. Design Polish | v2.8 | 1/1 | Complete | 2025-12-26 |
 | 30. Automated E2E Testing | v2.8 | 1/1 | Complete | 2025-12-26 |
-| 31. SkiaSharp Rendering | v2.9 | 0/? | Not started | - |
+| 31. SkiaSharp Rendering | v2.9 | 1/1 | Complete | 2025-12-26 |
