@@ -13,60 +13,24 @@
 - ✅ [v2.7 Fixes](milestones/v2.7-ROADMAP.md) (Phases 23-25) - SHIPPED 2025-12-26
 - ✅ [v2.8 Simplification](milestones/v2.8-ROADMAP.md) (Phases 26-30) - SHIPPED 2025-12-26
 - ✅ [v2.9 SkiaSharp Rendering](milestones/v2.9-ROADMAP.md) (Phase 31) - SHIPPED 2025-12-26
-- 🚧 [v3.0 Playlist Management](milestones/v3.0-ROADMAP.md) (Phases 32-36) - IN PROGRESS
-
-## Current Milestone
-
-### 🚧 v3.0 Playlist Management (In Progress)
-
-**Milestone Goal:** Multi-playlist management with server-side LiteDB persistence and browser UUID identity.
-
-#### Phase 32: LiteDB Setup
-**Goal:** Add LiteDB and create data model with repository pattern
-**Depends on:** v2.9 complete
-**Research:** Complete (see 32-RESEARCH.md)
-**Plans:** 1
-
-Plans:
-- [x] 32-01: Add LiteDB package, models, context, and repositories
-
-#### Phase 33: Playlist CRUD API
-**Goal:** RESTful API endpoints for playlist management
-**Depends on:** Phase 32
-**Research:** Unlikely (internal patterns)
-**Plans:** 1
-
-Plans:
-- [x] 33-01: Playlist CRUD endpoints and track management
-
-#### Phase 34: Playlist Selection UI
-**Goal:** Playlist selection page with browser UUID identity
-**Depends on:** Phase 33
-**Research:** Unlikely (internal patterns)
-**Plans:** 1
-
-Plans:
-- [x] 34-01: Browser identity, playlist UI components, landing page integration
-
-#### Phase 35: Flow Integration
-**Goal:** Connect existing flow to playlist persistence
-**Depends on:** Phase 34
-**Research:** Unlikely (internal patterns)
-**Plans:** 1
-
-Plans:
-- [x] 35-01: Sync card store with API, update CSV/Spotify flows to persist tracks
-
-#### Phase 36: UX Polish
-**Goal:** Error handling, loading states, edge cases
-**Depends on:** Phase 35
-**Research:** Unlikely (internal patterns)
-**Plans:** 1
-
-Plans:
-- [x] 36-01: Toast notifications, loading states, playlist rename/delete
+- ✅ [v3.0 Playlist Management](milestones/v3.0-ROADMAP.md) (Phases 32-36) - SHIPPED 2025-12-26
 
 ## Completed Milestones (Recent)
+
+<details>
+<summary>✅ v3.0 Playlist Management (Phases 32-36) - SHIPPED 2025-12-26</summary>
+
+Multi-playlist management with server-side LiteDB persistence and browser UUID identity.
+
+- [x] **Phase 32: LiteDB Setup** - Database models, repository pattern (1 plan)
+- [x] **Phase 33: Playlist CRUD API** - RESTful endpoints with browser isolation (1 plan)
+- [x] **Phase 34: Playlist Selection UI** - Browser identity, playlist grid (1 plan)
+- [x] **Phase 35: Flow Integration** - CSV/Spotify save to playlists (1 plan)
+- [x] **Phase 36: UX Polish** - Toasts, loading states, rename/delete (1 plan)
+
+**Total:** 5 phases, 5 plans
+
+</details>
 
 <details>
 <summary>✅ v2.8 Simplification (Phases 26-30) - SHIPPED 2025-12-26</summary>
