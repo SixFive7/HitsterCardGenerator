@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { fetchHealth, matchSongs } from './lib/api'
+  import { fetchHealth, matchSongs, fetchPlaylists, createPlaylist } from './lib/api'
   import { fly, fade } from 'svelte/transition'
   import FileUpload from './lib/FileUpload.svelte'
   import MatchResults from './lib/MatchResults.svelte'
@@ -9,7 +9,9 @@
   import ExportStep from './lib/ExportStep.svelte'
   import SpotifySearch from './lib/SpotifySearch.svelte'
   import PlaylistBuilder from './lib/PlaylistBuilder.svelte'
-  import type { CsvUploadResponse, MatchResult, SpotifyMatch, PlaylistTrack } from './lib/types'
+  import PlaylistList from './lib/Playlists/PlaylistList.svelte'
+  import CreatePlaylistModal from './lib/Playlists/CreatePlaylistModal.svelte'
+  import type { CsvUploadResponse, MatchResult, SpotifyMatch, PlaylistTrack, Playlist } from './lib/types'
   import {
     getCardCustomizationState,
     getGenreColor
@@ -21,6 +23,10 @@
     updateTrackGenre,
     clearPlaylist
   } from './lib/stores/playlist.svelte'
+  import {
+    getSelectedPlaylistState,
+    setSelectedPlaylistId
+  } from './lib/stores/selectedPlaylist.svelte'
 
   // Svelte 5 runes
   let apiStatus = $state<'loading' | 'connected' | 'error'>('loading')
@@ -39,6 +45,17 @@
   // Playlist state
   const playlistState = getPlaylistState()
 
+  // Playlist selection state
+  let playlists = $state<Playlist[]>([])
+  let isLoadingPlaylists = $state<boolean>(true)
+  let showCreateModal = $state<boolean>(false)
+  const selectedPlaylistState = getSelectedPlaylistState()
+
+  // Get currently selected playlist
+  const selectedPlaylist = $derived(
+    playlists.find(p => p.id === selectedPlaylistState.selectedPlaylistId) ?? null
+  )
+
   // Fetch API health on mount
   $effect(() => {
     fetchHealth()
@@ -50,6 +67,64 @@
         errorMessage = error.message
       })
   })
+
+  // Fetch playlists on mount (after API is connected)
+  $effect(() => {
+    if (apiStatus === 'connected') {
+      loadPlaylists()
+    }
+  })
+
+  async function loadPlaylists() {
+    isLoadingPlaylists = true
+    try {
+      const fetchedPlaylists = await fetchPlaylists()
+      playlists = fetchedPlaylists
+
+      if (fetchedPlaylists.length === 0) {
+        // Auto-create "My Playlist" on first visit
+        const newPlaylist = await createPlaylist('My Playlist')
+        playlists = [newPlaylist]
+        setSelectedPlaylistId(newPlaylist.id)
+      } else {
+        // Check if stored selection is still valid
+        const storedId = selectedPlaylistState.selectedPlaylistId
+        const storedExists = fetchedPlaylists.some(p => p.id === storedId)
+
+        if (!storedExists) {
+          // Select the first playlist
+          setSelectedPlaylistId(fetchedPlaylists[0].id)
+        }
+      }
+    } catch (error) {
+      console.error('Failed to load playlists:', error)
+    } finally {
+      isLoadingPlaylists = false
+    }
+  }
+
+  function handleSelectPlaylist(id: string) {
+    setSelectedPlaylistId(id)
+  }
+
+  function handleOpenCreateModal() {
+    showCreateModal = true
+  }
+
+  function handleCloseCreateModal() {
+    showCreateModal = false
+  }
+
+  async function handleCreatePlaylist(name: string) {
+    try {
+      const newPlaylist = await createPlaylist(name)
+      playlists = [...playlists, newPlaylist]
+      setSelectedPlaylistId(newPlaylist.id)
+      showCreateModal = false
+    } catch (error) {
+      console.error('Failed to create playlist:', error)
+    }
+  }
 
   function handleUploadCSV() {
     flowMode = 'csv'
@@ -252,8 +327,16 @@
           {/if}
         </div>
 
-        <!-- Path Choice -->
+        <!-- Selected Playlist Indicator & Path Choice -->
         {#if apiStatus === 'connected'}
+          <!-- Selected Playlist Indicator -->
+          {#if selectedPlaylist}
+            <div class="text-center mb-6" in:fly={{ y: 20, duration: 500, delay: 200 }}>
+              <p class="text-gray-400 text-sm mb-1">Working with playlist:</p>
+              <p class="text-[#1DB954] font-bold text-xl">{selectedPlaylist.name}</p>
+            </div>
+          {/if}
+
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16" in:fly={{ y: 20, duration: 500, delay: 300 }}>
             <button
               onclick={handleUploadCSV}
@@ -272,7 +355,37 @@
               <p class="text-gray-400">Search Spotify and build your list</p>
             </button>
           </div>
+
+          <!-- Your Playlists Section -->
+          <div class="mb-16" in:fly={{ y: 20, duration: 500, delay: 400 }}>
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="text-2xl font-bold text-white">Your Playlists</h2>
+              {#if isLoadingPlaylists}
+                <div class="w-5 h-5 border-2 border-[#1DB954] border-t-transparent rounded-full animate-spin"></div>
+              {/if}
+            </div>
+
+            {#if !isLoadingPlaylists}
+              <PlaylistList
+                {playlists}
+                selectedId={selectedPlaylistState.selectedPlaylistId}
+                onSelect={handleSelectPlaylist}
+                onCreateNew={handleOpenCreateModal}
+              />
+            {:else}
+              <div class="bg-[#282828] rounded-xl p-8 text-center">
+                <p class="text-gray-400">Loading playlists...</p>
+              </div>
+            {/if}
+          </div>
         {/if}
+
+        <!-- Create Playlist Modal -->
+        <CreatePlaylistModal
+          isOpen={showCreateModal}
+          onClose={handleCloseCreateModal}
+          onCreate={handleCreatePlaylist}
+        />
 
         <!-- Feature Highlights -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">

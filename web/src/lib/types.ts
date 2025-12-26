@@ -84,3 +84,12 @@ export interface ExportCard {
   albumImageUrl?: string
   albumName?: string
 }
+
+export interface Playlist {
+  id: string
+  browserId: string
+  name: string
+  trackCount: number
+  createdAt: string
+  updatedAt: string
+}

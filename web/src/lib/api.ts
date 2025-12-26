@@ -1,7 +1,23 @@
-import type { CsvUploadResponse, MatchResponse, Song, ExportRequest, SearchResult } from './types'
+import type { CsvUploadResponse, MatchResponse, Song, ExportRequest, SearchResult, Playlist } from './types'
+import { getBrowserId } from './stores/browser.svelte'
+
+/**
+ * Get headers with browser ID for API calls
+ */
+function getHeaders(contentType?: string): HeadersInit {
+  const headers: HeadersInit = {
+    'X-Browser-Id': getBrowserId()
+  }
+  if (contentType) {
+    headers['Content-Type'] = contentType
+  }
+  return headers
+}
 
 export async function fetchHealth(): Promise<{ status: string; timestamp: string }> {
-  const response = await fetch('/api/health')
+  const response = await fetch('/api/health', {
+    headers: getHeaders()
+  })
   return response.json()
 }
 
@@ -11,6 +27,7 @@ export async function uploadCsv(file: File): Promise<CsvUploadResponse> {
 
   const response = await fetch('/api/csv/upload', {
     method: 'POST',
+    headers: { 'X-Browser-Id': getBrowserId() },
     body: formData,
   })
 
@@ -25,7 +42,7 @@ export async function uploadCsv(file: File): Promise<CsvUploadResponse> {
 export async function matchSongs(songs: Song[]): Promise<MatchResponse> {
   const response = await fetch('/api/match', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: getHeaders('application/json'),
     body: JSON.stringify({
       songs: songs.map(s => ({
         title: s.title,
@@ -42,7 +59,7 @@ export async function matchSongs(songs: Song[]): Promise<MatchResponse> {
 export async function exportPdf(request: ExportRequest): Promise<Blob> {
   const response = await fetch('/api/export', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: getHeaders('application/json'),
     body: JSON.stringify(request)
   })
   if (!response.ok) throw new Error('Failed to export PDF')
@@ -55,7 +72,37 @@ export async function searchSpotify(query: string): Promise<SearchResult[]> {
     return []
   }
 
-  const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`)
+  const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`, {
+    headers: getHeaders()
+  })
   if (!response.ok) throw new Error('Failed to search Spotify')
+  return response.json()
+}
+
+// Playlist API functions
+
+export async function fetchPlaylists(): Promise<Playlist[]> {
+  const response = await fetch('/api/playlists', {
+    headers: getHeaders()
+  })
+  if (!response.ok) throw new Error('Failed to fetch playlists')
+  return response.json()
+}
+
+export async function createPlaylist(name: string): Promise<Playlist> {
+  const response = await fetch('/api/playlists', {
+    method: 'POST',
+    headers: getHeaders('application/json'),
+    body: JSON.stringify({ name })
+  })
+  if (!response.ok) throw new Error('Failed to create playlist')
+  return response.json()
+}
+
+export async function getPlaylist(id: string): Promise<Playlist> {
+  const response = await fetch(`/api/playlists/${encodeURIComponent(id)}`, {
+    headers: getHeaders()
+  })
+  if (!response.ok) throw new Error('Failed to get playlist')
   return response.json()
 }
