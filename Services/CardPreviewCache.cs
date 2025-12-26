@@ -43,8 +43,9 @@ public class CardPreviewCache
     /// <summary>
     /// Generates a cache key for a back card
     /// </summary>
-    public static string BackCardKey(string trackId, int year, string? backgroundColor)
+    public static string BackCardKey(string trackId, int year, string? backgroundColor, string? albumImageUrl = null)
     {
-        return $"card_back_{trackId}_{year}_{backgroundColor ?? "default"}";
+        var albumHash = albumImageUrl != null ? albumImageUrl.GetHashCode().ToString("x8") : "noalbum";
+        return $"card_back_{trackId}_{year}_{backgroundColor ?? "default"}_{albumHash}";
     }
 }

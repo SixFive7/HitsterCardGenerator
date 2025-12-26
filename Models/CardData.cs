@@ -11,6 +11,8 @@ public record CardData
     public string Genre { get; init; } = string.Empty;
     public byte[]? QrCodeData { get; init; }
     public string? BackgroundColor { get; init; }
+    public string? AlbumImageUrl { get; init; }
+    public string? AlbumName { get; init; }
 
     /// <summary>
     /// Creates CardData from a Song, optionally with background color

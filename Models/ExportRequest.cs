@@ -34,6 +34,8 @@ public record ExportCard
     public required string Artist { get; init; }
     public required int Year { get; init; }
     public required string Genre { get; init; }
+    public string? AlbumImageUrl { get; init; }
+    public string? AlbumName { get; init; }
 }
 
 /// <summary>

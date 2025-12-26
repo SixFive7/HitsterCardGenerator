@@ -42,7 +42,9 @@ public static class ExportEndpoints
                         Year = card.Year,
                         Genre = card.Genre,
                         QrCodeData = qrCode,
-                        BackgroundColor = backgroundColor
+                        BackgroundColor = backgroundColor,
+                        AlbumImageUrl = card.AlbumImageUrl,
+                        AlbumName = card.AlbumName
                     });
                 }
 

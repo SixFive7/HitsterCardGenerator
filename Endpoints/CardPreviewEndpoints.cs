@@ -34,7 +34,9 @@ public static class CardPreviewEndpoints
                         Year = request.Year,
                         Genre = request.Genre,
                         QrCodeData = qrCode,
-                        BackgroundColor = request.BackgroundColor
+                        BackgroundColor = request.BackgroundColor,
+                        AlbumImageUrl = request.AlbumImageUrl,
+                        AlbumName = request.AlbumName
                     };
 
                     // Generate front card image using QuestPDF
@@ -67,7 +69,7 @@ public static class CardPreviewEndpoints
             try
             {
                 // Generate cache key
-                var cacheKey = CardPreviewCache.BackCardKey(request.TrackId, request.Year, request.BackgroundColor);
+                var cacheKey = CardPreviewCache.BackCardKey(request.TrackId, request.Year, request.BackgroundColor, request.AlbumImageUrl);
 
                 // Get from cache or generate
                 var imageBytes = cache.GetOrCreate(cacheKey, () =>
@@ -79,7 +81,9 @@ public static class CardPreviewEndpoints
                         Artist = request.Artist,
                         Year = request.Year,
                         Genre = request.Genre,
-                        BackgroundColor = request.BackgroundColor
+                        BackgroundColor = request.BackgroundColor,
+                        AlbumImageUrl = request.AlbumImageUrl,
+                        AlbumName = request.AlbumName
                     };
 
                     // Generate back card image using QuestPDF
@@ -130,4 +134,10 @@ public record CardPreviewRequest
 
     /// <summary>Background color in hex format (e.g., "#FF6B6B")</summary>
     public string? BackgroundColor { get; init; }
+
+    /// <summary>Album artwork URL from Spotify</summary>
+    public string? AlbumImageUrl { get; init; }
+
+    /// <summary>Album name</summary>
+    public string? AlbumName { get; init; }
 }
