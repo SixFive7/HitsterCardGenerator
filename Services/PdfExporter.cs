@@ -31,8 +31,8 @@ public static class PdfExporter
     private const float CuttingLineExtension = 3f; // mm - extends beyond card edges for alignment
 
     // Card layout constants
-    private const float QrSize = 38f;     // mm (slightly smaller to fit genre text)
-    private const float BarHeight = 8f;   // mm - height of text bars
+    private const float QrSize = 40f;     // mm - prominent QR code for easy scanning
+    private const float BarHeight = 10f;  // mm - height of text bars for better readability
 
     // Simple in-memory cache for album art during PDF generation
     private static readonly ConcurrentDictionary<string, byte[]?> AlbumImageCache = new();
@@ -219,10 +219,10 @@ public static class PdfExporter
             .Background(card.BackgroundColor ?? Colors.White)
             .Column(col =>
             {
-                // Top spacer
-                col.Item().Height(4, Unit.Millimetre);
+                // Top spacer - minimal for larger QR
+                col.Item().Height(2, Unit.Millimetre);
 
-                // QR code centered
+                // QR code centered - prominent for easy scanning
                 col.Item()
                     .AlignCenter()
                     .Width(QrSize, Unit.Millimetre)
@@ -231,13 +231,13 @@ public static class PdfExporter
                     .FitArea();
 
                 // Spacer between QR and text
-                col.Item().Height(2, Unit.Millimetre);
+                col.Item().Height(1.5f, Unit.Millimetre);
 
-                // Genre text centered below QR
+                // Genre text centered below QR - larger for visibility
                 col.Item()
                     .AlignCenter()
                     .Text(card.Genre)
-                    .FontSize(10)
+                    .FontSize(11)
                     .Bold()
                     .FontColor(textColor);
             });
@@ -254,23 +254,23 @@ public static class PdfExporter
             .Background(card.BackgroundColor ?? Colors.White)
             .Column(col =>
             {
-                // Top bar: Year | Genre
+                // Top bar: Year | Genre - prominent for quick identification
                 col.Item()
                     .Height(BarHeight, Unit.Millimetre)
-                    .Background("#00000080") // Semi-transparent black
+                    .Background("#000000B3") // Semi-transparent black (70% opacity)
                     .AlignCenter()
                     .AlignMiddle()
                     .Text(text =>
                     {
                         text.Span(card.Year.ToString())
-                            .FontSize(9)
+                            .FontSize(11)
                             .Bold()
                             .FontColor(Colors.White);
                         text.Span("  |  ")
-                            .FontSize(9)
+                            .FontSize(10)
                             .FontColor(Colors.White);
                         text.Span(card.Genre)
-                            .FontSize(9)
+                            .FontSize(10)
                             .FontColor(Colors.White);
                     });
 
@@ -283,45 +283,45 @@ public static class PdfExporter
                     {
                         if (albumImage != null)
                         {
-                            c.Width(35, Unit.Millimetre)
-                                .Height(35, Unit.Millimetre)
+                            c.Width(32, Unit.Millimetre)
+                                .Height(32, Unit.Millimetre)
                                 .Image(albumImage)
                                 .FitArea();
                         }
                         else
                         {
                             // Empty placeholder when no album art
-                            c.Width(35, Unit.Millimetre)
-                                .Height(35, Unit.Millimetre);
+                            c.Width(32, Unit.Millimetre)
+                                .Height(32, Unit.Millimetre);
                         }
                     });
 
                 // Bottom bar: Artist - Title - Album
                 col.Item()
                     .Height(BarHeight, Unit.Millimetre)
-                    .Background("#00000080") // Semi-transparent black
+                    .Background("#000000B3") // Semi-transparent black (70% opacity)
                     .AlignCenter()
                     .AlignMiddle()
-                    .Padding(1, Unit.Millimetre)
+                    .PaddingHorizontal(2, Unit.Millimetre)
                     .Text(text =>
                     {
                         text.Span(card.Artist)
-                            .FontSize(7)
+                            .FontSize(9)
                             .Bold()
                             .FontColor(Colors.White);
                         text.Span(" - ")
-                            .FontSize(7)
+                            .FontSize(9)
                             .FontColor(Colors.White);
                         text.Span(card.Title)
-                            .FontSize(7)
+                            .FontSize(9)
                             .FontColor(Colors.White);
                         if (!string.IsNullOrWhiteSpace(card.AlbumName))
                         {
                             text.Span(" - ")
-                                .FontSize(7)
+                                .FontSize(9)
                                 .FontColor(Colors.White);
                             text.Span(card.AlbumName)
-                                .FontSize(7)
+                                .FontSize(9)
                                 .Italic()
                                 .FontColor(Colors.White);
                         }
