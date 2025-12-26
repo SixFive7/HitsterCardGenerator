@@ -12,10 +12,23 @@
 - ✅ [v2.6 Improvements](milestones/v2.6-ROADMAP.md) (Phase 22) - SHIPPED 2025-12-25
 - ✅ [v2.7 Fixes](milestones/v2.7-ROADMAP.md) (Phases 23-25) - SHIPPED 2025-12-26
 - ✅ [v2.8 Simplification](milestones/v2.8-ROADMAP.md) (Phases 26-30) - SHIPPED 2025-12-26
+- 🚧 **v2.9 SkiaSharp Rendering** - Phase 31 (in progress)
 
 ## Current Milestone
 
-No active milestone.
+### 🚧 v2.9 SkiaSharp Rendering (In Progress)
+
+**Milestone Goal:** Replace QuestPDF rendering with SkiaSharp for high-quality renders that serve as single source of truth for web preview and PDF export.
+
+#### Phase 31: SkiaSharp Rendering
+
+**Goal**: Replace QuestPDF with SkiaSharp for unified card rendering
+**Depends on**: Phase 30 (Previous milestone complete)
+**Research**: Unlikely (SkiaSharp is established .NET library)
+**Plans**: TBD
+
+Plans:
+- [ ] 31-01: TBD (run /gsd:plan-phase 31 to break down)
 
 ## Completed Milestones (Recent)
 
@@ -199,3 +212,4 @@ See [milestones/v2.4-ROADMAP.md](milestones/v2.4-ROADMAP.md) for full details.
 | 28. Card Redesign | v2.8 | 2/2 | Complete | 2025-12-26 |
 | 29. Design Polish | v2.8 | 1/1 | Complete | 2025-12-26 |
 | 30. Automated E2E Testing | v2.8 | 1/1 | Complete | 2025-12-26 |
+| 31. SkiaSharp Rendering | v2.9 | 0/? | Not started | - |
