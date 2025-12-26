@@ -212,7 +212,16 @@ Your job:
 2. Execute all tasks in order
 3. Handle deviations per deviation rules
 4. Create SUMMARY.md when complete
-5. Commit changes with proper message
+5. Update STATE.md with plan/phase progress
+6. Update ROADMAP.md with plan completion (mark plan checkbox done)
+7. Commit changes with proper message
+
+**CRITICAL BOUNDARIES - DO NOT:**
+- Do NOT mark the milestone as SHIPPED or complete
+- Do NOT create milestone archive files (.planning/milestones/)
+- Do NOT collapse milestone sections in ROADMAP.md
+- Do NOT create git tags
+- These are handled by complete-milestone subagent AFTER all phases
 
 Return: Confirmation that SUMMARY.md was created and changes committed
 ```
@@ -220,11 +229,14 @@ Return: Confirmation that SUMMARY.md was created and changes committed
 ### Transition
 
 After all plans for a phase are complete:
-1. Update STATE.md (mark phase as complete)
-2. Update ROADMAP.md (progress indicator)
-3. Continue to next phase in milestone
+1. Check if more phases remain in milestone
+2. If yes: Continue to next phase (back to discuss-phase/plan-phase/execute-plan)
+3. If no (all phases done): **MUST spawn complete-milestone subagent** (Section 4)
 
-## 4. Milestone Completion (if State C or all phases done)
+## 4. Milestone Completion (REQUIRED after all phases done)
+
+**CRITICAL:** This step MUST be run as a separate subagent after all phases complete.
+The orchestrator must ALWAYS spawn this subagent - never skip it or let execute-plan do this work.
 
 ### complete-milestone (subagent)
 
@@ -234,19 +246,20 @@ You are running complete-milestone for /gsd:lazy.
 
 Read the complete-milestone workflow from:
 @~/.claude/commands/gsd/complete-milestone.md
+@~/.claude/get-shit-done/workflows/complete-milestone.md
 
 Your job:
 1. Verify all phases have SUMMARY.md
 2. Ask user to confirm shipping (AskUserQuestion)
-3. Create MILESTONES.md entry
-4. Archive milestone to .planning/milestones/
-5. Update PROJECT.md current state
-6. Reorganize ROADMAP.md
-7. Create git tag
-8. Ask about pushing tag (AskUserQuestion)
+3. Archive milestone to .planning/milestones/
+4. Update ROADMAP.md (mark milestone SHIPPED, collapse to one-line)
+5. Update STATE.md (reset for next milestone)
+6. Create git tag
+7. Ask about pushing tag to remote (AskUserQuestion) - THIS IS REQUIRED
+8. If user says yes, push the tag
 9. Commit all changes
 
-Return: Confirmation of milestone version and git tag
+Return: Confirmation of milestone version, git tag, and whether it was pushed
 ```
 
 ## 5. Milestone Complete - Exit
