@@ -1,5 +1,55 @@
 # Project Milestones: Hitster Card Generator
 
+## v2.9 SkiaSharp Rendering (Shipped: 2025-12-26)
+
+**Delivered:** Unified card rendering with SkiaSharp as single source of truth for both web preview and PDF export.
+
+**Phases completed:** 31 (1 plan total)
+
+**Key accomplishments:**
+
+- Created CardRenderer.cs with SkiaSharp rendering using modern SKFont API (zero deprecation warnings)
+- Updated SkiaSharp from 3.116.1 to 3.119.1
+- Simplified CardDesigner.cs to delegate to CardRenderer
+- Updated PdfExporter.cs to embed pre-rendered PNGs instead of re-rendering
+
+**Stats:**
+
+- 4 files modified
+- ~200 lines removed (code consolidation)
+- 1 phase, 1 plan, 5 tasks
+- Same day (2025-12-26)
+
+**Git range:** `feat(31-01)` -> `v2.9`
+
+**What's next:** All rendering unified through CardRenderer. Ready for next milestone.
+
+---
+
+## v2.8 Simplification (Shipped: 2025-12-26)
+
+**Delivered:** Unified card rendering between preview and PDF, hardcoded color scheme, card redesign, and E2E testing.
+
+**Phases completed:** 26-30 (7 plans total)
+
+**Key accomplishments:**
+
+- QuestPDF server-side rendering for pixel-perfect preview/PDF parity
+- Removed palette selection, hardcoded Spotify green palette
+- Card redesign: centered QR code front, album art + metadata back
+- Automated E2E testing with Chrome DevTools MCP
+
+**Stats:**
+
+- 5 phases, 7 plans
+- Duration: 1 day (2025-12-26)
+
+**Git range:** See [v2.8-ROADMAP.md](milestones/v2.8-ROADMAP.md) for details
+
+**What's next:** v2.9 migrated to SkiaSharp rendering.
+
+---
+
 ## v2.7 Fixes (Shipped: 2025-12-26)
 
 **Delivered:** Bug fixes and stability improvements - remove obsolete inclusion feature, fix card flip, fix color palettes.
