@@ -5,6 +5,7 @@
 
 import type { SearchResult, PlaylistTrack, PlaylistDetail, TrackDto } from '../types'
 import { getPlaylistDetail, addTrackToPlaylist, removeTrackFromPlaylist, type AddTrackRequest } from '../api'
+import { showToast } from './toast.svelte'
 
 // Extended PlaylistTrack with API track ID for removal capability
 interface PlaylistTrackWithId extends PlaylistTrack {
@@ -50,6 +51,7 @@ export async function loadTracksFromPlaylist(playlistId: string): Promise<void> 
     currentPlaylistId = playlistId
   } catch (error) {
     console.error('Failed to load playlist tracks:', error)
+    showToast('Failed to load playlist tracks', 'error')
     tracks = []
     currentPlaylistId = null
   } finally {
@@ -100,6 +102,7 @@ export async function addTrack(result: SearchResult, playlistId?: string): Promi
       tracks = [...tracks, playlistTrack]
     } catch (error) {
       console.error('Failed to add track to playlist:', error)
+      showToast('Failed to add track to playlist', 'error')
     }
   } else {
     // No playlist selected, just add to local store (session-only)
@@ -172,6 +175,8 @@ export async function addTrackWithData(
       tracks = [...tracks, playlistTrack]
     } catch (error) {
       console.error('Failed to add track to playlist:', error)
+      showToast('Failed to add track to playlist', 'error')
+      throw error  // Re-throw so caller can handle if needed
     }
   } else {
     // No playlist selected, just add to local store (session-only)
@@ -205,6 +210,7 @@ export async function removeTrack(trackId: string): Promise<void> {
       await removeTrackFromPlaylist(currentPlaylistId, track.id)
     } catch (error) {
       console.error('Failed to remove track from playlist:', error)
+      showToast('Failed to remove track from playlist', 'error')
       return  // Don't remove from local store if API fails
     }
   }

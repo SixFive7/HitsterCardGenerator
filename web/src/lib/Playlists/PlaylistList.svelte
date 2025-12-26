@@ -7,9 +7,11 @@
     selectedId: string | null
     onSelect: (id: string) => void
     onCreateNew: () => void
+    onEdit?: (playlist: Playlist) => void
+    onDelete?: (playlist: Playlist) => void
   }
 
-  let { playlists, selectedId, onSelect, onCreateNew }: Props = $props()
+  let { playlists, selectedId, onSelect, onCreateNew, onEdit, onDelete }: Props = $props()
 </script>
 
 <div class="playlist-list">
@@ -32,6 +34,8 @@
           {playlist}
           isSelected={selectedId === playlist.id}
           {onSelect}
+          {onEdit}
+          {onDelete}
         />
       {/each}
 

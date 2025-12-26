@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { fetchHealth, matchSongs, fetchPlaylists, createPlaylist } from './lib/api'
+  import { fetchHealth, matchSongs, fetchPlaylists, createPlaylist, renamePlaylist, deletePlaylist } from './lib/api'
   import { fly, fade } from 'svelte/transition'
   import FileUpload from './lib/FileUpload.svelte'
   import MatchResults from './lib/MatchResults.svelte'
@@ -11,6 +11,10 @@
   import PlaylistBuilder from './lib/PlaylistBuilder.svelte'
   import PlaylistList from './lib/Playlists/PlaylistList.svelte'
   import CreatePlaylistModal from './lib/Playlists/CreatePlaylistModal.svelte'
+  import EditPlaylistModal from './lib/Playlists/EditPlaylistModal.svelte'
+  import DeleteConfirmModal from './lib/Playlists/DeleteConfirmModal.svelte'
+  import ToastContainer from './lib/Toast/ToastContainer.svelte'
+  import { showToast } from './lib/stores/toast.svelte'
   import type { CsvUploadResponse, MatchResult, SpotifyMatch, PlaylistTrack, Playlist } from './lib/types'
   import {
     getCardCustomizationState,
@@ -40,6 +44,7 @@
   let matchResults = $state<MatchResult[]>([])
   let isMatching = $state<boolean>(false)
   let matchError = $state<string | null>(null)
+  let isSavingTracks = $state<boolean>(false)
 
   // Card customization state
   const customizationState = getCardCustomizationState()
@@ -52,6 +57,10 @@
   let playlists = $state<Playlist[]>([])
   let isLoadingPlaylists = $state<boolean>(true)
   let showCreateModal = $state<boolean>(false)
+  let showEditModal = $state<boolean>(false)
+  let showDeleteModal = $state<boolean>(false)
+  let editingPlaylist = $state<Playlist | null>(null)
+  let deletingPlaylist = $state<Playlist | null>(null)
   const selectedPlaylistState = getSelectedPlaylistState()
 
   // Get currently selected playlist
@@ -109,6 +118,7 @@
       }
     } catch (error) {
       console.error('Failed to load playlists:', error)
+      showToast('Failed to load playlists. Please refresh the page.', 'error')
     } finally {
       isLoadingPlaylists = false
     }
@@ -132,10 +142,68 @@
       playlists = [...playlists, newPlaylist]
       setSelectedPlaylistId(newPlaylist.id)
       showCreateModal = false
+      showToast(`Playlist "${name}" created`, 'success')
     } catch (error) {
       console.error('Failed to create playlist:', error)
+      showToast('Failed to create playlist. Please try again.', 'error')
     }
   }
+
+  function handleOpenEditModal(playlist: Playlist) {
+    editingPlaylist = playlist
+    showEditModal = true
+  }
+
+  function handleCloseEditModal() {
+    showEditModal = false
+    editingPlaylist = null
+  }
+
+  async function handleRenamePlaylist(id: string, name: string) {
+    try {
+      const updatedPlaylist = await renamePlaylist(id, name)
+      playlists = playlists.map(p => p.id === id ? updatedPlaylist : p)
+      showEditModal = false
+      editingPlaylist = null
+      showToast(`Playlist renamed to "${name}"`, 'success')
+    } catch (error) {
+      console.error('Failed to rename playlist:', error)
+      showToast('Failed to rename playlist. Please try again.', 'error')
+    }
+  }
+
+  function handleOpenDeleteModal(playlist: Playlist) {
+    deletingPlaylist = playlist
+    showDeleteModal = true
+  }
+
+  function handleCloseDeleteModal() {
+    showDeleteModal = false
+    deletingPlaylist = null
+  }
+
+  async function handleDeletePlaylist(id: string) {
+    try {
+      await deletePlaylist(id)
+      const deletedName = playlists.find(p => p.id === id)?.name ?? 'Playlist'
+      playlists = playlists.filter(p => p.id !== id)
+
+      // If we deleted the selected playlist, select the first remaining one
+      if (selectedPlaylistState.selectedPlaylistId === id && playlists.length > 0) {
+        setSelectedPlaylistId(playlists[0].id)
+      }
+
+      showDeleteModal = false
+      deletingPlaylist = null
+      showToast(`"${deletedName}" deleted`, 'success')
+    } catch (error) {
+      console.error('Failed to delete playlist:', error)
+      showToast('Failed to delete playlist. Please try again.', 'error')
+    }
+  }
+
+  // Derived: can delete if there's more than one playlist
+  const canDeletePlaylist = $derived(playlists.length > 1)
 
   function handleUploadCSV() {
     flowMode = 'csv'
@@ -217,20 +285,28 @@
     // Save matched tracks to selected playlist
     const playlistId = selectedPlaylistState.selectedPlaylistId
     if (playlistId) {
-      // Save each matched track to the API
-      for (const result of matchResults) {
-        if (result.match) {
-          await addTrackWithData({
-            spotifyId: result.match.trackId,
-            title: result.match.trackName,
-            artist: result.match.artistName,
-            year: result.originalYear,
-            genre: result.originalGenre,
-            albumImageUrl: result.match.albumImageUrl,
-            albumName: result.match.albumName,
-            spotifyUrl: result.match.spotifyUrl
-          }, playlistId)
+      isSavingTracks = true
+      try {
+        // Save each matched track to the API
+        for (const result of matchResults) {
+          if (result.match) {
+            await addTrackWithData({
+              spotifyId: result.match.trackId,
+              title: result.match.trackName,
+              artist: result.match.artistName,
+              year: result.originalYear,
+              genre: result.originalGenre,
+              albumImageUrl: result.match.albumImageUrl,
+              albumName: result.match.albumName,
+              spotifyUrl: result.match.spotifyUrl
+            }, playlistId)
+          }
         }
+      } catch (error) {
+        console.error('Failed to save tracks:', error)
+        showToast('Some tracks may not have been saved. Please try again.', 'error')
+      } finally {
+        isSavingTracks = false
       }
     }
 
@@ -402,6 +478,8 @@
                 selectedId={selectedPlaylistState.selectedPlaylistId}
                 onSelect={handleSelectPlaylist}
                 onCreateNew={handleOpenCreateModal}
+                onEdit={handleOpenEditModal}
+                onDelete={handleOpenDeleteModal}
               />
             {:else}
               <div class="bg-[#282828] rounded-xl p-8 text-center">
@@ -416,6 +494,23 @@
           isOpen={showCreateModal}
           onClose={handleCloseCreateModal}
           onCreate={handleCreatePlaylist}
+        />
+
+        <!-- Edit Playlist Modal -->
+        <EditPlaylistModal
+          isOpen={showEditModal}
+          playlist={editingPlaylist}
+          onClose={handleCloseEditModal}
+          onSave={handleRenamePlaylist}
+        />
+
+        <!-- Delete Playlist Modal -->
+        <DeleteConfirmModal
+          isOpen={showDeleteModal}
+          playlist={deletingPlaylist}
+          canDelete={canDeletePlaylist}
+          onClose={handleCloseDeleteModal}
+          onConfirm={handleDeletePlaylist}
         />
 
         <!-- Feature Highlights -->
@@ -657,9 +752,15 @@
           </button>
           <button
             onclick={handleContinueToPreview}
-            class="bg-[#1DB954] hover:bg-[#1ed760] text-white font-bold px-8 py-3 rounded-full transition-all transform hover:scale-105"
+            disabled={isSavingTracks}
+            class="bg-[#1DB954] hover:bg-[#1ed760] text-white font-bold px-8 py-3 rounded-full transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center gap-2"
           >
-            Continue to Preview
+            {#if isSavingTracks}
+              <div class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              Saving...
+            {:else}
+              Continue to Preview
+            {/if}
           </button>
         </div>
       </div>
@@ -748,6 +849,9 @@
       </div>
     {/if}
   </div>
+
+  <!-- Toast Notifications -->
+  <ToastContainer />
 </main>
 
 <style>

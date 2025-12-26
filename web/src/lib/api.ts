@@ -157,3 +157,21 @@ export async function removeTrackFromPlaylist(playlistId: string, trackId: strin
   })
   if (!response.ok) throw new Error('Failed to remove track from playlist')
 }
+
+export async function renamePlaylist(id: string, name: string): Promise<Playlist> {
+  const response = await fetch(`/api/playlists/${encodeURIComponent(id)}`, {
+    method: 'PUT',
+    headers: getHeaders('application/json'),
+    body: JSON.stringify({ name })
+  })
+  if (!response.ok) throw new Error('Failed to rename playlist')
+  return response.json()
+}
+
+export async function deletePlaylist(id: string): Promise<void> {
+  const response = await fetch(`/api/playlists/${encodeURIComponent(id)}`, {
+    method: 'DELETE',
+    headers: getHeaders()
+  })
+  if (!response.ok) throw new Error('Failed to delete playlist')
+}
