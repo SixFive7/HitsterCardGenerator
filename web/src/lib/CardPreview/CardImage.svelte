@@ -133,15 +133,11 @@
     width: 100%;
     height: 100%;
     aspect-ratio: 17 / 11;
-    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    background: #f0f0f0;
     display: flex;
     align-items: center;
     justify-content: center;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
+    /* No border-radius or background here - handled by parent for 3D flip */
   }
 
   .card-image {

@@ -242,6 +242,8 @@
     aspect-ratio: 17 / 11;
     transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
     transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    /* Note: no overflow:hidden here - it breaks 3D transforms */
   }
 
   .card-flip-container.flipped .card-flip-inner {
@@ -250,18 +252,48 @@
 
   .card-face {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    border-radius: 12px;
+    overflow: hidden;
   }
 
   .card-face-front {
     z-index: 2;
+    transform: rotateY(0deg);
+    -webkit-transform: rotateY(0deg);
   }
 
   .card-face-back {
+    z-index: 1;
     transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+  }
+
+  /* Firefox fallback: use opacity/visibility since backface-visibility is unreliable */
+  .card-flip-container:not(.flipped) .card-face-front {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .card-flip-container:not(.flipped) .card-face-back {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .card-flip-container.flipped .card-face-front {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .card-flip-container.flipped .card-face-back {
+    opacity: 1;
+    visibility: visible;
   }
 
   .flip-hint {
