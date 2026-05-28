@@ -425,3 +425,18 @@ FodyWeavers.xsd
 
 # LiteDB database (local data storage)
 /data/
+
+# Playwright MCP runtime dirs (one per server mode).
+# Each mode's output/ is gitignored; the persistent mode's profile/ too.
+# config.json, README.md, and a .gitkeep inside each dir stay tracked so the
+# folder structure is visible on a fresh clone.
+playwright/headless/output/*
+!playwright/headless/output/.gitkeep
+playwright/interactive/output/*
+!playwright/interactive/output/.gitkeep
+playwright/tracing/output/*
+!playwright/tracing/output/.gitkeep
+playwright/persistent/output/*
+!playwright/persistent/output/.gitkeep
+playwright/persistent/profile/*
+!playwright/persistent/profile/.gitkeep

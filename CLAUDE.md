@@ -21,11 +21,12 @@ A .NET 10 web application that generates printable PDF cards for a custom Hitste
 
 When making any changes to the project ensure the README.md is updated to reflect those changes.
 
-## Visual Verification
+## Visual verification & E2E testing
 
-Use Chrome DevTools MCP tools for visual verification instead of human checkpoints:
-- `mcp__chrome-devtools__take_screenshot` - Capture page/element screenshots
-- `mcp__chrome-devtools__take_snapshot` - Get accessibility tree snapshot
-- `mcp__chrome-devtools__navigate_page` - Navigate to URLs for testing
+Four Playwright MCP servers are configured: `playwright-headless`, `playwright-interactive`, `playwright-tracing`, `playwright-persistent`. Apply this policy:
 
-Use these to verify UI changes yourself rather than asking the user to check.
+1. **Default to `playwright-headless`** for visual verification of UI changes and for running the E2E procedure ([tests/e2e-test-procedure.md](tests/e2e-test-procedure.md)). Parallel-safe, ephemeral, no state on disk.
+2. **Use `playwright-tracing`** when debugging API/UI interactions and you need a network trace (HAR with WebSocket frames) or a full session log.
+3. **`playwright-interactive` and `playwright-persistent`** are configured but rarely needed — the app has no built-in authentication. Use only when something genuinely requires a credentialed login or persistent profile state.
+
+Use these to verify UI changes yourself rather than asking the user to check. See [playwright/README.md](playwright/README.md) for the architecture, per-mode settings, and rules (HAR archive convention, screenshot filename behaviour, etc.).

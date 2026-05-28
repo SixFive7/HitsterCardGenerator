@@ -166,7 +166,7 @@ Then open http://localhost:5173 for the Vite dev server.
 
 ### E2E Testing
 
-The project includes an E2E test procedure that can be executed using Chrome DevTools MCP tools.
+The project includes an E2E test procedure executed via the project's Playwright MCP servers (see [playwright/](playwright/)).
 
 **Test File:**
 - `tests/e2e-test-procedure.md` - Complete test procedure with steps
@@ -178,7 +178,7 @@ The project includes an E2E test procedure that can be executed using Chrome Dev
    dotnet run
    ```
 
-2. Use Chrome DevTools MCP to execute the test procedure:
+2. Have Claude Code execute the test procedure using the `playwright-headless` MCP server:
    - Open the test procedure file
    - Execute each step using the appropriate MCP tool
    - Verify expected outcomes at each step
