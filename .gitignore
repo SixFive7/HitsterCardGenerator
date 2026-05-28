@@ -418,9 +418,6 @@ FodyWeavers.xsd
 *.msm
 *.msp
 
-# Devcontainer mounts (persisted locally per developer)
-.devcontainer/mounts/
-
 # Claude Code local settings (MCP approvals, session state)
 .claude/*
 # But keep the shared project settings

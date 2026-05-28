@@ -24,8 +24,5 @@
 # GSD workflow files
 .planning/
 
-# Dev environment
-.devcontainer/
-
 # Frontend build output (built fresh from web/ source)
 wwwroot/

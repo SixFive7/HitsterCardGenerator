@@ -164,10 +164,6 @@ npm run dev
 
 Then open http://localhost:5173 for the Vite dev server.
 
-**Using DevContainer:**
-
-The project includes a devcontainer configuration. Open in VS Code with the Dev Containers extension, and everything is pre-configured.
-
 ### E2E Testing
 
 The project includes an E2E test procedure that can be executed using Chrome DevTools MCP tools.

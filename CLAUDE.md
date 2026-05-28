@@ -16,7 +16,6 @@ A .NET 10 web application that generates printable PDF cards for a custom Hitste
 
 - Run `dotnet run` for production (serves frontend from wwwroot)
 - For HMR development: Use F5 compound launch in VS Code
-- Devcontainer available for sandbox-free Claude Code operation
 
 ## Documentation
 
