@@ -6,10 +6,8 @@ Persistent profile, headed, exclusive via Chrome's `SingletonLock`.
 
 ## When to use
 
-- Long-running sessions where browser state (cookies, localStorage, cached assets) should survive between runs.
-- Tasks where the agent reasonably has access to whatever is already stored in this profile.
-
-This mode is rare for this project — the app has no authentication and most testing is fine with the ephemeral [../headless/](../headless/) mode. The mode is kept available for completeness and for any future workflow that benefits from a stable profile.
+- Long-running personal sessions where logins persist across runs (a site / vendor portals you sign into manually once and reuse).
+- Tasks where the agent reasonably has access to the credentials already stored in this profile.
 
 **Important security note:** any agent calling this MCP server has access to every login stored in `profile/`. Do not use this server in workflows where the agent shouldn't see those credentials. For credential-sensitive one-shots, use [../interactive/](../interactive/) instead, which is ephemeral.
 
@@ -20,6 +18,9 @@ MCP tool prefix: `mcp__playwright-persistent__browser_*`.
 - `config.json` - Playwright MCP configuration. `userDataDir: playwright/persistent/profile`, `headless: false`. No HAR. See [../README.md](../README.md) for the full settings table.
 - `profile/` - Chrome's persistent user-data directory. Cookies, localStorage, cache, extensions, autofill, history. Gitignored.
 - `output/` - screenshots, snapshots, session traces. Gitignored.
+- `state/` - launcher runtime state (lockfiles, log), created on demand. See [../LAUNCHER.md](../LAUNCHER.md). Gitignored.
+
+Any logins you establish in this profile persist here between sessions.
 
 ## Concurrency model
 

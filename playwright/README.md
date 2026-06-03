@@ -20,9 +20,9 @@ This project runs **four** `@playwright/mcp` instances as separate MCP servers, 
 | Mode | Use case | Concurrency |
 |---|---|---|
 | **headless** | Default — most agent work. Ephemeral. No state, no HAR. | Many parallel sessions. No locking. |
-| **interactive** | Manual login (creds the agent should not see). Ephemeral. | Single-instance. Mutex `Global\HitsterCardGenerator-PlaywrightInteractive`. |
-| **tracing** | Debugging — network/console/session investigation. Ephemeral. | Single-instance. Mutex `Global\HitsterCardGenerator-PlaywrightTracing`. Independent of interactive. |
-| **persistent** | Tasks that need browser state to survive between runs. Rare for this project — the app has no built-in authentication. | Single-instance. Chrome `SingletonLock` on profile dir. |
+| **interactive** | Manual login (creds the agent should not see). Ephemeral. | Single-instance. Mutex `Global\<RepoName>-PlaywrightInteractive`. (`<RepoName>` is this repository's folder name.) |
+| **tracing** | Debugging — network/console/session investigation. Ephemeral. | Single-instance. Mutex `Global\<RepoName>-PlaywrightTracing`. Independent of interactive. |
+| **persistent** | Tasks that need login state to survive between runs (a site you sign into). | Single-instance. Chrome `SingletonLock` on profile dir. |
 
 If you're unsure: use **headless**. Switch only when the mode's specific feature is required.
 
@@ -42,19 +42,21 @@ Unrenamed `network.har` files are considered disposable.
 **Screenshot filenames.** When calling `browser_take_screenshot` with an explicit `filename`, **prepend the mode's `outputDir`** — e.g. `playwright/headless/output/<session-subdir>/foo.png`. Upstream resolves explicit filenames via `workspaceFile()` against CWD (the repo root), not against `outputDir`, so a bare `foo.png` lands in the repo root. Auto-naming (omitting `filename` entirely) routes through `outputFile()` and does honour `outputDir`. The tool description ("Prefer relative file names to stay within the output directory") is misleading vs. the actual code path — see `packages/playwright-core/src/tools/backend/screenshot.ts` upstream. No config flag bridges the two; this is the agent's responsibility.
 
 **Single-instance per-mode (interactive, tracing, persistent).** Enforcement varies:
-- `interactive`: Windows named mutex `Global\HitsterCardGenerator-PlaywrightInteractive` acquired by [launch.ps1](launch.ps1).
-- `tracing`: separate mutex `Global\HitsterCardGenerator-PlaywrightTracing`.
+- `interactive`: Windows named mutex `Global\<RepoName>-PlaywrightInteractive` acquired by [launch.ps1](launch.ps1).
+- `tracing`: separate mutex `Global\<RepoName>-PlaywrightTracing`.
 - `persistent`: Chrome's `SingletonLock` file inside the persistent `userDataDir` (`playwright/persistent/profile/`). Automatic.
 
 `headless` has **no** single-instance constraint — many parallel sessions are explicitly supported.
 
 **Per-session output isolation (headless only).** The launcher creates `playwright/headless/output/{yyyy-MM-dd-HH-mm-ss}-{4-char-suffix}/` per launch and passes it as `--output-dir` on the CLI (overrides the config's `outputDir`). This eliminates collisions for parallel sessions.
 
-**Server-generated downloads (e.g. the app's PDF export).** Click the real download button — Playwright intercepts the `download` event and writes the authentic server-served file to the active `outputDir`. Do **not** use `browser_pdf_save` for this: that tool renders the current HTML to PDF (a page screenshot), not the real generated file. The `pdf` capability is intentionally disabled — see row #56.
+**Official documents (invoices, statements, policies).** Click the site's download button — Playwright intercepts the `download` event and writes the authentic server-served file to the active `outputDir`. Do **not** use `browser_pdf_save` for this: that tool renders the current HTML to PDF (a page screenshot), not the real file. The `pdf` capability is intentionally disabled — see row #56.
 
 **Resetting profiles.**
 - `persistent`: see [persistent/README.md](persistent/README.md). `Remove-Item -Recurse -Force playwright/persistent/profile/*` forces fresh logins on next launch.
 - `headless`, `interactive`, `tracing`: nothing to reset — these are `--isolated`, profiles are tmp dirs Playwright wipes on close.
+
+**Ephemeral profile dirs are gitignored.** Contents of `playwright/{headless,interactive,tracing}/profile/` are ignored (only the placeholder `README.md` stays tracked) — a defensive backstop so that if `isolated` (#4) ever regresses and a real on-disk profile with cookies/credentials appears, git can't accidentally commit it. See [.gitignore](../.gitignore).
 
 **Debugging a failed session.** `saveSession: true` is on for all four modes. The most recent `<mode>/output/.../session-{timestamp}/session.md` contains the full tool-call trace (each call as a `### Tool call:` heading with `Args` and `Result` JSON-fenced blocks). For tracing mode, `<mode>/output/network.har` has the corresponding network activity including WebSocket frames.
 
@@ -62,7 +64,7 @@ Unrenamed `network.har` files are considered disposable.
 
 ## Location legend
 
-| Locatie | Meaning |
+| Location | Meaning |
 |---|---|
 | `json` | Set in one or more mode `config.json` files. |
 | `flag` | Set as a CLI argument by [launch.ps1](launch.ps1) (used when the setting has no config-schema equivalent, or when it must vary per launch). |
@@ -79,7 +81,7 @@ Upstream: `defaults < configFile < env vars < CLI flags`. CLI wins over everythi
 
 Values that differ across modes are written as `headless / interactive / tracing / persistent`. A single value means all four modes agree. `—` means default (not set by us).
 
-| # | Setting | Locatie | Function | Value | Motivation |
+| # | Setting | Location | Function | Value | Motivation |
 |--:|---|:-:|---|---|---|
 | | **▸ Browser engine & profile** | | | | |
 | 1 | `browser.browserName` | json | Browser engine family | `chromium` (all) | Chromium required for full CDP access (WebSocket frames, network bodies, performance traces). Default: `chromium`. |
@@ -96,7 +98,7 @@ Values that differ across modes are written as `headless / interactive / tracing
 | 11 | `browser.launchOptions.downloadsPath` | default | Separate downloads directory from `outputDir` | — | Keeping everything under the mode's `outputDir` avoids split storage. Default: inherits `outputDir`. |
 | 12 | `browser.launchOptions.chromiumSandbox` | default | Sandbox on the parent browser process | — | Renderer-sandbox is the real protection; this extra layer has Windows start-up quirks for little gain. Default: `false`. |
 | 13 | `browser.launchOptions.timeout` | default | Browser launch timeout (ms) | — | 30s is comfortable on any machine we use. Default: `30000`. |
-| 14 | `browser.launchOptions.proxy` | default | HTTP/SOCKS proxy + bypass | — | Home workflow, no corp proxy. Default: none. |
+| 14 | `browser.launchOptions.proxy` | default | HTTP/SOCKS proxy + bypass | — | Direct network, no proxy in use. Default: none. |
 | 15 | `browser.launchOptions.ignoreDefaultArgs` | default | Skip Playwright's default Chrome args | — | Advanced escape hatch, never needed. Default: `[]`. |
 | 16 | `browser.launchOptions.firefoxUserPrefs` | default | Firefox-specific prefs | — | N/A, we use Chromium. Default: `{}`. |
 | 17 | `browser.launchOptions.handleSIGINT/TERM/HUP` | default | Signal handling on MCP shutdown | — | Default `true` correct for stdio spawn. Default: `true` (all three). |
@@ -106,7 +108,7 @@ Values that differ across modes are written as `headless / interactive / tracing
 | | **▸ Context options — display & emulation** | | | | |
 | 21 | `browser.contextOptions.viewport.width` | json | Viewport width in pixels | `1920` (all) | 1080p desktop — most common business resolution; triggers desktop layout. Default: `1280`. |
 | 22 | `browser.contextOptions.viewport.height` | json | Viewport height in pixels | `1080` (all) | See #21. Default: `720`. |
-| 23 | `browser.contextOptions.locale` | json | `navigator.language` + Accept-Language header | `nl-NL` (all) | Set explicitly so Accept-Language is reproducible across machines (developer is NL-based). The app is locale-neutral, so this rarely affects results. Default: inherits OS locale. |
+| 23 | `browser.contextOptions.locale` | json | `navigator.language` + Accept-Language header | `nl-NL` (all) | Pinned explicitly so locale-sensitive UI renders reproducibly across machines. Default: inherits OS locale. |
 | 24 | `browser.contextOptions.timezoneId` | json | Browser timezone | `Europe/Amsterdam` (all) | Explicit for reproducibility across machines. Default: inherits OS timezone. |
 | 25 | `browser.contextOptions.colorScheme` | default | `prefers-color-scheme` override | — | Default `light` keeps screenshots readable. Default: `light`. |
 | 26 | `browser.contextOptions.contrast` | default | `prefers-contrast` CSS override | — | Accessibility-testing feature, N/A here. Default: `no-preference`. |
@@ -120,12 +122,12 @@ Values that differ across modes are written as `headless / interactive / tracing
 | | **▸ Context options — network & security** | | | | |
 | 34 | `browser.contextOptions.ignoreHTTPSErrors` | json | Accept invalid/self-signed certs | `true` (all) | Internal dev servers with self-signed certs must remain reachable. Default: `false`. |
 | 35 | `browser.contextOptions.permissions` | json | Permissions auto-granted (no dialog) | `["clipboard-read", "clipboard-write"]` (all) | Agent must copy/paste without modal interruption. Other permissions intentionally omitted. Default: `[]`. |
-| 36 | `browser.contextOptions.geolocation` | default | Simulated GPS coordinates | — | The app doesn't request geolocation; simulation only adds fingerprint noise. Default: none. |
+| 36 | `browser.contextOptions.geolocation` | default | Simulated GPS coordinates | — | Portals don't request this; simulation = fingerprint noise. Default: none. |
 | 37 | `browser.contextOptions.httpCredentials` | default | Basic Auth credentials | — | Violates repo rule "tokens never on disk". Default: none. |
 | 38 | `browser.contextOptions.extraHTTPHeaders` | default | Static custom headers on every request | — | No concrete use case. Default: `{}`. |
-| 39 | `browser.contextOptions.baseURL` | default | URL prefix for relative `page.goto()` calls | — | Tests may hit different URLs (5657 production, 5173 Vite dev, plus any external Spotify auth pages); a single baseURL would be limiting. Default: none. |
+| 39 | `browser.contextOptions.baseURL` | default | URL prefix for relative `page.goto()` calls | — | We cross many portals; a single baseURL would break everything else. Default: none. |
 | 40 | `browser.contextOptions.bypassCSP` | default | Disable Content-Security-Policy enforcement | — | Weakens security; standard agent tool set doesn't hit CSP walls. Default: `false`. |
-| 41 | `browser.contextOptions.serviceWorkers` | default | `allow`/`block` service workers | — | Default `allow` is correct — nothing in the app relies on disabling SWs. Default: `allow`. |
+| 41 | `browser.contextOptions.serviceWorkers` | default | `allow`/`block` service workers | — | Some web apps use service workers for offline sync. Default: `allow`. |
 | 42 | `browser.contextOptions.javaScriptEnabled` | default | Disable JS execution | — | Modern portals require JS. Default: `true`. |
 | 43 | `browser.contextOptions.offline` | default | Simulate offline network | — | Defeats the purpose. Default: `false`. |
 | 44 | `browser.contextOptions.acceptDownloads` | default | Permit file downloads | — | Our download-to-`outputDir` flow **requires** this — never change. Default: `true`. |
@@ -146,7 +148,7 @@ Values that differ across modes are written as `headless / interactive / tracing
 | 57 | `codegen` | json | Language for code-generation tools | `none` (all) | Agent works live interactively. Saves context + tool surface. Default: `typescript`. |
 | 58 | `snapshot.mode` | default | Accessibility snapshot mode (`full`/`none`) | — | Non-vision workflow leans on snapshots. Default: `full`. |
 | 59 | `imageResponses` | default | Screenshots in tool response | — | Model chooses when a screenshot is useful. Default: `auto`. |
-| 60 | `testIdAttribute` | default | HTML attribute used as test id | — | The Svelte UI doesn't use a custom test-id attribute; the upstream default is fine. Default: `data-testid`. |
+| 60 | `testIdAttribute` | default | HTML attribute used as test id | — | External portals, not own-app testing. Default: `data-testid`. |
 | 61 | `browser.contextOptions.strictSelectors` | default | Locators fail on multi-match instead of picking first | — | Breaks Playwright MCP's standard tool flow. Default: `false`. |
 | | **▸ Output & logging** | | | | |
 | 62 | `outputDir` | json (all) | Directory for downloads, auto-named screenshots, session folders, HAR | per-mode: `playwright/<mode>/output` | Each mode has its own output dir, fully isolated. Headless additionally gets per-session sub-dirs via the launcher's `--output-dir` CLI override (see "Per-session output isolation" rule). Default: OS temp dir. |
@@ -158,7 +160,7 @@ Values that differ across modes are written as `headless / interactive / tracing
 | 68 | `browser.contextOptions.logger` | code | Per-context custom `Logger` interface | — | Function/object type — not JSON-representable. Default: none. |
 | | **▸ Timeouts** | | | | |
 | 69 | `timeouts.action` | default | Per-action timeout (ms) | — | 5s is generous; longer masks bugs. Default: `5000`. |
-| 70 | `timeouts.navigation` | default | Per-navigation timeout (ms) | — | 60s is comfortable for local dev (and for the Spotify auth round-trip if that ever appears in a test). Default: `60000`. |
+| 70 | `timeouts.navigation` | default | Per-navigation timeout (ms) | — | 60s is ample for the portals we hit. Default: `60000`. |
 | 71 | `timeouts.expect` | default | `expect()` assertion timeout | — | Test-runner feature; we use `browser_wait_for`. Default: `5000`. |
 | | **▸ Transport & remote connections** (N/A under stdio) | | | | |
 | 72 | `server.port` | default | HTTP/SSE transport bind port | — | stdio transport. Default: none. |

@@ -6,7 +6,7 @@ Ephemeral, headless, parallel-safe. Many Claude Code sessions can run this serve
 
 ## When to use
 
-This is the right mode for almost everything an agent does in this repo: running the E2E test procedure, verifying visual changes after a UI edit, exercising the playlist/CSV/preview/export flow, checking that the API responds correctly. Use this unless one of the other three modes is specifically required.
+This is the right mode for almost everything an agent does in this repo: scraping data, filling forms with credentials it already has, checking a page, fetching content. Use this unless one of the other three modes is specifically required.
 
 MCP tool prefix: `mcp__playwright-headless__browser_*`.
 

@@ -21,12 +21,31 @@ A .NET 10 web application that generates printable PDF cards for a custom Hitste
 
 When making any changes to the project ensure the README.md is updated to reflect those changes.
 
-## Visual verification & E2E testing
+## Playwright usage policy
 
-Four Playwright MCP servers are configured: `playwright-headless`, `playwright-interactive`, `playwright-tracing`, `playwright-persistent`. Apply this policy:
+Four Playwright MCP servers are configured: `playwright-headless`, `playwright-interactive`, `playwright-tracing`, `playwright-persistent`. Apply this policy when choosing one:
 
-1. **Default to `playwright-headless`** for visual verification of UI changes and for running the E2E procedure ([tests/e2e-test-procedure.md](tests/e2e-test-procedure.md)). Parallel-safe, ephemeral, no state on disk.
-2. **Use `playwright-tracing`** when debugging API/UI interactions and you need a network trace (HAR with WebSocket frames) or a full session log.
-3. **`playwright-interactive` and `playwright-persistent`** are configured but rarely needed — the app has no built-in authentication. Use only when something genuinely requires a credentialed login or persistent profile state.
+1. **Default to `playwright-headless`** — parallel-safe, ephemeral, no state. Use it for almost everything that needs browser automation.
+2. **Use Playwright as little as possible.** After one research round on a new site, evaluate whether the task can be done by calling the underlying API directly (with credentials you already have). Prefer direct HTTP over browser automation — it is faster, more reliable, and easier to debug.
+3. **Use `playwright-tracing`** to reverse-engineer a site's API shapes (request/response, auth flow, WebSocket frames). The goal is usually to *stop* using Playwright on that site — capture enough trace to make direct calls work, then switch.
+4. **Use `playwright-interactive` only** when a credentialed login is required and the credentials are not already on hand. Tell the user what you are about to do. Do not see, ask for, or attempt to capture credentials — the user types them directly in the visible window.
+5. **Use `playwright-persistent` only** when the user explicitly instructs you to AND has validated the request. Saved logins in `playwright/persistent/profile/` are accessible to any agent that touches that server — treat as a security risk, never default to it.
 
-Use these to verify UI changes yourself rather than asking the user to check. See [playwright/README.md](playwright/README.md) for the architecture, per-mode settings, and rules (HAR archive convention, screenshot filename behaviour, etc.).
+The rules above are sufficient for using the servers. Only read [playwright/README.md](playwright/README.md) if you need the architecture rationale, the per-mode settings table, or are about to *change* the Playwright configuration.
+
+## workdir — Agent Scratch Space
+
+The [`workdir/`](workdir/) directory at the repo root is scratch space for agent-driven workflows that follow a **download → restructure → rename → review** cycle. The user reviews outputs before they go anywhere permanent (e.g. shipped to an external destination).
+
+**Conventions**:
+- Each session creates its own subdirectory — never dump files directly in `workdir/`. This keeps parallel sessions from stepping on each other.
+- Suggested naming: `workdir/{YYYY-MM-DD}-{short-task-slug}/` — e.g. `workdir/2026-01-15-example-export/`.
+- Do not scatter temporary files elsewhere on the user's PC. Everything agent-produced that the user needs to review lives under `workdir/`.
+
+**Typical flow**:
+1. Browser downloads raw files to the active Playwright server's `output/` directory (e.g. `playwright/persistent/output/` for stateful portal work, or `playwright/headless/output/<session>/` for headless scrapes — Playwright auto-captures `download` events). Each server has its own output dir; see the Playwright usage policy above.
+2. Agent moves + renames them into `workdir/{session-dir}/` with clear, final names.
+3. User reviews the structured session directory.
+4. On approval, the files are shipped to their destination.
+
+`workdir/` contents are gitignored; the directory itself is tracked via `.gitkeep`.

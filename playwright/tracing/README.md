@@ -23,7 +23,7 @@ MCP tool prefix: `mcp__playwright-tracing__browser_*`.
 
 ## Concurrency model
 
-- Single-instance enforced via Windows named mutex `Global\HitsterCardGenerator-PlaywrightTracing`.
+- Single-instance enforced via Windows named mutex `Global\<RepoName>-PlaywrightTracing`. (`<RepoName>` is this repository's folder name.)
 - Independent of the [interactive](../interactive/) mutex - the two modes can be running side-by-side (interactive in one Claude Code session, tracing in another), but you can't have two tracing sessions at once.
 - Acquired and released by [../launch.ps1](../launch.ps1).
 

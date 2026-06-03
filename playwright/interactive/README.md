@@ -6,9 +6,9 @@ Ephemeral, headed, exclusive. Only one Claude Code session may run this at a tim
 
 ## When to use
 
-A task requires credentials the agent should not see — e.g. signing into the Spotify Developer Dashboard to configure the app's client. The browser window pops onto the user's screen; the user types credentials directly; the agent then drives the authenticated session.
+A task requires credentials the agent should not see (typically: log in to a site / a vendor portal as a human, then let the agent take over). The browser window pops onto the user's screen; the user types credentials directly; the agent then drives the authenticated session.
 
-This mode is rare for this project: the app itself has no built-in authentication, and the Spotify credentials it uses come from env vars set out-of-band. Do **not** use this for routine work. Use [../headless/](../headless/) instead.
+Do **not** use this for routine work. Use [../headless/](../headless/) instead.
 
 MCP tool prefix: `mcp__playwright-interactive__browser_*`.
 
@@ -22,7 +22,7 @@ MCP tool prefix: `mcp__playwright-interactive__browser_*`.
 
 ## Concurrency model
 
-- Single-instance enforced via Windows named mutex `Global\HitsterCardGenerator-PlaywrightInteractive`.
+- Single-instance enforced via Windows named mutex `Global\<RepoName>-PlaywrightInteractive`. (`<RepoName>` is this repository's folder name.)
 - The mutex is acquired by [../launch.ps1](../launch.ps1) before invoking `npx`. Second concurrent launch attempt fails fast with a clear error and the MCP server does not start in the second session.
 - Mutex is released when the holding process exits (cleanly or via crash - the Windows kernel handles abandoned-mutex recovery).
 
