@@ -461,6 +461,5 @@ playwright/interactive/state/
 playwright/tracing/state/
 playwright/persistent/state/
 
-# Agent scratch space — folder tracked via .gitkeep, contents not committed
-workdir/*
-!workdir/.gitkeep
+# Agent scratch space — gitignored entirely, created on demand
+.work/

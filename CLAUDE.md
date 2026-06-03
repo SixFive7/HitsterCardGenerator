@@ -33,19 +33,19 @@ Four Playwright MCP servers are configured: `playwright-headless`, `playwright-i
 
 The rules above are sufficient for using the servers. Only read [playwright/README.md](playwright/README.md) if you need the architecture rationale, the per-mode settings table, or are about to *change* the Playwright configuration.
 
-## workdir — Agent Scratch Space
+## .work — Agent Scratch Space
 
-The [`workdir/`](workdir/) directory at the repo root is scratch space for agent-driven workflows that follow a **download → restructure → rename → review** cycle. The user reviews outputs before they go anywhere permanent (e.g. shipped to an external destination).
+The [`.work/`](.work/) directory at the repo root is scratch space for agent-driven workflows that follow a **download → restructure → rename → review** cycle. The user reviews outputs before they go anywhere permanent (e.g. shipped to an external destination).
 
 **Conventions**:
-- Each session creates its own subdirectory — never dump files directly in `workdir/`. This keeps parallel sessions from stepping on each other.
-- Suggested naming: `workdir/{YYYY-MM-DD}-{short-task-slug}/` — e.g. `workdir/2026-01-15-example-export/`.
-- Do not scatter temporary files elsewhere on the user's PC. Everything agent-produced that the user needs to review lives under `workdir/`.
+- Each session creates its own subdirectory — never dump files directly in `.work/`. This keeps parallel sessions from stepping on each other.
+- Suggested naming: `.work/{YYYY-MM-DD}-{short-task-slug}/` — e.g. `.work/2026-01-15-example-export/`.
+- Do not scatter temporary files elsewhere on the user's PC. Everything agent-produced that the user needs to review lives under `.work/`.
 
 **Typical flow**:
 1. Browser downloads raw files to the active Playwright server's `output/` directory (e.g. `playwright/persistent/output/` for stateful portal work, or `playwright/headless/output/<session>/` for headless scrapes — Playwright auto-captures `download` events). Each server has its own output dir; see the Playwright usage policy above.
-2. Agent moves + renames them into `workdir/{session-dir}/` with clear, final names.
+2. Agent moves + renames them into `.work/{session-dir}/` with clear, final names.
 3. User reviews the structured session directory.
 4. On approval, the files are shipped to their destination.
 
-`workdir/` contents are gitignored; the directory itself is tracked via `.gitkeep`.
+`.work/` is gitignored entirely and created on demand (nothing under it is committed).
