@@ -463,3 +463,7 @@ playwright/persistent/state/
 
 # Agent scratch space — gitignored entirely, created on demand
 .work/
+
+# Instructions live in AGENTS.md; a CLAUDE.md makes Claude Code skip it
+CLAUDE.md
+CLAUDE.local.md

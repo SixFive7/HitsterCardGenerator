@@ -2,6 +2,10 @@
 
 This file provides guidance for Claude Code when working on the HitsterCardGenerator project.
 
+## Subfolder instructions
+
+Before working in a subfolder, read any AGENTS.md from that folder up to the repo root that you haven't seen yet. Claude Code attaches them only when a file there is read: https://github.com/anthropics/claude-code/tree/main/mods/agents-md#where-it-still-differs-from-claudemd
+
 ## Project Overview
 
 A .NET 10 web application that generates printable PDF cards for a custom Hitster-style music guessing game. Users upload a CSV of songs, the app matches them to Spotify tracks, and generates credit-card sized cards with QR codes linking to the songs.
