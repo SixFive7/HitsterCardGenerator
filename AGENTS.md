@@ -25,17 +25,15 @@ A .NET 10 web application that generates printable PDF cards for a custom Hitste
 
 When making any changes to the project ensure the README.md is updated to reflect those changes.
 
-## Playwright usage policy
+## Browser usage policy
 
-Four Playwright MCP servers are configured: `playwright-headless`, `playwright-interactive`, `playwright-tracing`, `playwright-persistent`. Apply this policy when choosing one:
+Browser automation goes through BrowserAI: the `browserai` MCP server in [.mcp.json](.mcp.json), which BrowserAI's installer also registers for every project. Its tools are `mcp__browserai__*`. Apply this policy:
 
-1. **Default to `playwright-headless`** — parallel-safe, ephemeral, no state. Use it for almost everything that needs browser automation.
-2. **Use Playwright as little as possible.** After one research round on a new site, evaluate whether the task can be done by calling the underlying API directly (with credentials you already have). Prefer direct HTTP over browser automation — it is faster, more reliable, and easier to debug.
-3. **Use `playwright-tracing`** to reverse-engineer a site's API shapes (request/response, auth flow, WebSocket frames). The goal is usually to *stop* using Playwright on that site — capture enough trace to make direct calls work, then switch.
-4. **Use `playwright-interactive` only** when a credentialed login is required and the credentials are not already on hand. Tell the user what you are about to do. Do not see, ask for, or attempt to capture credentials — the user types them directly in the visible window.
-5. **Use `playwright-persistent` only** when the user explicitly instructs you to AND has validated the request. Saved logins in `playwright/persistent/profile/` are accessible to any agent that touches that server — treat as a security risk, never default to it.
-
-The rules above are sufficient for using the servers. Only read [playwright/README.md](playwright/README.md) if you need the architecture rationale, the per-mode settings table, or are about to *change* the Playwright configuration.
+1. **Open a session first.** `browserai_init` creates one in a new directory you name, for example `.work/{YYYY-MM-DD}-{short-task-slug}/browser/`; `browserai_resume` reopens one that exists. Pass that directory as `session` to every `browser_*` call. `browserai_init` takes a `purpose`, and every later call a `why`.
+2. **Use the browser as little as possible.** After one research round on a new site, evaluate whether the task can be done by calling the underlying API directly (with credentials you already have). Prefer direct HTTP over browser automation: it is faster, more reliable, and easier to debug.
+3. **To reverse-engineer a site's API shapes** (request/response, auth flow), open the session with `captureNetwork: true`, which writes an HTTP Archive into the session's `output` folder, or read `browser_network_requests`. The goal is usually to *stop* using the browser on that site: capture enough to make direct calls work, then switch. The archive holds every header and cookie in plain text, so delete it when done.
+4. **Run without a window (`headed: false`)** unless a credentialed login is required and the credentials are not already on hand. Then tell the user what you are about to do and use `headed: true`. Do not see, ask for, or attempt to capture credentials: the user types them directly in the visible window.
+5. **Destroy the session with `browserai_destroy` when the work is done**, promptly when it held a login: its logins and cookies stay in the profile on disk until then. Keep a logged-in session for later only when the user explicitly instructs you to. `browserai_destroy` deletes the whole session directory, screenshots and downloads included, so move out what must be kept first.
 
 ## .work — Agent Scratch Space
 
@@ -47,7 +45,7 @@ The [`.work/`](.work/) directory at the repo root is scratch space for agent-dri
 - Do not scatter temporary files elsewhere on the user's PC. Everything agent-produced that the user needs to review lives under `.work/`.
 
 **Typical flow**:
-1. Browser downloads raw files to the active Playwright server's `output/` directory (e.g. `playwright/persistent/output/` for stateful portal work, or `playwright/headless/output/<session>/` for headless scrapes — Playwright auto-captures `download` events). Each server has its own output dir; see the Playwright usage policy above.
+1. Browser downloads raw files to the BrowserAI session's `output` folder, inside the session directory (Playwright auto-captures `download` events); see the Browser usage policy above.
 2. Agent moves + renames them into `.work/{session-dir}/` with clear, final names.
 3. User reviews the structured session directory.
 4. On approval, the files are shipped to their destination.
